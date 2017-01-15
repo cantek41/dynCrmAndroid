@@ -1,16 +1,19 @@
 package DynamicView.View;
 
 import android.content.Context;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import DynamicView.Model.Response;
-import veribis.veribiscrmdyn.IList;
+import veribis.veribiscrmdyn.Forms.FormFragment;
+import veribis.veribiscrmdyn.Lists.IMyList;
 import veribis.veribiscrmdyn.R;
 
 /**
@@ -19,12 +22,14 @@ import veribis.veribiscrmdyn.R;
 public class ListAdapter extends ArrayAdapter<Response> {
   private final String TAG = "AccountAdapter";
   private Context context;
-  private IList view;
+  private IMyList view;
+  private FragmentTransaction frgmTra;
 
-  public ListAdapter(Context context,IList view, int resource, List<Response> objects) {
+  public ListAdapter(Context context, IMyList view, FragmentTransaction frgmTra, int resource, List<Response> objects) {
     super(context, resource, objects);
     this.context = context;
-    this.view=view;
+    this.view = view;
+    this.frgmTra=frgmTra;
 
   }
 
@@ -38,6 +43,7 @@ public class ListAdapter extends ArrayAdapter<Response> {
     }
     final Response o = getItem(position);
     if (o != null) {
+      LinearLayout row = (LinearLayout) v.findViewById(R.id.listRow);
       TextView large = (TextView) v.findViewById(R.id.rowLargeText);
       TextView small1 = (TextView) v.findViewById(R.id.rowSmalTextLeft);
       TextView small2 = (TextView) v.findViewById(R.id.rowSmallTextRightFirst);
@@ -47,7 +53,15 @@ public class ListAdapter extends ArrayAdapter<Response> {
       small1.setText(String.valueOf(o.getId()));
       small2.setText(o.getOpenOrClose());
 
-
+      //satıra tıklama
+      row.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          frgmTra.replace(R.id.content,new FormFragment());
+          frgmTra.addToBackStack(null);
+          frgmTra.commit();
+        }
+      });
     }
     return v;
   }
@@ -55,7 +69,7 @@ public class ListAdapter extends ArrayAdapter<Response> {
   @Override
   public Response getItem(int position) {
     if (closeEngoughToPullData(position)) {
-      ((IList)(view)).getData((super.getCount() / 10) + 1);
+      ((IMyList) (view)).getData((super.getCount() / 10) + 1);
     }
     return super.getItem(position);
   }

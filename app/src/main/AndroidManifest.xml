@@ -7,24 +7,19 @@
 
   <application
     android:allowBackup="true"
-    android:icon="@mipmap/ic_launcher"
+    android:icon="@drawable/logo"
     android:label="@string/app_name"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
     <activity
-      android:name=".BaseActivity"
+      android:name=".BaseMyActivity"
       android:label="@string/app_name"
       android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
-
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity
-      android:name=".HomeActivity"
-      android:label="@string/app_name"
-      android:theme="@style/AppTheme.NoActionBar"></activity>
 
     <service android:name="Firebase.MyFirebaseMessagingService">
       <intent-filter>
@@ -32,7 +27,7 @@
       </intent-filter>
     </service>
 
-    <activity android:name=".ListActivity" />
+    <activity android:name=".Lists.MyListActivity" />
   </application>
 
 </manifest>

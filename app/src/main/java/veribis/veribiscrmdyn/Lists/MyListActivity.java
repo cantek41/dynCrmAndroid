@@ -1,7 +1,9 @@
-package veribis.veribiscrmdyn;
+package veribis.veribiscrmdyn.Lists;
 
-import android.app.Activity;
+
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -14,8 +16,9 @@ import DynamicView.Model.Response;
 import DynamicView.View.ListAdapter;
 import cantekinWebApi.IThreadDelegete;
 import cantekinWebApi.ThreadWebApiPost;
+import veribis.veribiscrmdyn.R;
 
-public class ListActivity extends Activity implements IThreadDelegete,IList {
+public class MyListActivity extends AppCompatActivity implements IThreadDelegete, IMyList {
   String webApiAddress = "http://demo.veribiscrm.com/api/mobile/getlist";
   private ArrayList<Response> dataList;
 
@@ -41,8 +44,10 @@ public class ListActivity extends Activity implements IThreadDelegete,IList {
   }
 
   private void fisrtLoad() {
+    FragmentTransaction frgTra;
+    frgTra = getSupportFragmentManager().beginTransaction();
     istAdapter = new ListAdapter
-      (this,this, R.layout.row_data_list, dataList);
+      (this, this, frgTra, R.layout.row_data_list, dataList);
     data_list.setAdapter(istAdapter);
   }
 

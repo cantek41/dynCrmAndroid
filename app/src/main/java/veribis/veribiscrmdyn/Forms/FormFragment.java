@@ -1,14 +1,12 @@
-package veribis.veribiscrmdyn;
+package veribis.veribiscrmdyn.Forms;
 
 
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,16 +17,20 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import DynamicView.Model.Response;
+import veribis.veribiscrmdyn.BaseMyActivity;
+import veribis.veribiscrmdyn.IMyFragment;
+import veribis.veribiscrmdyn.Menu.MenuButtonBuilder;
+import veribis.veribiscrmdyn.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BlankggFragment extends Fragment {
+public class FormFragment extends Fragment implements IMyFragment {
   String webApiAddress = "http://demo.veribiscrm.com/api/mobile/getlist";
   private ArrayList<Response> dataList;
 
-  public BlankggFragment() {
+  public FormFragment() {
     // Required empty public constructor
   }
 
@@ -36,39 +38,12 @@ public class BlankggFragment extends Fragment {
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     createLabel(view);
-    crateButton(view);
-    createLabel(view);
-    crateButton(view);
     changeTitle();
-
+    getActivity().invalidateOptionsMenu();
   }
 
   public void changeTitle() {
-
-    ActionBar actionBar = ((AppCompatActivity) getContext()).getSupportActionBar();
-    if (actionBar != null) {
-
-
-      actionBar.setDisplayShowTitleEnabled(false);
-      actionBar.setDisplayShowCustomEnabled(true);
-      View customView =getActivity().getLayoutInflater().inflate(R.layout.actionbar_title, null);
-      // Get the textview of the title
-      TextView customTitle = (TextView) customView.findViewById(R.id.actionbarTitle);
-
-      customTitle.setText("sdfasfsdfsdf");
-      // Change the font family (optional)
-      customTitle.setTypeface(Typeface.MONOSPACE);
-      // Set the on click listener for the title
-      customTitle.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          Toast.makeText(getContext(), "dfsf", Toast.LENGTH_SHORT).show();
-
-        }
-      });
-      actionBar.setCustomView(customView);
-    }
-
+    ((BaseMyActivity) getActivity()).changeTitle("Form");
   }
 
   public void crateButton(View view) {
@@ -124,8 +99,15 @@ public class BlankggFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
+    setHasOptionsMenu(true);//fragmentlerde options menuyu kullanabilmek için gerekli
     return inflater.inflate(R.layout.fragment_blankgg, container, false);
   }
 
+  @Override
+  public void onPrepareOptionsMenu(Menu menu) {
+    menu.clear();
+    menu = MenuButtonBuilder.getMenuButtons(getActivity(), menu, "SAVE");
+    menu = MenuButtonBuilder.getMenuButtons(getActivity(), menu, "CANCEL");
+  }
 
 }

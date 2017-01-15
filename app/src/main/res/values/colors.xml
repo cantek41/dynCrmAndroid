@@ -3,4 +3,10 @@
   <color name="colorPrimary">#3F51B5</color>
   <color name="colorPrimaryDark">#303F9F</color>
   <color name="colorAccent">#FF4081</color>
+
+  <color name="rowTransparan">#77ffffff</color>
+  <color name="TextNormalLight">#50444444</color>
+  <color name="TextHeaderLight">#FFFFFF</color>
+  <color name="TextNormal">#111111</color>
+  <color name="TextHeader">#222222</color>
 </resources>

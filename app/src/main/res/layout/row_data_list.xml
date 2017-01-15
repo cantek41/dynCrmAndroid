@@ -3,8 +3,9 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
   android:padding="5dp"
-  android:background="@android:color/white"
-  android:alpha="10">
+  android:background="@color/rowTransparan"
+  android:alpha="10"
+  android:id="@+id/listRow">
 
   <LinearLayout
     android:orientation="vertical"
@@ -17,6 +18,7 @@
       android:layout_height="wrap_content"
       android:textAppearance="?android:attr/textAppearanceLarge"
       android:text="Large Text"
+      android:textColor="@color/TextHeaderLight"
       android:id="@+id/rowLargeText" />
 
     <TextView
@@ -24,6 +26,7 @@
       android:layout_height="wrap_content"
       android:textAppearance="?android:attr/textAppearanceSmall"
       android:text="Small Text"
+      android:textColor="@color/TextNormal"
       android:id="@+id/rowSmalTextLeft" />
   </LinearLayout>
 
@@ -40,6 +43,7 @@
       android:textAppearance="?android:attr/textAppearanceSmall"
       android:text="Small Text"
       android:id="@+id/rowSmallTextRightFirst"
+      android:textColor="@color/TextNormal"
       android:layout_marginTop="1dp" />
 
     <TextView
@@ -48,6 +52,7 @@
       android:textAppearance="?android:attr/textAppearanceSmall"
       android:text="Small Text"
       android:id="@+id/rowSmallTextSecond"
+      android:textColor="@color/TextNormal"
       android:layout_marginTop="5dp" />
 
   </LinearLayout>
