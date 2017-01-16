@@ -24,6 +24,7 @@ import veribis.veribiscrmdyn.Lists.MyListFragment;
 public class BaseMyActivity extends AppCompatActivity
   implements NavigationView.OnNavigationItemSelectedListener, IMyActivity {
   FragmentTransaction fmTr;
+  public FloatingActionButton fab;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class BaseMyActivity extends AppCompatActivity
   private void initNavigation() {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -51,7 +52,6 @@ public class BaseMyActivity extends AppCompatActivity
         fmTr.commit();
       }
     });
-
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
       this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -70,9 +70,9 @@ public class BaseMyActivity extends AppCompatActivity
   }
 
   public void initActivity() {
-    /*fmTr = getSupportFragmentManager().beginTransaction();
-    fmTr.add(R.id.content, getFragment());
-    fmTr.commit();*/
+    fmTr = getSupportFragmentManager().beginTransaction();
+    fmTr.add(R.id.content, new HomeFragment());
+    fmTr.commit();
   }
 
   private Fragment getFragment() {
