@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.MenuItem;
 
+import veribis.veribiscrmdyn.Fragment.MyFragment;
 import veribis.veribiscrmdyn.R;
 
 /**
@@ -11,14 +12,20 @@ import veribis.veribiscrmdyn.R;
  */
 public class CancelButtonCommand implements IMenuButtonCommand {
   Context context;
+  MyFragment fragment;
 
   public CancelButtonCommand(Context context) {
     this.context = context;
   }
 
+  public CancelButtonCommand(MyFragment fragment) {
+    this.context = fragment.getContext();
+    this.fragment = fragment;
+  }
+
   @Override
   public void execute() {
-    ((Activity)context).onBackPressed();
+    ((Activity) context).onBackPressed();
   }
 
   @Override
@@ -28,7 +35,7 @@ public class CancelButtonCommand implements IMenuButtonCommand {
 
   @Override
   public int icon() {
-   return R.drawable.cast_album_art_placeholder;
+    return R.drawable.cast_album_art_placeholder;
   }
 
   @Override

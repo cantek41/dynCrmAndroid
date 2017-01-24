@@ -1,4 +1,4 @@
-package veribis.veribiscrmdyn.Lists;
+package veribis.veribiscrmdyn.Fragment.List;
 
 /**
  * Created by Cantekin on 15.1.2017.

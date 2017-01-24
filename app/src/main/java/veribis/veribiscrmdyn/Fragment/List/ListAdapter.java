@@ -1,4 +1,4 @@
-package DynamicView.View;
+package veribis.veribiscrmdyn.Fragment.List;
 
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
@@ -11,9 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import DynamicView.Model.Response;
-import veribis.veribiscrmdyn.Forms.FormFragment;
-import veribis.veribiscrmdyn.Lists.IMyList;
+import Model.Response;
+import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
 import veribis.veribiscrmdyn.R;
 
 /**
@@ -57,7 +56,8 @@ public class ListAdapter extends ArrayAdapter<Response> {
       row.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-          frgmTra.replace(R.id.content,new FormFragment());
+          //TODO: değişmeli
+          frgmTra.replace(R.id.content,new FormFragment().setProp());
           frgmTra.addToBackStack(null);
           frgmTra.commit();
         }
@@ -66,6 +66,12 @@ public class ListAdapter extends ArrayAdapter<Response> {
     return v;
   }
 
+  /**
+   * Liste Sonuna gelmişse yen data çekmek
+   * için web servara gider
+   * @param position
+   * @return
+     */
   @Override
   public Response getItem(int position) {
     if (closeEngoughToPullData(position)) {
@@ -74,8 +80,6 @@ public class ListAdapter extends ArrayAdapter<Response> {
     return super.getItem(position);
   }
 
-
-  // will return true, if loaded item 3 items away from end
   public boolean closeEngoughToPullData(int position) {
     return super.getCount() - position < 3;
   }

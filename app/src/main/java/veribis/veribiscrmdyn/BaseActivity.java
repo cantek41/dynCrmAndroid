@@ -1,7 +1,7 @@
 package veribis.veribiscrmdyn;
 
+import android.app.ProgressDialog;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -17,37 +17,33 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import veribis.veribiscrmdyn.Forms.FormFragment;
-import veribis.veribiscrmdyn.Lists.MyListFragment;
+import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
+import veribis.veribiscrmdyn.Fragment.List.ListFragment;
 
-
-public class BaseMyActivity extends AppCompatActivity
-  implements NavigationView.OnNavigationItemSelectedListener, IMyActivity {
-  FragmentTransaction fmTr;
+/**
+ * Created by Cantekin on 21.1.2017.
+ */
+public abstract class BaseActivity extends AppCompatActivity
+  implements NavigationView.OnNavigationItemSelectedListener {
+  public FragmentTransaction fmTr;
   public FloatingActionButton fab;
+  private final String TAG = "BaseActivity";
+  protected ProgressDialog mProgressDialog;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+  protected void initActivity() {
     initNavigation();
-    initActivity();
   }
 
-  /**
-   * yan açılır menu için hazırlıklar
-   */
-  private void initNavigation() {
+  protected void initNavigation() {
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-       /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-          .setAction("Action", null).show();*/
+        //TODO:dinamik hale gelmeli
         fmTr = getSupportFragmentManager().beginTransaction();
-        fmTr.replace(R.id.content, new FormFragment());
+        fmTr.replace(R.id.content, new FormFragment().setProp());
         fmTr.addToBackStack(null);
         fmTr.commit();
       }
@@ -62,23 +58,63 @@ public class BaseMyActivity extends AppCompatActivity
     navigationView.setNavigationItemSelectedListener(this);
   }
 
-  public void goDetail() {
-    fmTr = getSupportFragmentManager().beginTransaction();
-    fmTr.add(R.id.content, new FormFragment());
-    fmTr.addToBackStack(null);
-    fmTr.commit();
+  /**
+   * ActionBar Text
+   * @param title
+   */
+  public void changeTitle(String title) {
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      actionBar.setDisplayShowTitleEnabled(false);
+      actionBar.setDisplayShowCustomEnabled(true);
+      View customView = getLayoutInflater().inflate(R.layout.actionbar_title, null);
+      TextView customTitle = (TextView) customView.findViewById(R.id.actionbarTitle);
+      customTitle.setText(title);
+      customTitle.setTextColor(getResources().getColor(R.color.TextHeaderLight));
+      // Change the font family (optional)
+      customTitle.setTypeface(Typeface.DEFAULT_BOLD);
+      customTitle.setTextSize(20);
+      // Set the on click listener for the title
+      customTitle.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Toast.makeText(getApplicationContext(), "dfsf", Toast.LENGTH_SHORT).show();
+        }
+      });
+      actionBar.setCustomView(customView);
+    }
   }
 
-  public void initActivity() {
-    fmTr = getSupportFragmentManager().beginTransaction();
-    fmTr.add(R.id.content, new HomeFragment());
-    fmTr.commit();
+  @SuppressWarnings("StatementWithEmptyBody")
+  @Override
+  public boolean onNavigationItemSelected(MenuItem item) {
+    // Handle navigation view item clicks here.
+    int id = item.getItemId();
+
+    if (id == R.id.nav_camera) {
+      fmTr = getSupportFragmentManager().beginTransaction();
+      fmTr.replace(R.id.content, getFragment());
+      fmTr.addToBackStack(null);
+      fmTr.commit();
+    } else if (id == R.id.nav_share) {
+      fmTr = getSupportFragmentManager().beginTransaction();
+      fmTr.replace(R.id.content, getFragment());
+      fmTr.addToBackStack(null);
+      fmTr.commit();
+    } else if (id == R.id.nav_send) {
+    }
+    ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
+    return true;
   }
 
+  //TODO: burası Jsondan gelecek
   private Fragment getFragment() {
-    return new MyListFragment().setProp();
+    return new ListFragment().setProp();
   }
 
+  /**
+   * All Activity Control backbutton
+   */
   @Override
   public void onBackPressed() {
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -93,58 +129,28 @@ public class BaseMyActivity extends AppCompatActivity
     }
   }
 
+  /**
+   * All Activity
+   * Message Progressbar Open
+   *
+   * @param msg
+   */
+  public void showProgress(String msg) {
+    if (mProgressDialog != null && mProgressDialog.isShowing())
+      dismissProgress();
 
-  public void changeTitle(String title) {
-    ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setDisplayShowTitleEnabled(false);
-      actionBar.setDisplayShowCustomEnabled(true);
-      View customView = getLayoutInflater().inflate(R.layout.actionbar_title, null);
-      TextView customTitle = (TextView) customView.findViewById(R.id.actionbarTitle);
-      customTitle.setText(title);
-      customTitle.setTextColor(getResources().getColor(R.color.TextHeaderLight));
-      // Change the font family (optional)
-      customTitle.setTypeface(Typeface.DEFAULT_BOLD);
-
-      customTitle.setTextSize(20);
-      // Set the on click listener for the title
-      customTitle.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          Toast.makeText(getApplicationContext(), "dfsf", Toast.LENGTH_SHORT).show();
-        }
-      });
-      actionBar.setCustomView(customView);
-    }
+    mProgressDialog = ProgressDialog.show(this, getResources().getString(
+      R.string.app_name), msg);
   }
 
-
-  @SuppressWarnings("StatementWithEmptyBody")
-  @Override
-  public boolean onNavigationItemSelected(MenuItem item) {
-    // Handle navigation view item clicks here.
-    int id = item.getItemId();
-
-    if (id == R.id.nav_camera) {
-      fmTr = getSupportFragmentManager().beginTransaction();
-      fmTr.replace(R.id.content, getFragment());
-      fmTr.addToBackStack(null);
-
-      fmTr.commit();
-
-
-    } else if (id == R.id.nav_share) {
-      fmTr = getSupportFragmentManager().beginTransaction();
-      fmTr.replace(R.id.content, getFragment());
-      fmTr.addToBackStack(null);
-
-      fmTr.commit();
-
-    } else if (id == R.id.nav_send) {
-
+  /**
+   * All Activity
+   * ProgressBar Close
+   */
+  public void dismissProgress() {
+    if (mProgressDialog != null) {
+      mProgressDialog.dismiss();
+      mProgressDialog = null;
     }
-
-    ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
-    return true;
   }
 }

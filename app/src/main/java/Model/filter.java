@@ -1,4 +1,4 @@
-package DynamicView.Model;
+package Model;
 
 public class filter {
   public String op;

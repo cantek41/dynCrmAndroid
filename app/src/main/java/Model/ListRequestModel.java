@@ -1,4 +1,4 @@
-package DynamicView.Model;
+package Model;
 
 /**
  * Created by Cantekin on 10.1.2017.

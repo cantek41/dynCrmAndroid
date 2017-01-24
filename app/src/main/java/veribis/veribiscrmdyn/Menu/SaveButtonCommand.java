@@ -2,8 +2,8 @@ package veribis.veribiscrmdyn.Menu;
 
 import android.content.Context;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import veribis.veribiscrmdyn.Fragment.MyFragment;
 import veribis.veribiscrmdyn.R;
 
 
@@ -12,14 +12,22 @@ import veribis.veribiscrmdyn.R;
  */
 public class SaveButtonCommand implements IMenuButtonCommand {
   Context context;
+  MyFragment fragment;
 
   public SaveButtonCommand(Context context) {
     this.context = context;
   }
 
+  public SaveButtonCommand(MyFragment fragment) {
+    this.context = fragment.getContext();
+    this.fragment = fragment;
+  }
+
   @Override
   public void execute() {
-    Toast.makeText(context, "Kaydet", Toast.LENGTH_SHORT).show();
+       if(fragment!=null)
+         fragment.save();
+    //Toast.makeText(context, "Kaydet", Toast.LENGTH_SHORT).show();
   }
 
   @Override

@@ -1,11 +1,8 @@
-package veribis.veribiscrmdyn.Forms;
+package veribis.veribiscrmdyn.Fragment.Form;
 
 
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,59 +12,74 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import DynamicView.Model.Response;
-import veribis.veribiscrmdyn.BaseMyActivity;
-import veribis.veribiscrmdyn.IMyFragment;
+import Model.UpdateRequestModel;
+import cantekinLogger.CustomLogger;
+import cantekinWebApi.IThreadDelegete;
+import cantekinWebApi.ThreadWebApiPost;
+import veribis.veribiscrmdyn.BaseActivity;
+import veribis.veribiscrmdyn.Fragment.MyFragment;
+import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.Menu.MenuButtonBuilder;
 import veribis.veribiscrmdyn.R;
+import veribis.veribiscrmdyn.Widgets.AbstractWidget;
+import veribis.veribiscrmdyn.Widgets.WidgetHelper;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FormFragment extends Fragment implements IMyFragment {
-  private String webApiAddress = "http://demo.veribiscrm.com/api/mobile/getlist";
-  private ArrayList<Response> dataList;
-  private View view;
+public class FormFragment extends MyFragment implements IThreadDelegete {
+  private static final String TAG = "FormFragment";
+  private String webApiAddress = "http://demo.veribiscrm.com/api/mobile/UpdateData";
+  List<AbstractWidget> fields;//kaydet te gidecek datalar burada
 
   public FormFragment() {
     // Required empty public constructor
   }
 
   @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    this.view = view;
-    getActivity().invalidateOptionsMenu();
-    initFragment();
+  public FormFragment setProp() {
+    LayoutId = R.layout.fragment_form;
+    return this;
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    setHasOptionsMenu(true);//fragmentlerde options menuyu kullanabilmek için gerekli
-    return inflater.inflate(R.layout.fragment_form, container, false);
+  protected void initFragment() {
+    super.initFragment();
+    ((BaseActivity) getActivity()).changeTitle("Güne Başla");
+    ((BaseActivity) getActivity()).fab.setVisibility(View.VISIBLE);
+   /* createWidget("Tarih");
+    createWidget("Güne Başla");
+    createWidget("Fotoğraf Çek");*/
+    intiWidgets();
+  }
+
+  private void intiWidgets() {
+    LinearLayout root = (LinearLayout) getActivity().findViewById(R.id.fargmentForm);
+    fields = new WidgetHelper(root, "dfsgdsf").build();
+  }
+
+  @Override
+  public void save() {
+
+    UpdateRequestModel request = new UpdateRequestModel();
+    request.entity = "Activity";
+    request.data.put("Id",103);
+    for (AbstractWidget w : fields) {
+      request.data.put(w.getField(),w.getValue());
+    }
+    new ThreadWebApiPost<UpdateRequestModel>(this, request, webApiAddress).execute();
+    ((MainActivity) getActivity()).showProgress("Kaydediliyor");
   }
 
   @Override
   public void onPrepareOptionsMenu(Menu menu) {
+    //TODO: menuler somun datasından gelmeli
     menu.clear();
-    menu = MenuButtonBuilder.getMenuButtons(getActivity(), menu, "SAVE");
+    menu = MenuButtonBuilder.getMenuButtons(this, menu, "SAVE");
     menu = MenuButtonBuilder.getMenuButtons(getActivity(), menu, "CANCEL");
-  }
-
-
-  @Override
-  public void initFragment() {
-    ((BaseMyActivity) getActivity()).changeTitle("Güne Başla");
-    ((BaseMyActivity) getActivity()).fab.setVisibility(View.VISIBLE);
-    createWidget("Tarih");
-    createWidget("Güne Başla");
-    createWidget("Fotoğraf Çek");
-
   }
 
   private void createWidget(String label) {
@@ -79,7 +91,6 @@ public class FormFragment extends Fragment implements IMyFragment {
 
     linearLayout.setOrientation(LinearLayout.VERTICAL); //dikey
     linearLayout.setBackgroundColor(getResources().getColor(R.color.rowTransparan));
-
 
 
     TextView w0 = new TextView(getActivity());
@@ -151,4 +162,10 @@ public class FormFragment extends Fragment implements IMyFragment {
     Toast.makeText(getActivity(), "salam", Toast.LENGTH_SHORT).show();
   }
 
+  @Override
+  public void postResult(String data) {
+    CustomLogger.info(TAG, "List");
+//    DataModel model = (DataModel) new Gson().fromJson(data, DataModel.class);
+    ((MainActivity) getActivity()).dismissProgress();
+  }
 }

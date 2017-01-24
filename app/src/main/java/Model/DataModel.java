@@ -1,4 +1,4 @@
-package DynamicView.Model;
+package Model;
 
 import java.util.ArrayList;
 

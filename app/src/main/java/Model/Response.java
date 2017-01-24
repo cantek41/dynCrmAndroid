@@ -1,4 +1,4 @@
-package DynamicView.Model;
+package Model;
 
 public class Response {
   private int Id;

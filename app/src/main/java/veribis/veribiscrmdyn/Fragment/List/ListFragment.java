@@ -1,64 +1,49 @@
-package veribis.veribiscrmdyn.Lists;
+package veribis.veribiscrmdyn.Fragment.List;
 
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-import DynamicView.Model.DataModel;
-import DynamicView.Model.ListRequestModel;
-import DynamicView.Model.Response;
-import DynamicView.View.ListAdapter;
+import Model.DataModel;
+import Model.ListRequestModel;
+import Model.Response;
 import cantekinLogger.CustomLogger;
 import cantekinWebApi.IThreadDelegete;
 import cantekinWebApi.ThreadWebApiPost;
-import veribis.veribiscrmdyn.BaseMyActivity;
-import veribis.veribiscrmdyn.IMyFragment;
+import veribis.veribiscrmdyn.Fragment.MyFragment;
+import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.R;
 
 /**
  * Created by Cantekin on 28.7.2016.
  * A simple {@link Fragment} subclass.
  */
-public class MyListFragment extends Fragment implements IThreadDelegete, IMyList, IMyFragment {
-  private static final String TAG = "MyListFragment";
+public class ListFragment extends MyFragment implements IThreadDelegete, IMyList {
+  private static final String TAG = "ListFragment";
   private String webApiAddress = "http://demo.veribiscrm.com/api/mobile/getlist";
   private ListAdapter istAdapter;
   private ListView data_list;
   private ArrayList<Response> dataList;
-  public MyListFragment() {
+  public ListFragment() {
     // Required empty public constructor
-  }
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_list, container, false);
-  }
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    initFragment();
   }
   @Override
   public void initFragment() {
     dataList = new ArrayList<Response>();
-    ((BaseMyActivity) getActivity()).changeTitle("List");
-    ((BaseMyActivity) getActivity()).fab.setVisibility(View.VISIBLE);
+    ((MainActivity) getActivity()).changeTitle("List");
+    ((MainActivity) getActivity()).fab.setVisibility(View.VISIBLE);
     data_list = (ListView) getActivity().findViewById(R.id.dataListListView);
     listLoad();
   }
-  public MyListFragment setProp() {
-    //TODO liste ayarları gidecek
+  @Override
+  public ListFragment setProp() {
+    LayoutId=R.layout.fragment_list;
     return this;
   }
   private void listLoad() {
@@ -79,6 +64,7 @@ public class MyListFragment extends Fragment implements IThreadDelegete, IMyList
     request.page = page;
     request.fields = new String[]{"Id", "Subject", "OpenOrClose"};
     new ThreadWebApiPost<ListRequestModel>(this, request, webApiAddress).execute();
+    ((MainActivity) getActivity()).showProgress("Liste Çekliyor");
   }
   @Override
   public void postResult(String data) {
@@ -86,5 +72,7 @@ public class MyListFragment extends Fragment implements IThreadDelegete, IMyList
     DataModel model = (DataModel) new Gson().fromJson(data, DataModel.class);
     dataList.addAll(model.Data);
     istAdapter.notifyDataSetChanged();
+    ((MainActivity) getActivity()).dismissProgress();
+
   }
 }
