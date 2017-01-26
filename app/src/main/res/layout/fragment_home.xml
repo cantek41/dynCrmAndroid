@@ -14,12 +14,21 @@
    android:gravity="center"
    android:layout_gravity="center" />
 
+<<<<<<< .mine
   <LinearLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1">
+=======
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+>>>>>>> .theirs
+
+<<<<<<< .mine
     <EditText
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -35,4 +44,23 @@
   </LinearLayout>
 
 
+
+=======
+    <EditText
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/editText"
+      android:layout_weight="0.8" />
+
+    <Button
+      style="?android:attr/buttonStyleSmall"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="New Button"
+      android:id="@+id/button" />
+
+  </LinearLayout>
+
+
+>>>>>>> .theirs
 </FrameLayout>
