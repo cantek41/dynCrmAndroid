@@ -22,4 +22,8 @@ public class WidgetTextView extends AbstractWidget {
   public String getValue() {
     return ((TextView) widget).getText().toString();
   }
+  @Override
+  public void setValue(String data) {
+    ((TextView) widget).setText(data);
+  }
 }

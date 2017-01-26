@@ -5,6 +5,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Cantekin on 23.1.2017.
@@ -12,22 +13,17 @@ import java.util.List;
 public class WidgetHelper {
   Context context;
   LinearLayout root;
-  List<WidgetProperties> widgetsData;
+  ArrayList<Map<String, Object>> widgetsProperties;
 
-  public WidgetHelper(LinearLayout root,String swed)
-  {
-    widgetsData=new ArrayList<WidgetProperties>();
-    widgetsData.add(new WidgetProperties(EnumWidgetTypes.TEXT,"etiket","Description"));
-    widgetsData.add(new WidgetProperties(EnumWidgetTypes.EDIT,"edit Etiketi","Subject"));
-    context=root.getContext();
-    this.root=root;
+  public WidgetHelper(LinearLayout root, ArrayList<Map<String, Object>> widgets) {
+    widgetsProperties = widgets;
+    context = root.getContext();
+    this.root = root;
   }
 
-  public List<AbstractWidget> build()
-  {
-    List<AbstractWidget> widgets=FactoryWidget.createViewGroup(context,widgetsData);
-    for (AbstractWidget w:widgets)
-    {
+  public List<AbstractWidget> build() {
+    List<AbstractWidget> widgets = FactoryWidget.createViewGroup(context, widgetsProperties);
+    for (AbstractWidget w : widgets) {
       root.addView(w.getLayout());
     }
     return widgets;

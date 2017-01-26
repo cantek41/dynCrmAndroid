@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import Model.Form.FormProperties;
 import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
 import veribis.veribiscrmdyn.Fragment.List.ListFragment;
 
@@ -43,7 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity
       public void onClick(View view) {
         //TODO:dinamik hale gelmeli
         fmTr = getSupportFragmentManager().beginTransaction();
-        fmTr.replace(R.id.content, new FormFragment().setProp());
+        fmTr.replace(R.id.content, new FormFragment().setProp(new FormProperties()));
         fmTr.addToBackStack(null);
         fmTr.commit();
       }
@@ -109,7 +110,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
   //TODO: burası Jsondan gelecek
   private Fragment getFragment() {
-    return new ListFragment().setProp();
+    return new ListFragment().setProp(new FormProperties());
   }
 
   /**
@@ -127,6 +128,10 @@ public abstract class BaseActivity extends AppCompatActivity
         super.onBackPressed();
       }
     }
+  }
+
+  public void showMessage(String msg) {
+    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
   }
 
   /**
