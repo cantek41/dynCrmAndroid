@@ -24,11 +24,7 @@ public class MainActivity extends BaseActivity {
   protected void initActivity() {
     super.initActivity();
     fmTr = getSupportFragmentManager().beginTransaction();
-<<<<<<< .mine
     fmTr.add(R.id.content, new FormFragment().setProp(new FormProperties()));
-=======
-    fmTr.add(R.id.content, new HomeFragment().setProp(new FormProperties()));
->>>>>>> .theirs
     fmTr.commit();
   }
 }

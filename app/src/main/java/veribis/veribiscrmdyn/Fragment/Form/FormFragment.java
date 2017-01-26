@@ -132,20 +132,12 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
   @Override
   public void onPrepareOptionsMenu(Menu menu) {
     menu.clear();
-<<<<<<< .mine
     for (String button : formProperties.Buttons)
       menu = MenuButtonBuilder.getMenuButtons(this, menu, button);
-
-=======
-    for (String button : formProperties.Buttons)
-      menu = MenuButtonBuilder.getMenuButtons(this, menu, button);
-    // menu = MenuButtonBuilder.getMenuButtons(getActivity(), menu, "CANCEL");
->>>>>>> .theirs
   }
 
   @Override
   public void postResult(String data) {
-<<<<<<< .mine
     // TODO: 25.1.2017 data model boş yada hatalı gelebilir kontrolünü yap
     try {
       // TODO: 26.1.2017 jsonları dataya çeviren bir class yaz hep ordan çek yarın gson kullanmzasan çok yerde değişiklik yapmak gerekebilir
@@ -163,25 +155,6 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
     } finally {
       ((MainActivity) getActivity()).dismissProgress();
     }
-=======
-    // TODO: 25.1.2017 data model boş yada hatalı gelebilir kontrolünü yap
-    try {
-      formModel = (DataModelForm) new Gson().fromJson(data, DataModelForm.class);
-      if (formModel.Status.ErrCode == 0)
-        setDataToWidget();
-      else
-        ((MainActivity) getActivity()).showMessage(formModel.Status.Message);
-    } catch (JsonSyntaxException ex) {
-      CustomLogger.error(TAG, ex.getMessage());
-      ((MainActivity) getActivity()).showMessage("Yöneticinize Başvurun Hata Kodu:Tasarım uyuşmazlığı");
-    } catch (NullPointerException ex) {
-      CustomLogger.error(TAG, ex.getMessage());
-      ((MainActivity) getActivity()).showMessage("Yöneticinize Başvurun Hata Kodu:Null Data");
-    } finally {
-      ((MainActivity) getActivity()).dismissProgress();
-    }
-
->>>>>>> .theirs
   }
   private void setDataToWidget() {
     for (AbstractWidget w : widgetFields) {
