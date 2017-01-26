@@ -2,8 +2,8 @@ package veribis.veribiscrmdyn;
 
 import android.os.Bundle;
 
+import Model.Form.FormProperties;
 import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
-import veribis.veribiscrmdyn.Fragment.HomeFragment;
 
 
 public class MainActivity extends BaseActivity {
@@ -16,7 +16,7 @@ public class MainActivity extends BaseActivity {
   }
   public void goDetail() {
     fmTr = getSupportFragmentManager().beginTransaction();
-    fmTr.add(R.id.content, new FormFragment().setProp());
+    fmTr.add(R.id.content, new FormFragment().setProp(new FormProperties()));
     fmTr.addToBackStack(null);
     fmTr.commit();
   }
@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity {
   protected void initActivity() {
     super.initActivity();
     fmTr = getSupportFragmentManager().beginTransaction();
-    fmTr.add(R.id.content, new HomeFragment().setProp());
+    fmTr.add(R.id.content, new FormFragment().setProp(new FormProperties()));
     fmTr.commit();
   }
 }

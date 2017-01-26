@@ -1,6 +1,7 @@
 package veribis.veribiscrmdyn;
 
 import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import Model.Form.FormProperties;
 import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
 import veribis.veribiscrmdyn.Fragment.List.ListFragment;
 
@@ -43,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity
       public void onClick(View view) {
         //TODO:dinamik hale gelmeli
         fmTr = getSupportFragmentManager().beginTransaction();
-        fmTr.replace(R.id.content, new FormFragment().setProp());
+        fmTr.replace(R.id.content, new FormFragment().setProp(new FormProperties()));
         fmTr.addToBackStack(null);
         fmTr.commit();
       }
@@ -109,7 +111,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
   //TODO: burası Jsondan gelecek
   private Fragment getFragment() {
-    return new ListFragment().setProp();
+    return new ListFragment().setProp(new FormProperties());
   }
 
   /**
@@ -127,6 +129,10 @@ public abstract class BaseActivity extends AppCompatActivity
         super.onBackPressed();
       }
     }
+  }
+
+  public void showMessage(String msg) {
+    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
   }
 
   /**
@@ -151,6 +157,17 @@ public abstract class BaseActivity extends AppCompatActivity
     if (mProgressDialog != null) {
       mProgressDialog.dismiss();
       mProgressDialog = null;
+    }
+  }
+
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode,
+                                         String permissions[], int[] grantResults) {
+    if (grantResults.length > 0
+      && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    } else {
+      showMessage("İzinleri vermezseniz uygulama doğru çalışmayacaktır.");
     }
   }
 }

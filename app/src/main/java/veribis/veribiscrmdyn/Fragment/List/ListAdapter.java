@@ -9,26 +9,28 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import Model.Response;
+import Model.Form.FormProperties;
 import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
 import veribis.veribiscrmdyn.R;
 
 /**
  * Created by Cantekin on 8.1.2017.
  */
-public class ListAdapter extends ArrayAdapter<Response> {
+public class ListAdapter extends ArrayAdapter<Map<String, Object>> {
   private final String TAG = "AccountAdapter";
   private Context context;
   private IMyList view;
   private FragmentTransaction frgmTra;
 
-  public ListAdapter(Context context, IMyList view, FragmentTransaction frgmTra, int resource, List<Response> objects) {
+  public ListAdapter(Context context, IMyList view, FragmentTransaction frgmTra, int resource, List<Map<String, Object>> objects) {
     super(context, resource, objects);
     this.context = context;
     this.view = view;
-    this.frgmTra=frgmTra;
+    this.frgmTra = frgmTra;
 
   }
 
@@ -40,7 +42,7 @@ public class ListAdapter extends ArrayAdapter<Response> {
       vi = LayoutInflater.from(getContext());
       v = vi.inflate(R.layout.row_data_list, null);
     }
-    final Response o = getItem(position);
+    final Map<String, Object> o = getItem(position);
     if (o != null) {
       LinearLayout row = (LinearLayout) v.findViewById(R.id.listRow);
       TextView large = (TextView) v.findViewById(R.id.rowLargeText);
@@ -48,16 +50,19 @@ public class ListAdapter extends ArrayAdapter<Response> {
       TextView small2 = (TextView) v.findViewById(R.id.rowSmallTextRightFirst);
       TextView small3 = (TextView) v.findViewById(R.id.rowSmallTextSecond);
 
-      large.setText(o.getSubject() + " " + String.valueOf(position));
-      small1.setText(String.valueOf(o.getId()));
-      small2.setText(o.getOpenOrClose());
+      //TODO: list gösterim değişmeli
 
+      List<Object> list = new ArrayList<Object>(o.values());
+      prepairText(large, list.get(0));
+      prepairText(small1, list.get(1));
+      prepairText(small2, list.get(2));
+      final Object value = o.get("Id");
       //satıra tıklama
       row.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-          //TODO: değişmeli
-          frgmTra.replace(R.id.content,new FormFragment().setProp());
+          //TODO: değişmeli dinamik olarak fragmente bilgiler göndermeli
+          frgmTra.replace(R.id.content, new FormFragment().setProp(new FormProperties("Activity",((Double) value).intValue())));
           frgmTra.addToBackStack(null);
           frgmTra.commit();
         }
@@ -66,14 +71,22 @@ public class ListAdapter extends ArrayAdapter<Response> {
     return v;
   }
 
+  private void prepairText(TextView view, Object o) {
+    if (o instanceof Double) view.setText(String.valueOf(((Double) o).intValue()));
+    else view.setText(String.valueOf(o));
+
+  }
+
+
   /**
    * Liste Sonuna gelmişse yen data çekmek
    * için web servara gider
+   *
    * @param position
    * @return
-     */
+   */
   @Override
-  public Response getItem(int position) {
+  public Map<String, Object> getItem(int position) {
     if (closeEngoughToPullData(position)) {
       ((IMyList) (view)).getData((super.getCount() / 10) + 1);
     }

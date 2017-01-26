@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import veribis.veribiscrmdyn.Widgets.Items.WidgetEditView;
 import veribis.veribiscrmdyn.Widgets.Items.WidgetTextView;
@@ -13,17 +14,17 @@ import veribis.veribiscrmdyn.Widgets.Items.WidgetTextView;
  */
 public final class FactoryWidget {
 
-  public static List<AbstractWidget> createViewGroup(Context context, List<WidgetProperties> widgets) {
+  public static List<AbstractWidget> createViewGroup(Context context, ArrayList<Map<String, Object>> widgets) {
     List<AbstractWidget> result = new ArrayList<AbstractWidget>();
-    for (WidgetProperties widget : widgets) {
-      result.add(createWidget(context, widget));
+    for (Map<String, Object> w : widgets) {
+      result.add(createWidget(context, w));
     }
     return result;
   }
 
-  public static AbstractWidget createWidget(Context contex, WidgetProperties properties) {
+  public static AbstractWidget createWidget(Context contex, Map<String, Object> properties) {
     AbstractWidget widget = null;
-    switch (properties.getWidgetType()) {
+    switch ((EnumWidgetTypes) properties.get("WidgetType")) {
       case TEXT:
         widget = new WidgetTextView(contex);
         break;
@@ -33,19 +34,7 @@ public final class FactoryWidget {
       default:
         break;
     }
-    widget = setProp(contex, widget, properties);
-    return widget;
-  }
-
-  private static AbstractWidget setProp(Context contex, AbstractWidget widget, WidgetProperties properties) {
-    //TODO:widget setprop
-    widget.setLabel(properties.getLabel());
-    widget.setField(properties.getField());
-
-    //set custom properties
     widget.setProp(properties);
     return widget;
   }
-
-
 }
