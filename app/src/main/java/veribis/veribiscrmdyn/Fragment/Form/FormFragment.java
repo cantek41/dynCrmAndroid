@@ -71,7 +71,7 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
     widget.put("Buttons", null);
     ArrayList<String> btn = new ArrayList<String>();
     btn.add("CALL");
-    btn.add("LOCATION");
+    btn.add("BARCODE");
     widget.put("Buttons", btn);
 
     formProperties.widgets.add(widget);
@@ -88,12 +88,17 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
     return this;
   }
 
+  public void barcode()
+  {
+
+  }
   @Override
   protected void initFragment() {
     super.initFragment();
     ((BaseActivity) getActivity()).changeTitle(formProperties.getFormName());
     ((BaseActivity) getActivity()).fab.setVisibility(View.VISIBLE);
     intiWidgets();
+    barcode();
   }
 
   private void intiWidgets() {

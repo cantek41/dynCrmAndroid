@@ -22,10 +22,13 @@ public class WidgetButtonBuilder {
     IWidgetButton command = null;
     switch (enumitem) {
       case CALL:
-        command = new WidgetSaveButtonCommand(context);
+        command = new WidgetCallButtonCommand(context);
         break;
       case LOCATION:
         command = new WidgetNavigationButtonCommand(context);
+        break;
+      case BARCODE:
+        command = new WidgetBarcodeButtonCommand(context);
         break;
       // TODO: 27.1.2017 diğer butonlarda eklenecek
       default:

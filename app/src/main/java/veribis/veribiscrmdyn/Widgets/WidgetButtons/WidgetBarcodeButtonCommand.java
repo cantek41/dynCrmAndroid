@@ -3,46 +3,51 @@ package veribis.veribiscrmdyn.Widgets.WidgetButtons;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import me.sudar.zxingorient.ZxingOrient;
+import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.R;
 
 
 /**
  * Created by Cantekin on 16.1.2017.
  */
-public class WidgetSaveButtonCommand extends IWidgetButton implements IWidgetButtonCommand {
+public class WidgetBarcodeButtonCommand extends IWidgetButton implements IWidgetButtonCommand {
   View parent;
 
-  public WidgetSaveButtonCommand(Context context) {
+  public WidgetBarcodeButtonCommand(Context context) {
     super(context);
   }
 
 
   @Override
   public String name() {
-    return "Kaydet";
+    return "Barkod";
   }
 
   @Override
   public int icon() {
-    return R.drawable.call;
+    return R.drawable.barkod;
   }
 
   @Override
   public void execute() {
-    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + getParentValue()));
-    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.CALL_PHONE}, 0);
+    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.CAMERA}, 0);
       return;
     }
-    getContext().startActivity(intent);
+    ((MainActivity)getContext()).barcode=parent;
+    ZxingOrient integrator = new ZxingOrient((MainActivity)getContext());
+    integrator.setIcon(R.drawable.icon)   // Sets the custom icon
+      .setToolbarColor("#AA3F51B5")       // Sets Tool bar Color
+      .setInfoBoxColor("#AA3F51B5")       // Sets Info box color
+      .setInfo("Barkod okutunuz")   //// TODO: 27.1.2017 danimik string
+      .initiateScan();
   }
 
   @Override
