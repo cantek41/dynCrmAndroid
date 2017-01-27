@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ import Model.UpdateRequestModel;
 import cantekinLogger.CustomLogger;
 import cantekinWebApi.IThreadDelegete;
 import cantekinWebApi.ThreadWebApiPost;
+import cntJson.jsonHelper;
 import veribis.veribiscrmdyn.BaseActivity;
 import veribis.veribiscrmdyn.Fragment.MyFragment;
 import veribis.veribiscrmdyn.MainActivity;
@@ -69,7 +69,7 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
     widget.put("Field", "Subject");
     widget.put("WidgetType", EnumWidgetTypes.EDIT);
     widget.put("Buttons", null);
-    ArrayList<String> btn= new ArrayList<String>();
+    ArrayList<String> btn = new ArrayList<String>();
     btn.add("CALL");
     btn.add("LOCATION");
     widget.put("Buttons", btn);
@@ -141,7 +141,7 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
     // TODO: 25.1.2017 data model boş yada hatalı gelebilir kontrolünü yap
     try {
       // TODO: 26.1.2017 jsonları dataya çeviren bir class yaz hep ordan çek yarın gson kullanmzasan çok yerde değişiklik yapmak gerekebilir
-      formModel = (DataModelForm) new Gson().fromJson(data, DataModelForm.class);
+      formModel = jsonHelper.stringToObject(data, DataModelForm.class);
       if (formModel.Status.ErrCode == 0)
         setDataToWidget();
       else
@@ -156,6 +156,7 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
       ((MainActivity) getActivity()).dismissProgress();
     }
   }
+
   private void setDataToWidget() {
     for (AbstractWidget w : widgetFields) {
       w.setValue(formModel.Data.get(w.getField().toString()).toString());

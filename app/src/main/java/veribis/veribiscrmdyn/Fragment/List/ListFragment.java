@@ -6,8 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +16,7 @@ import Model.ListRequestModel;
 import cantekinLogger.CustomLogger;
 import cantekinWebApi.IThreadDelegete;
 import cantekinWebApi.ThreadWebApiPost;
+import cntJson.jsonHelper;
 import veribis.veribiscrmdyn.Fragment.MyFragment;
 import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.R;
@@ -87,7 +86,7 @@ public class ListFragment extends MyFragment implements IThreadDelegete, IMyList
   public void postResult(String data) {
     CustomLogger.info(TAG, "List");
     // TODO: 25.1.2017 data model boş yada hatalı gelebilir kontrolünü yap
-    DataModelList model = (DataModelList) new Gson().fromJson(data, DataModelList.class);
+    DataModelList model = jsonHelper.stringToObject(data,DataModelList.class);
     dataList.addAll(model.Data);
     istAdapter.notifyDataSetChanged();
     ((MainActivity) getActivity()).dismissProgress();
