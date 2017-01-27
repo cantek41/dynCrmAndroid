@@ -6,13 +6,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import Model.Form.FormProperties;
 import me.sudar.zxingorient.ZxingOrient;
 import me.sudar.zxingorient.ZxingOrientResult;
 import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
 
 
 public class MainActivity extends BaseActivity {
+  public static final int REQUEST_CAMERA = 101;
+  public static final int SELECT_FILE = 102;
+  private static final String TAG ="MainActivity" ;
   public View barcode;
 
   @Override
@@ -24,7 +26,7 @@ public class MainActivity extends BaseActivity {
 
   public void goDetail() {
     fmTr = getSupportFragmentManager().beginTransaction();
-    fmTr.add(R.id.content, new FormFragment().setProp(new FormProperties()));
+    fmTr.add(R.id.content, new FormFragment().setProp(getFromProp.get()));
     fmTr.addToBackStack(null);
     fmTr.commit();
   }
@@ -33,20 +35,37 @@ public class MainActivity extends BaseActivity {
   protected void initActivity() {
     super.initActivity();
     fmTr = getSupportFragmentManager().beginTransaction();
-    fmTr.add(R.id.content, new FormFragment().setProp(new FormProperties()));
+    fmTr.add(R.id.content, new FormFragment().setProp(getFromProp.get()));
     fmTr.commit();
   }
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-    ZxingOrientResult scanResult =
-      ZxingOrient.parseActivityResult(requestCode, resultCode, intent);
-    if (scanResult != null) {
-      if (barcode instanceof TextView)
-        ((TextView) barcode).setText(scanResult.getContents());
-      else if (barcode instanceof EditText)
-        ((EditText) barcode).setText(scanResult.getContents());
-
+    switch (requestCode) {
+      case ZxingOrient.REQUEST_CODE:
+        ZxingOrientResult scanResult =
+          ZxingOrient.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult == null)
+          return;
+        if (barcode instanceof TextView)
+          ((TextView) barcode).setText(scanResult.getContents());
+        else if (barcode instanceof EditText)
+          ((EditText) barcode).setText(scanResult.getContents());
+        break;
+      case REQUEST_CAMERA:
+        Object fragment = getSupportFragmentManager().findFragmentById(R.id.content);
+        if (fragment instanceof FormFragment) {
+          ((FormFragment)fragment).uploadFile();
+        }
+        break;
+      case SELECT_FILE:
+        Object frag = getSupportFragmentManager().findFragmentById(R.id.content);
+        if (frag instanceof FormFragment) {
+          ((FormFragment)frag).uploadFile();
+        }
+        break;
+      default:
+        break;
     }
   }
 }

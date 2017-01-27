@@ -19,11 +19,15 @@ import Model.Form.FormProperties;
 public abstract class MyFragment extends Fragment {
   public View view;
   protected int LayoutId;
+  protected FormProperties formProperties;
 
   public MyFragment setProp(FormProperties prop) {
+    if (prop != null) this.formProperties = prop;
     return this;
   }
-
+  public FormProperties getProp() {
+    return formProperties;
+  }
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {

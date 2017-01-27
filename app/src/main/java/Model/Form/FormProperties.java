@@ -11,8 +11,8 @@ public class FormProperties {
   private int Id;
   private String formName;
   private String entity;
-  public ArrayList<Map<String,Object>> widgets;
-  public List<String> Buttons;
+  public ArrayList<Map<String,Object>> widgets=new ArrayList<Map<String,Object>>();
+  public List<String> Buttons=new ArrayList<String>();
   public FormProperties() {
 
   }

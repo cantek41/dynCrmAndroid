@@ -8,8 +8,6 @@ import android.widget.LinearLayout;
 
 import com.google.gson.JsonSyntaxException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +24,6 @@ import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.Menu.MenuButtonBuilder;
 import veribis.veribiscrmdyn.R;
 import veribis.veribiscrmdyn.Widgets.AbstractWidget;
-import veribis.veribiscrmdyn.Widgets.EnumWidgetTypes;
 import veribis.veribiscrmdyn.Widgets.WidgetHelper;
 
 
@@ -35,10 +32,10 @@ import veribis.veribiscrmdyn.Widgets.WidgetHelper;
  */
 public class FormFragment extends MyFragment implements IThreadDelegete {
   private static final String TAG = "FormFragment";
-  private String webApiAddress = "http://demo.veribiscrm.com/api/mobile/UpdateData"; //preferanceden gelecek
+  private String webApiAddress = "http://demo.veribiscrm.com/api/mobile/UpdateData";
+  //TODO: preferanceden gelecek
   private String webApiAddressGet = "http://demo.veribiscrm.com/api/mobile/GetData";
   List<AbstractWidget> widgetFields;//kaydet te gidecek datalar burada
-  private FormProperties formProperties;
   private DataModelForm formModel = new DataModelForm();
 
   public FormFragment() {
@@ -49,56 +46,20 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
   public FormFragment setProp(FormProperties prop) {
     if (prop != null) this.formProperties = prop;
     LayoutId = R.layout.fragment_form;
-    // TODO: 25.1.2017 form datası prferenstan gelecek
-    formProperties = new FormProperties();
-    formProperties.setFormName("Form1");
-    formProperties.setId(103);
-    formProperties.setEntity("Activity");
-    formProperties.widgets = new ArrayList<Map<String, Object>>();
-    formProperties.Buttons = new ArrayList<String>();
-    formProperties.Buttons.add("SAVE");
-    formProperties.Buttons.add("CANCEL");
-    Map<String, Object> widget = new HashMap<String, Object>();
-    widget.put("Label", "Description");
-    widget.put("Field", "Description");
-    widget.put("WidgetType", EnumWidgetTypes.EDIT);
-    widget.put("Buttons", null);
-    formProperties.widgets.add(widget);
-    widget = new HashMap<String, Object>();
-    widget.put("Label", "Subject");
-    widget.put("Field", "Subject");
-    widget.put("WidgetType", EnumWidgetTypes.EDIT);
-    widget.put("Buttons", null);
-    ArrayList<String> btn = new ArrayList<String>();
-    btn.add("CALL");
-    btn.add("BARCODE");
-    widget.put("Buttons", btn);
-
-    formProperties.widgets.add(widget);
-    widget = new HashMap<String, Object>();
-    widget.put("Label", "Note");
-    widget.put("Field", "Note");
-    widget.put("WidgetType", EnumWidgetTypes.EDIT);
-    formProperties.widgets.add(widget);
-
     formModel.Data.put("Id", formProperties.getId());
-    for (Map<String, Object> w : formProperties.widgets) {
-      formModel.Data.put(String.valueOf(w.get("Field")), "");
-    }
+    if (formProperties.widgets != null)
+      for (Map<String, Object> w : formProperties.widgets) {
+        formModel.Data.put(String.valueOf(w.get("Field")), "");
+      }
     return this;
   }
 
-  public void barcode()
-  {
-
-  }
   @Override
   protected void initFragment() {
     super.initFragment();
     ((BaseActivity) getActivity()).changeTitle(formProperties.getFormName());
     ((BaseActivity) getActivity()).fab.setVisibility(View.VISIBLE);
     intiWidgets();
-    barcode();
   }
 
   private void intiWidgets() {
@@ -145,7 +106,6 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
   public void postResult(String data) {
     // TODO: 25.1.2017 data model boş yada hatalı gelebilir kontrolünü yap
     try {
-      // TODO: 26.1.2017 jsonları dataya çeviren bir class yaz hep ordan çek yarın gson kullanmzasan çok yerde değişiklik yapmak gerekebilir
       formModel = jsonHelper.stringToObject(data, DataModelForm.class);
       if (formModel.Status.ErrCode == 0)
         setDataToWidget();
@@ -166,5 +126,10 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
     for (AbstractWidget w : widgetFields) {
       w.setValue(formModel.Data.get(w.getField().toString()).toString());
     }
+  }
+
+  public void uploadFile() {
+    ((MainActivity) getActivity()).showMessage("dosyaGonder");
+    // TODO: 27.1.2017 erkan abi dosya alan apiyi yazacak, ona göre burayı yaz
   }
 }

@@ -23,7 +23,7 @@ public class WidgetEditView extends ActiveWidget {
     v.setOnFocusChangeListener(new OnFocusChangeListener() {
       @Override
       public void onFocusChange(View view, boolean b) {
-        onClick(view);
+      //  onClick(view);
       }
     });
   }

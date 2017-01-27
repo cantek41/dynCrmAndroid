@@ -24,11 +24,14 @@ public class WidgetButtonBuilder {
       case CALL:
         command = new WidgetCallButtonCommand(context);
         break;
-      case LOCATION:
+      case MAP:
         command = new WidgetNavigationButtonCommand(context);
         break;
       case BARCODE:
         command = new WidgetBarcodeButtonCommand(context);
+        break;
+      case LOCATION:
+        command = new WidgetLocationButtonCommand(context);
         break;
       // TODO: 27.1.2017 diğer butonlarda eklenecek
       default:
