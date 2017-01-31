@@ -133,7 +133,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
   //TODO: burası Jsondan gelecek
   private Fragment getFragment() {
-    return new ListFragment().setProp(new FormProperties());
+    return new ListFragment().setProp(getFromProp.getList());
   }
 
   /**

@@ -13,10 +13,16 @@
   android:background="@drawable/background"
   tools:showIn="@layout/app_bar_main">
 
-  <FrameLayout
-    android:id="@+id/content"
+  <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView" >
 
-  </FrameLayout>
+    <FrameLayout
+      android:id="@+id/content"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    </FrameLayout>
+  </ScrollView>
 </RelativeLayout>

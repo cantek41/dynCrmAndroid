@@ -41,7 +41,7 @@ public class AttachButtonCommand implements IMenuButtonCommand {
 
   @Override
   public void execute() {
-    if (fragment.getProp().getId() < 1) {
+    if (fragment.getProp().getRecordId() < 1) {
       ((MainActivity) context).showMessage("Önce çalışmayı kaydetmelisiniz");
       return;
     }

@@ -11,6 +11,5 @@ public class DataModelForm {
   public Model.Status Status;
   public DataModelForm() {
     Data = new HashMap<String, Object>();
-
   }
 }

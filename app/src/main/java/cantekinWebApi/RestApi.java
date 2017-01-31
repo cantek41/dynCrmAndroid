@@ -45,7 +45,6 @@ public class RestApi<T> {
 
     } finally {
       restTemplate = null;
-      CustomLogger.info(TAG + " restTemplate", "null");
     }
     return response;
   }

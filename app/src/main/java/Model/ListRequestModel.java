@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.List;
+
 /**
  * Created by Cantekin on 10.1.2017.
  * * {
@@ -13,7 +15,7 @@ package Model;
  */
 public class ListRequestModel {
   public String entity;
-  public String[] fields;
+  public List<String> fields;
   public int page;
   public int pageSize;
   public filter filter;

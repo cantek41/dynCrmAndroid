@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import veribis.veribiscrmdyn.Widgets.Items.WidgetEditView;
+import veribis.veribiscrmdyn.Widgets.Items.WidgetSubForm;
 import veribis.veribiscrmdyn.Widgets.Items.WidgetTextView;
 
 /**
@@ -30,6 +31,9 @@ public final class FactoryWidget {
         break;
       case EDIT:
         widget = new WidgetEditView(contex);
+        break;
+      case SUBFORM:
+        widget = new WidgetSubForm(contex);
         break;
       default:
         break;

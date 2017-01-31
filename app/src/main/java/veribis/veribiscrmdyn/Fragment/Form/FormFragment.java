@@ -3,7 +3,6 @@ package veribis.veribiscrmdyn.Fragment.Form;
 
 import android.support.v4.app.Fragment;
 import android.view.Menu;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.google.gson.JsonSyntaxException;
@@ -18,7 +17,6 @@ import cantekinLogger.CustomLogger;
 import cantekinWebApi.IThreadDelegete;
 import cantekinWebApi.ThreadWebApiPost;
 import cntJson.jsonHelper;
-import veribis.veribiscrmdyn.BaseActivity;
 import veribis.veribiscrmdyn.Fragment.MyFragment;
 import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.Menu.MenuButtonBuilder;
@@ -36,7 +34,7 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
   //TODO: preferanceden gelecek
   private String webApiAddressGet = "http://demo.veribiscrm.com/api/mobile/GetData";
   List<AbstractWidget> widgetFields;//kaydet te gidecek datalar burada
-  private DataModelForm formModel = new DataModelForm();
+  private DataModelForm formModel;
 
   public FormFragment() {
     // Required empty public constructor
@@ -46,26 +44,37 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
   public FormFragment setProp(FormProperties prop) {
     if (prop != null) this.formProperties = prop;
     LayoutId = R.layout.fragment_form;
-    formModel.Data.put("Id", formProperties.getId());
-    if (formProperties.widgets != null)
-      for (Map<String, Object> w : formProperties.widgets) {
-        formModel.Data.put(String.valueOf(w.get("Field")), "");
+    formModel = new DataModelForm();
+    formModel.Data.put("Id", formProperties.getRecordId());
+    String field;
+    if (formProperties.getWidgets() != null)
+      for (Map<String, Object> w : formProperties.getWidgets()) {
+        field = String.valueOf(w.get("Field"));
+        if (!field.equals("null")) {
+          formModel.Data.put(field, "");
+          CustomLogger.alert(TAG, field);
+        }
       }
+
+    if (formProperties.getParentField() != null) {
+      formModel.Data.put(formProperties.getParentField(), formProperties.getParentId());
+      CustomLogger.alert(TAG, formProperties.getParentField() + "--" + formProperties.getParentId());
+    }
     return this;
   }
 
   @Override
   protected void initFragment() {
     super.initFragment();
-    ((BaseActivity) getActivity()).changeTitle(formProperties.getFormName());
-    ((BaseActivity) getActivity()).fab.setVisibility(View.VISIBLE);
     intiWidgets();
   }
 
   private void intiWidgets() {
     LinearLayout root = (LinearLayout) getActivity().findViewById(R.id.fargmentForm);
-    widgetFields = new WidgetHelper(root, formProperties.widgets).build();
-    getData();
+    widgetFields = new WidgetHelper(root, formProperties.getWidgets()).build();
+    setDataToWidget();
+    if (formProperties.getRecordId() > 0)
+      getData();
   }
 
   private void getData() {
@@ -86,9 +95,14 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
       return;
     UpdateRequestModel request = new UpdateRequestModel();
     request.entity = formProperties.getEntity();
-    request.data.put("Id", formProperties.getId());
+    request.data.put("Id", formProperties.getRecordId());
+    CustomLogger.info(TAG, "ID" + formProperties.getRecordId());
+
     for (AbstractWidget w : widgetFields) {
-      request.data.put(w.getField(), w.getValue());
+      if (!w.getField().equals("null")) {
+        CustomLogger.info(TAG, w.getField() + w.getValue());
+        request.data.put(w.getField(), w.getValue());
+      }
     }
     //TODO: stringler dinamik olmalı
     new ThreadWebApiPost<UpdateRequestModel>(this, request, webApiAddress).execute();
@@ -98,7 +112,7 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
   @Override
   public void onPrepareOptionsMenu(Menu menu) {
     menu.clear();
-    for (String button : formProperties.Buttons)
+    for (String button : formProperties.getButtons())
       menu = MenuButtonBuilder.getMenuButtons(this, menu, button);
   }
 
@@ -124,7 +138,10 @@ public class FormFragment extends MyFragment implements IThreadDelegete {
 
   private void setDataToWidget() {
     for (AbstractWidget w : widgetFields) {
-      w.setValue(formModel.Data.get(w.getField().toString()).toString());
+      if (!w.getField().equals("null") && formModel.Data.get(w.getField().toString()) != null) {
+        w.setValue(formModel.Data.get(w.getField().toString()).toString());
+        CustomLogger.alert(TAG, formModel.Data.get(w.getField().toString()).toString());
+      }
     }
   }
 

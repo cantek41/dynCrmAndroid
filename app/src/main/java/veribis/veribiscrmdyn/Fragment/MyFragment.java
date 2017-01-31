@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import Model.Form.FormProperties;
+import veribis.veribiscrmdyn.MainActivity;
 
 /**
  * Created by Cantekin on 16.1.2017.
@@ -19,7 +20,7 @@ import Model.Form.FormProperties;
 public abstract class MyFragment extends Fragment {
   public View view;
   protected int LayoutId;
-  protected FormProperties formProperties;
+  public FormProperties formProperties;
 
   public MyFragment setProp(FormProperties prop) {
     if (prop != null) this.formProperties = prop;
@@ -53,6 +54,11 @@ public abstract class MyFragment extends Fragment {
   }
 
   protected void initFragment() {
+    ((MainActivity) getActivity()).changeTitle(formProperties.getFormTitle());
+    if (formProperties.isVisibleAddButton())
+      ((MainActivity) getActivity()).fab.setVisibility(View.VISIBLE);
+    else
+      ((MainActivity) getActivity()).fab.setVisibility(View.INVISIBLE);
   }
 
   protected boolean checkConnection() {
