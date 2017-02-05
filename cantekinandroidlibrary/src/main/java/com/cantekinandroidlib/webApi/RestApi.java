@@ -1,7 +1,6 @@
-package com.cantekin.webApi;
+package com.cantekinandroidlib.webApi;
 
-import com.cantekin.logger.CustomLogger;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.cantekinandroidlib.logger.CustomLogger;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import org.springframework.http.client.ClientHttpRequestFactory;

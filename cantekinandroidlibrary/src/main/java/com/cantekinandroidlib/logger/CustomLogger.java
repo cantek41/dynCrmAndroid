@@ -1,4 +1,4 @@
-package com.cantekin.logger;
+package com.cantekinandroidlib.logger;
 
 
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.cantekin.androidlibrary;
+package com.cantekinandroidlib.androidlibrary;
 
 import org.junit.Test;
 

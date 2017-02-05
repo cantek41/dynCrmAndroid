@@ -5,10 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ListView;
 
-import com.cantekin.customJson.jsonHelper;
-import com.cantekin.logger.CustomLogger;
-import com.cantekin.webApi.IThreadDelegete;
-import com.cantekin.webApi.ThreadWebApiPost;
+import com.cantekinandroidlib.customJson.jsonHelper;
+import com.cantekinandroidlib.logger.CustomLogger;
+import com.cantekinandroidlib.webApi.IThreadDelegete;
+import com.cantekinandroidlib.webApi.ThreadWebApiPost;
 
 import java.util.ArrayList;
 import java.util.Map;

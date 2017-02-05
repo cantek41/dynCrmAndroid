@@ -1,4 +1,4 @@
-package com.cantekin.customJson;
+package com.cantekinandroidlib.customJson;
 
 import com.google.gson.Gson;
 

@@ -3,10 +3,10 @@ package veribis.veribiscrmdyn.Fragment.Form;
 import android.view.Menu;
 import android.widget.LinearLayout;
 
-import com.cantekin.customJson.jsonHelper;
-import com.cantekin.logger.CustomLogger;
-import com.cantekin.webApi.IThreadDelegete;
-import com.cantekin.webApi.ThreadWebApiPost;
+import com.cantekinandroidlib.customJson.jsonHelper;
+import com.cantekinandroidlib.logger.CustomLogger;
+import com.cantekinandroidlib.webApi.IThreadDelegete;
+import com.cantekinandroidlib.webApi.ThreadWebApiPost;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.List;

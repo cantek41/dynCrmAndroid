@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.cantekin.location.GpsIntentService;
+import com.cantekinandroidlib.location.GpsIntentService;
 
 import veribis.veribiscrmdyn.R;
 

@@ -1,4 +1,4 @@
-package com.cantekin.notification;
+package com.cantekinandroidlib.notification;
 
 import android.net.Uri;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.cantekin.webApi;
+package com.cantekinandroidlib.webApi;
 
 /**
  * Created by Cantekin on 28.7.2016.

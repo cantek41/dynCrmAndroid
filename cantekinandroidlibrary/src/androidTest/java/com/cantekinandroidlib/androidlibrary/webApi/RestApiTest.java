@@ -1,14 +1,11 @@
-package com.cantekin.androidlibrary.webApi;
+package com.cantekinandroidlib.androidlibrary.webApi;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
-import com.cantekin.customJson.jsonHelper;
-import com.cantekin.logger.CustomLogger;
-import com.cantekin.webApi.RestApi;
+import com.cantekinandroidlib.customJson.jsonHelper;
+import com.cantekinandroidlib.logger.CustomLogger;
+import com.cantekinandroidlib.webApi.RestApi;
 
 import org.junit.Assert;
 import org.junit.Test;

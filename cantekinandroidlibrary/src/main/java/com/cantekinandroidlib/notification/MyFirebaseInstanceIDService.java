@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.cantekin.notification;
+package com.cantekinandroidlib.notification;
 
 import android.util.Log;
 

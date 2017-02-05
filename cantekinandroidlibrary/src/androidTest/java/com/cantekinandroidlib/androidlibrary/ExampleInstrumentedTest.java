@@ -1,4 +1,4 @@
-package com.cantekin.androidlibrary;
+package com.cantekinandroidlib.androidlibrary;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

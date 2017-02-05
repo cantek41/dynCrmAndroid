@@ -1,9 +1,8 @@
-package com.cantekin.webApi;
+package com.cantekinandroidlib.webApi;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.cantekin.logger.CustomLogger;
+import com.cantekinandroidlib.logger.CustomLogger;
 
 /**
  * post metodunu arka planda çalıştırmak için

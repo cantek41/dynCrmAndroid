@@ -1,4 +1,4 @@
-package com.cantekin.logger;
+package com.cantekinandroidlib.logger;
 
 /**
  * Created by Cantekin on 11.1.2017.

@@ -1,4 +1,4 @@
-package com.cantekin.location;
+package com.cantekinandroidlib.location;
 
 import android.Manifest;
 import android.app.Activity;
