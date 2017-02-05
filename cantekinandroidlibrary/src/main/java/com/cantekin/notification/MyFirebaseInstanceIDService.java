@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package Firebase;
+package com.cantekin.notification;
 
 import android.util.Log;
 

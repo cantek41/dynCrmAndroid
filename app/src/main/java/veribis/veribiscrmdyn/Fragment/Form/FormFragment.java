@@ -1,10 +1,12 @@
 package veribis.veribiscrmdyn.Fragment.Form;
 
-
-import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.widget.LinearLayout;
 
+import com.cantekin.customJson.jsonHelper;
+import com.cantekin.logger.CustomLogger;
+import com.cantekin.webApi.IThreadDelegete;
+import com.cantekin.webApi.ThreadWebApiPost;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.List;
@@ -13,10 +15,7 @@ import java.util.Map;
 import Model.Form.DataModelForm;
 import Model.Form.FormProperties;
 import Model.UpdateRequestModel;
-import cantekinLogger.CustomLogger;
-import cantekinWebApi.IThreadDelegete;
-import cantekinWebApi.ThreadWebApiPost;
-import cntJson.jsonHelper;
+
 import veribis.veribiscrmdyn.Fragment.MyFragment;
 import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.Menu.MenuButtonBuilder;
@@ -25,9 +24,7 @@ import veribis.veribiscrmdyn.Widgets.AbstractWidget;
 import veribis.veribiscrmdyn.Widgets.WidgetHelper;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class FormFragment extends MyFragment implements IThreadDelegete {
   private static final String TAG = "FormFragment";
   private String webApiAddress = "http://demo.veribiscrm.com/api/mobile/UpdateData";

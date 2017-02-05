@@ -1,4 +1,4 @@
-package cntJson;
+package com.cantekin.customJson;
 
 import com.google.gson.Gson;
 

@@ -1,4 +1,4 @@
-package cantekinWebApi;
+package com.cantekin.webApi;
 
 /**
  * Created by Cantekin on 28.7.2016.

@@ -5,6 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ListView;
 
+import com.cantekin.customJson.jsonHelper;
+import com.cantekin.logger.CustomLogger;
+import com.cantekin.webApi.IThreadDelegete;
+import com.cantekin.webApi.ThreadWebApiPost;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -12,10 +17,6 @@ import Model.DataModelList;
 import Model.Form.FormProperties;
 import Model.ListRequestModel;
 import Model.filter;
-import cantekinLogger.CustomLogger;
-import cantekinWebApi.IThreadDelegete;
-import cantekinWebApi.ThreadWebApiPost;
-import cntJson.jsonHelper;
 import veribis.veribiscrmdyn.Fragment.MyFragment;
 import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.R;
@@ -88,6 +89,7 @@ public class ListFragment extends MyFragment implements IThreadDelegete, IMyList
   public void postResult(String data) {
     CustomLogger.info(TAG, "List");
     // TODO: 25.1.2017 data model boş yada hatalı gelebilir kontrolünü yap
+
     DataModelList model = jsonHelper.stringToObject(data, DataModelList.class);
     dataList.addAll(model.Data); //listin datsource sine  at
     istAdapter.notifyDataSetChanged(); //listeyi güncelle

@@ -1,4 +1,4 @@
-package Firebase;
+package com.cantekin.notification;
 
 import android.net.Uri;
 import android.util.Log;

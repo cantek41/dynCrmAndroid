@@ -1,4 +1,4 @@
-package cantekinLogger;
+package com.cantekin.logger;
 
 /**
  * Created by Cantekin on 11.1.2017.

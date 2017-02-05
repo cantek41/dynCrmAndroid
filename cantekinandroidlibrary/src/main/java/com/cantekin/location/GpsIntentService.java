@@ -1,4 +1,4 @@
-package cntGpsService;
+package com.cantekin.location;
 
 import android.Manifest;
 import android.app.Activity;
@@ -14,7 +14,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-import cantekinLogger.CustomLogger;
 
 /**
  * Created by Cantekin on 27.1.2017.
