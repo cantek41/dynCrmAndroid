@@ -10,9 +10,14 @@ import android.util.Log;
  * Created by Cantekin on 8.1.2017.
  */
 public final class CustomLogger {
-    public static EnumLogType logType = EnumLogType.LOGCAT;
+    public static void setLogType(EnumLogType logType) {
+        CustomLogger.logType = logType;
+    }
 
-    public static EnumLogType getLogType() {
+    private static EnumLogType logType;
+
+
+    private static EnumLogType getLogType() {
         if (logType == null)
             logType = EnumLogType.LOGCAT;
         return logType;
@@ -21,6 +26,7 @@ public final class CustomLogger {
     /**
      * Loglama yapar logType a göre
      * Web,LogCat veya Systeme
+     *
      * @param TAG
      * @param message
      */

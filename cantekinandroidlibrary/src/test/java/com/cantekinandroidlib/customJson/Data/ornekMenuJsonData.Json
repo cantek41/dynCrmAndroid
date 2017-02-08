@@ -1,0 +1,43 @@
+name ve data var her dizide, name başlık dizi de alt elemanlar
+iconları belirleriz veririm ben sana
+açılacak formun tipi, type FORM,LIST,REPORT
+link te açılacak formun adı
+
+{
+  "group": [
+    {
+      "data": [
+        {
+          "name": "Mesai",
+          "icon": "ic_menu_share",
+          "link": "MesaiFormu",
+          "type": "FORM"
+        },
+        {
+          "name": "Mesai",
+          "icon": "ic_menu_share",
+          "link": "MesaiFormu",
+          "type": "FORM"
+        }
+      ],
+      "name": "Aktivite"
+    },
+    {
+      "data": [
+        {
+          "name": "Mesai",
+          "icon": "ic_menu_share",
+          "link": "MesaiFormu",
+          "type": "FORM"
+        },
+        {
+          "name": "Mesai",
+          "icon": "ic_menu_share",
+          "link": "MesaiFormu",
+          "type": "FORM"
+        }
+      ],
+      "name": "Firma"
+    }
+  ]
+}

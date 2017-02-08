@@ -15,9 +15,9 @@ import com.cantekinandroidlib.logger.CustomLogger;
 public class ThreadWebApiPost<T> extends AsyncTask<T, String, String> {
 
     private static final String TAG = "ThreadWebApiPost";
-    IThreadDelegete delegate = null;
-    T jSonRequest;
-    String webApiAddres;
+    private IThreadDelegete delegate = null;
+    private final T jSonRequest;
+    private final String webApiAddres;
 
     public ThreadWebApiPost(IThreadDelegete delegate, T jSonRequest, String webApiAddres) {
         this.delegate = delegate;
@@ -27,8 +27,7 @@ public class ThreadWebApiPost<T> extends AsyncTask<T, String, String> {
 
     @Override
     protected String doInBackground(T... params) {
-        String res = new RestApi<T>(webApiAddres).Post(jSonRequest);
-        return res;
+        return new RestApi<T>(webApiAddres).Post(jSonRequest);
     }
 
     @Override

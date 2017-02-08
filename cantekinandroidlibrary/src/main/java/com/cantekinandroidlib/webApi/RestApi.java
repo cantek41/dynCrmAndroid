@@ -21,7 +21,7 @@ public class RestApi<T> {
     private static String HttpServerErrorExceptionTAG = "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
     private static String RestClientExceptionTAG = "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
     private static String ExceptionTAG = "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
-    String webApiAddress;
+    private final String webApiAddress;
 
     public void setTAG(String TAG) {
         this.TAG = TAG;
@@ -69,7 +69,7 @@ public class RestApi<T> {
         String response = "";
         try {
             response = restTemplate.postForObject(webApiAddress, requests, String.class);
-            CustomLogger.info(TAG, "Response= " + response);
+          //  CustomLogger.info(TAG, "Response= " + response);
         } catch (HttpServerErrorException ex) {
             response=HttpServerErrorExceptionTAG;
             CustomLogger.error(TAG, "wep api kaynaklı hata, Id gitmermiş olabilir " + ex.getMessage().toString());

@@ -11,7 +11,7 @@ import org.junit.Test;
 public class CustomLoggerTest {
     @Before
     public void setUp() throws Exception {
-        CustomLogger.logType=null;
+        CustomLogger.setLogType(null);
     }
 
     @Test

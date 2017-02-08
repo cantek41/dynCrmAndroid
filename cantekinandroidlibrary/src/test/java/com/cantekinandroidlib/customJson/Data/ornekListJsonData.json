@@ -1,0 +1,25 @@
+list formların için örnek json
+{
+  "listPageSize": 10,
+  "editLink": "uniq form name",
+  "editFormType": "FORM",
+  "formName": "uniq form name",
+  "formTitle": "Form Title",
+  "entity": "Activity",
+  "formType": "LIST",
+  "actionButtonLink": "uniq form name",
+  "actionButtonIsVisible": true,
+  "actionButtonFromType": "FORM",
+  "parentField": "Priority",
+  "Buttons": [
+    "SAVE",
+    "CANCEL",
+    "ATTACH"
+  ],
+  "widgets": [
+    {
+      "field": "Description",
+      "label": "Description"
+    }
+  ]
+}

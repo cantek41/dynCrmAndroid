@@ -22,10 +22,9 @@ import com.google.android.gms.location.LocationServices;
 public class GpsIntentService implements
   GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
   private static final String TAG = "GpsIntentService";
-  private static GpsIntentService service;
-  GoogleApiClient mGoogleApiClient;
-  Context context;
-  Location mLastLocation;
+  private GoogleApiClient mGoogleApiClient;
+  private Context context;
+  private Location mLastLocation;
 
   public Location getmLastLocation() {
     if (mLastLocation == null)
@@ -33,7 +32,7 @@ public class GpsIntentService implements
     return mLastLocation;
   }
 
-  private GpsIntentService(Context context) {
+  public GpsIntentService(Context context) {
     this.context = context;
     if (mGoogleApiClient == null) {
       mGoogleApiClient = new GoogleApiClient.Builder(context)
@@ -49,15 +48,7 @@ public class GpsIntentService implements
   protected void finalize() throws Throwable {
     super.finalize();
     mGoogleApiClient.disconnect();
-    service = null;
   }
-
-  public static GpsIntentService craateGPSListener(Context context) {
-    if (service == null)
-      service = new GpsIntentService(context);
-    return service;
-  }
-
   @Override
   public void onConnected(@Nullable Bundle bundle) {
     if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

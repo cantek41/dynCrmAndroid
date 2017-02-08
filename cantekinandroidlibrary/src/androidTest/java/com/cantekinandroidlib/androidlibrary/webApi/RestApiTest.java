@@ -51,7 +51,7 @@ public class RestApiTest {
 }
 
 class DataModelForm {
-    public Map<String, Object> Data;
+    private final Map<String, Object> Data;
     public Status Status;
     public DataModelForm() {
         Data = new HashMap<String, Object>();
