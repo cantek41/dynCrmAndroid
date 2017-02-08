@@ -19,7 +19,7 @@ public class WidgetLocationButtonCommand extends IWidgetButton implements IWidge
 
   public WidgetLocationButtonCommand(Context context) {
     super(context);
-    gps = GpsIntentService.craateGPSListener(context);
+    gps = new GpsIntentService(context);
   }
 
 

@@ -2,6 +2,8 @@ package veribis.veribiscrmdyn.Widgets;
 
 import android.content.Context;
 
+import com.cantekinandroidlib.logger.CustomLogger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,30 +17,32 @@ import veribis.veribiscrmdyn.Widgets.Items.WidgetTextView;
  */
 public final class FactoryWidget {
 
-  public static List<AbstractWidget> createViewGroup(Context context, ArrayList<Map<String, Object>> widgets) {
-    List<AbstractWidget> result = new ArrayList<AbstractWidget>();
-    for (Map<String, Object> w : widgets) {
-      result.add(createWidget(context, w));
+    public static List<AbstractWidget> createViewGroup(Context context, ArrayList<Map<String, Object>> widgets) {
+        List<AbstractWidget> result = new ArrayList<AbstractWidget>();
+        for (Map<String, Object> w : widgets) {
+            result.add(createWidget(context, w));
+        }
+        return result;
     }
-    return result;
-  }
 
-  public static AbstractWidget createWidget(Context contex, Map<String, Object> properties) {
-    AbstractWidget widget = null;
-    switch ((EnumWidgetTypes) properties.get("WidgetType")) {
-      case TEXT:
-        widget = new WidgetTextView(contex);
-        break;
-      case EDIT:
-        widget = new WidgetEditView(contex);
-        break;
-      case SUBFORM:
-        widget = new WidgetSubForm(contex);
-        break;
-      default:
-        break;
+    public static AbstractWidget createWidget(Context contex, Map<String, Object> properties) {
+        AbstractWidget widget = null;
+        CustomLogger.alert("factory", String.valueOf(properties.get("widgetType")));
+        switch (EnumWidgetTypes.valueOf((String) properties.get("widgetType"))) {
+            case TEXT:
+                widget = new WidgetTextView(contex);
+                break;
+            case EDITVIEW:
+                widget = new WidgetEditView(contex);
+                break;
+            case SUBFORM:
+                widget = new WidgetSubForm(contex);
+                break;
+            default:
+                widget = new WidgetTextView(contex);
+                break;
+        }
+        widget.setProp(properties);
+        return widget;
     }
-    widget.setProp(properties);
-    return widget;
-  }
 }

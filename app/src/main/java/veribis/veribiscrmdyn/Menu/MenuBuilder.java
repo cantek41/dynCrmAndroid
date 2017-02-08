@@ -8,9 +8,11 @@ import android.view.SubMenu;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Menu.*;
-import Model.Menu.EnumMenuItem;
+import veribis.veribiscrmdyn.Menu.Data.EnumMenuItem;
 import veribis.veribiscrmdyn.BaseActivity;
+import veribis.veribiscrmdyn.Menu.Data.MenuGroupModel;
+import veribis.veribiscrmdyn.Menu.Data.MenuItemModel;
+import veribis.veribiscrmdyn.Menu.Data.MenuModel;
 
 /**
  * Created by Cantekin on 30.1.2017.

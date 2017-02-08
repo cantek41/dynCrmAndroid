@@ -10,22 +10,23 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import Model.Form.FormProperties;
+
+import Model.Form._baseProperties;
 import veribis.veribiscrmdyn.MainActivity;
 
 /**
  * Created by Cantekin on 16.1.2017.
  */
-public abstract class MyFragment extends Fragment {
+public abstract class _baseFragment extends Fragment {
   public View view;
   protected int LayoutId;
-  public FormProperties formProperties;
+  public _baseProperties formProperties;
 
-  public MyFragment setProp(FormProperties prop) {
+  public _baseFragment setProp(_baseProperties prop) {
     if (prop != null) this.formProperties = prop;
     return this;
   }
-  public FormProperties getProp() {
+  public _baseProperties getProp() {
     return formProperties;
   }
   @Override
@@ -54,18 +55,17 @@ public abstract class MyFragment extends Fragment {
 
   protected void initFragment() {
     ((MainActivity) getActivity()).changeTitle(formProperties.getFormTitle());
-    if (formProperties.isVisibleAddButton())
+    if (formProperties.isActionButtonIsVisible())
       ((MainActivity) getActivity()).fab.setVisibility(View.VISIBLE);
     else
       ((MainActivity) getActivity()).fab.setVisibility(View.INVISIBLE);
   }
 
-  protected boolean checkConnection() {
+  protected boolean isConnection() {
     ConnectivityManager connMgr = (ConnectivityManager) getContext()
       .getSystemService(getContext().CONNECTIVITY_SERVICE);
     NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-    NetworkInfo wifiInfo = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-    if (networkInfo != null && (networkInfo.isConnected() || wifiInfo.isConnected()))
+    if (networkInfo != null && networkInfo.isConnected())
       return true;
     else
       Toast.makeText(getContext(), "Bağlantınızı Kontrol edin", Toast.LENGTH_SHORT).show();

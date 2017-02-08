@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cantekinandroidlib.logger.CustomLogger;
+
 import java.util.Map;
 
 import veribis.veribiscrmdyn.MainActivity;
@@ -42,8 +44,8 @@ public class WidgetSubForm extends AbstractWidget {
   @Override
   public void setProp(Map<String, Object> properties) {
     super.setProp(properties);
-    if (properties.get("SubForm") != null) {
-      formName = String.valueOf(properties.get("SubForm"));
+    if (properties.get("subForm") != null) {
+      formName = String.valueOf(properties.get("subForm"));
     }
   }
 

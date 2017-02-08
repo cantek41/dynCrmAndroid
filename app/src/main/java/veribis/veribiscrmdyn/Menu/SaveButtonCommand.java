@@ -3,7 +3,7 @@ package veribis.veribiscrmdyn.Menu;
 import android.content.Context;
 import android.view.MenuItem;
 
-import veribis.veribiscrmdyn.Fragment.MyFragment;
+import veribis.veribiscrmdyn.Fragment._baseFragment;
 import veribis.veribiscrmdyn.R;
 
 
@@ -12,13 +12,13 @@ import veribis.veribiscrmdyn.R;
  */
 public class SaveButtonCommand implements IMenuButtonCommand {
   Context context;
-  MyFragment fragment;
+  _baseFragment fragment;
 
   public SaveButtonCommand(Context context) {
     this.context = context;
   }
 
-  public SaveButtonCommand(MyFragment fragment) {
+  public SaveButtonCommand(_baseFragment fragment) {
     this.context = fragment.getContext();
     this.fragment = fragment;
   }

@@ -17,7 +17,7 @@ public class WidgetButtonBuilder {
   private WidgetButtonBuilder() {
   }
 
-  public static final ImageButton getWidgetButtons(Context context, String buttonName, View parentValue) {
+  public static ImageButton getWidgetButtons(Context context, String buttonName, View parentValue) {
     EnumWidgetButtonItem enumitem = EnumWidgetButtonItem.valueOf(buttonName);
     IWidgetButton command = null;
     switch (enumitem) {
@@ -51,6 +51,6 @@ public class WidgetButtonBuilder {
         finalCommand.execute();
       }
     });
-    return (ImageButton) command;
+    return command;
   }
 }

@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -21,8 +22,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import Model.Form.FormProperties;
-import Model.Menu.MenuItemModel;
+import veribis.veribiscrmdyn.Fragment.EnumFragmentType;
+import veribis.veribiscrmdyn.Fragment.FragmentFactory;
+import veribis.veribiscrmdyn.Menu.Data.MenuItemModel;
 import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
 import veribis.veribiscrmdyn.Fragment.List.ListFragment;
 import veribis.veribiscrmdyn.Menu.MenuBuilder;
@@ -49,16 +51,16 @@ public abstract class BaseActivity extends AppCompatActivity {
       @Override
       public void onClick(View view) {
         //TODO:dinamik hale gelmeli
-        fmTr = getSupportFragmentManager().beginTransaction();
-        fmTr.replace(R.id.content, new FormFragment().setProp(new FormProperties()));
-        fmTr.addToBackStack(null);
-        fmTr.commit();
+//        fmTr = getSupportFragmentManager().beginTransaction();
+//        fmTr.replace(R.id.content, new FormFragment().setProp(new FormProperties()));
+//        fmTr.addToBackStack(null);
+//        fmTr.commit();
       }
     });
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
       this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-    drawer.setDrawerListener(toggle);
+    drawer.addDrawerListener(toggle);
     toggle.syncState();
     initMenu();
   }
@@ -104,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity {
       View customView = getLayoutInflater().inflate(R.layout.actionbar_title, null);
       TextView customTitle = (TextView) customView.findViewById(R.id.actionbarTitle);
       customTitle.setText(title);
-      customTitle.setTextColor(getResources().getColor(R.color.TextHeaderLight));
+      customTitle.setTextColor(ContextCompat.getColor(this,R.color.TextHeaderLight));
       // Change the font family (optional)
       customTitle.setTypeface(Typeface.DEFAULT_BOLD);
       customTitle.setTextSize(20);
@@ -125,17 +127,11 @@ public abstract class BaseActivity extends AppCompatActivity {
    */
   public void menuItemClick(MenuItemModel menuItem) {
     fmTr = getSupportFragmentManager().beginTransaction();
-    fmTr.replace(R.id.content, getFragment());
+    fmTr.replace(R.id.content, FragmentFactory.getFragment(EnumFragmentType.LIST).setProp(getFromProp.getListNoFilter()));
     fmTr.addToBackStack(null);
     fmTr.commit();
     ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
   }
-
-  //TODO: burası Jsondan gelecek
-  private Fragment getFragment() {
-    return new ListFragment().setProp(getFromProp.getList());
-  }
-
   /**
    * All Activity Control backbutton
    */

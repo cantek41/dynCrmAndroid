@@ -5,7 +5,7 @@ import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import veribis.veribiscrmdyn.Fragment.MyFragment;
+import veribis.veribiscrmdyn.Fragment._baseFragment;
 
 import static veribis.veribiscrmdyn.Menu.EnumMenuItem.valueOf;
 
@@ -20,7 +20,7 @@ public class MenuButtonBuilder {
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-  public static final Menu getMenuButtons(MyFragment fragment, Menu menu, String buttonName) {
+  public static Menu getMenuButtons(_baseFragment fragment, Menu menu, String buttonName) {
     EnumMenuItem enumitem= valueOf(buttonName);
     IMenuButtonCommand command = null;
     switch (enumitem) {

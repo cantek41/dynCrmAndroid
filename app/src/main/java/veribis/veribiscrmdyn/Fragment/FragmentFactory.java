@@ -10,8 +10,8 @@ public class FragmentFactory {
 
   private FragmentFactory(){}
 
-  public static MyFragment getFragment(EnumFragmentType fragmentType){
-    MyFragment fragment=null;
+  public static _baseFragment getFragment(EnumFragmentType fragmentType){
+    _baseFragment fragment=null;
     switch (fragmentType) {
       case LIST:
         fragment=new ListFragment();

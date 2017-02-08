@@ -9,11 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cantekinandroidlib.logger.CustomLogger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import Model.Form.FormProperties;
 import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
 import veribis.veribiscrmdyn.R;
 
@@ -54,17 +55,17 @@ public class ListAdapter extends ArrayAdapter<Map<String, Object>> {
 
       List<Object> list = new ArrayList<Object>(o.values());
       prepairText(large, list.get(0));
-      prepairText(small1, list.get(1));
-      prepairText(small2, list.get(2));
-      final Object value = o.get("Id");
+//      prepairText(small1, list.get(1));
+//      prepairText(small2, list.get(2));
+    //  final Object value = o.get("Id");
       //satıra tıklama
       row.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
           //TODO: değişmeli dinamik olarak fragmente bilgiler göndermeli
-          frgmTra.replace(R.id.content, new FormFragment().setProp(new FormProperties("Activity",((Double) value).intValue())));
-          frgmTra.addToBackStack(null);
-          frgmTra.commit();
+//          frgmTra.replace(R.id.content, new FormFragment().setProp(new FormProperties("Activity",((Double) value).intValue())));
+//          frgmTra.addToBackStack(null);
+//          frgmTra.commit();
         }
       });
     }
@@ -88,7 +89,7 @@ public class ListAdapter extends ArrayAdapter<Map<String, Object>> {
   @Override
   public Map<String, Object> getItem(int position) {
     if (closeEngoughToPullData(position)) {
-      ((IMyList) (view)).getData((super.getCount() / 10) + 1);
+      view.getData((super.getCount() / 10) + 1);
     }
     return super.getItem(position);
   }

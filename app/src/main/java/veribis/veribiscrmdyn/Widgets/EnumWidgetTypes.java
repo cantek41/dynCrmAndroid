@@ -4,5 +4,5 @@ package veribis.veribiscrmdyn.Widgets;
  * Created by Cantekin on 23.1.2017.
  */
 public enum EnumWidgetTypes {
-  TEXT,EDIT,DROPDOWN,BUTTON, widgetType, CHECKBOX,SUBFORM
+  TEXT,EDITVIEW,DROPDOWN,BUTTON, widgetType, CHECKBOX,SUBFORM
 }

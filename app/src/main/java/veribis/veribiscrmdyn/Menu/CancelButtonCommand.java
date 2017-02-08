@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.MenuItem;
 
-import veribis.veribiscrmdyn.Fragment.MyFragment;
+import veribis.veribiscrmdyn.Fragment._baseFragment;
 import veribis.veribiscrmdyn.R;
 
 /**
@@ -12,13 +12,13 @@ import veribis.veribiscrmdyn.R;
  */
 public class CancelButtonCommand implements IMenuButtonCommand {
   Context context;
-  MyFragment fragment;
+  _baseFragment fragment;
 
   public CancelButtonCommand(Context context) {
     this.context = context;
   }
 
-  public CancelButtonCommand(MyFragment fragment) {
+  public CancelButtonCommand(_baseFragment fragment) {
     this.context = fragment.getContext();
     this.fragment = fragment;
   }
