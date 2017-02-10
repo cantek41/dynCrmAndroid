@@ -1,7 +1,7 @@
 package veribis.veribiscrmdyn.Fragment;
 
 
-import Model.Form._baseProperties;
+import Model.Form.baseProperties;
 import veribis.veribiscrmdyn.R;
 
 public class HomeFragment extends _baseFragment {
@@ -9,7 +9,7 @@ public class HomeFragment extends _baseFragment {
     // Required empty public constructor
   }
   @Override
-  public HomeFragment setProp(_baseProperties prop) {
+  public HomeFragment setProp(baseProperties prop) {
     this.LayoutId = R.layout.fragment_home;
     return this;
   }
