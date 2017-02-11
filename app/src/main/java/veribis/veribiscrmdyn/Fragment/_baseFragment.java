@@ -11,65 +11,81 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import Model.Form._baseProperties;
+import Data.MyPreference;
+import Model.Form.baseProperties;
 import veribis.veribiscrmdyn.MainActivity;
+import veribis.veribiscrmdyn.getFromProp;
 
 /**
  * Created by Cantekin on 16.1.2017.
  */
 public abstract class _baseFragment extends Fragment {
-  public View view;
-  protected int LayoutId;
-  public _baseProperties formProperties;
+    public View view;
+    protected int LayoutId;
+    public baseProperties formProperties;
 
-  public _baseFragment setProp(_baseProperties prop) {
-    if (prop != null) this.formProperties = prop;
-    return this;
-  }
-  public _baseProperties getProp() {
-    return formProperties;
-  }
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    setHasOptionsMenu(true);//fragmentlerde options menuyu kullanabilmek için gerekli
-    return inflater.inflate(LayoutId, container, false);
-  }
+    public _baseFragment setProp(baseProperties prop) {
+        if (prop != null) this.formProperties = prop;
+        return this;
+    }
 
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    this.view = view;
-    getActivity().invalidateOptionsMenu();
-    initFragment();
-  }
+    public baseProperties getProp() {
+        return formProperties;
+    }
 
-  @Override
-  public void onPrepareOptionsMenu(Menu menu) {
-    menu.clear();
-  }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        setHasOptionsMenu(true);//fragmentlerde options menuyu kullanabilmek için gerekli
+        return inflater.inflate(LayoutId, container, false);
+    }
 
-  public void save() {
-  }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        this.view = view;
+        getActivity().invalidateOptionsMenu();
+        initFragment();
+    }
 
-  protected void initFragment() {
-    ((MainActivity) getActivity()).changeTitle(formProperties.getFormTitle());
-    if (formProperties.isActionButtonIsVisible())
-      ((MainActivity) getActivity()).fab.setVisibility(View.VISIBLE);
-    else
-      ((MainActivity) getActivity()).fab.setVisibility(View.INVISIBLE);
-  }
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+    }
 
-  protected boolean isConnection() {
-    ConnectivityManager connMgr = (ConnectivityManager) getContext()
-      .getSystemService(getContext().CONNECTIVITY_SERVICE);
-    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-    if (networkInfo != null && networkInfo.isConnected())
-      return true;
-    else
-      Toast.makeText(getContext(), "Bağlantınızı Kontrol edin", Toast.LENGTH_SHORT).show();
-    // TODO: 25.1.2017 textler dinamik gelmeli
-    return false;
-  }
+    public void save() {
+    }
+
+    protected void initFragment() {
+        ((MainActivity) getActivity()).changeTitle(formProperties.getFormTitle());
+        if (formProperties.isActionButtonIsVisible())
+            ((MainActivity) getActivity()).fab.setVisibility(View.VISIBLE);
+        else
+            ((MainActivity) getActivity()).fab.setVisibility(View.INVISIBLE);
+    }
+
+    public void fabOnClick() {
+        baseProperties newProp = MyPreference.getPreference(getContext()).getData(formProperties.getEditLink(), baseProperties.class);
+        if (newProp == null) {
+            ((MainActivity) getActivity()).showMessage("form is null");
+            return;
+        }
+        newProp.setParentFieldId(formProperties.getParentFieldId());
+        ((MainActivity) getActivity())
+                .showFragment(FragmentFactory.getFragment(newProp.getFormType())
+                        .setProp(newProp));
+    }
+
+    protected boolean isConnection() {
+        ConnectivityManager connMgr = (ConnectivityManager) getContext()
+                .getSystemService(getContext().CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected())
+            return true;
+        else
+            Toast.makeText(getContext(), "Bağlantınızı Kontrol edin", Toast.LENGTH_SHORT).show();
+        // TODO: 25.1.2017 textler dinamik gelmeli
+        return false;
+    }
 }

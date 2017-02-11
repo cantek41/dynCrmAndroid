@@ -6,14 +6,14 @@ import java.util.Map;
 /**
  * Created by Cantekin on 10.1.2017.
  * *"entity":"Activity",
- * "data":{"Id":103,"Description":null}
+ * "Data":{"Id":103,"Description":null}
  * }
  */
 public class UpdateRequestModel {
   public String entity;
-  public Map<String, Object> data;
+  public Map<String, Object> Data;
 
   public UpdateRequestModel() {
-    data = new HashMap<String, Object>();
+    Data = new HashMap<>();
   }
 }

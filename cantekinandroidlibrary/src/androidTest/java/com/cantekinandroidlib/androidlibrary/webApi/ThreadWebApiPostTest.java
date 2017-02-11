@@ -22,6 +22,8 @@ import java.util.concurrent.CountDownLatch;
 @SmallTest
 public class ThreadWebApiPostTest implements IThreadDelegete {
     private CountDownLatch async = null;
+    private int REQUEST_READ=10001;
+
     @Test
     public void testAsync()
     {
@@ -32,7 +34,7 @@ public class ThreadWebApiPostTest implements IThreadDelegete {
         request.data = new HashMap<String, Object>();
         request.data.put("Id",113);
         CustomLogger.alert("postResult","testAsync");
-        new ThreadWebApiPost<UpdateRequestModel>(this, request, webApiAddressGet).execute();
+        new ThreadWebApiPost<UpdateRequestModel>(REQUEST_READ, this, request, webApiAddressGet).execute();
         try {
             async.await();
         } catch (InterruptedException e) {
@@ -41,7 +43,7 @@ public class ThreadWebApiPostTest implements IThreadDelegete {
     }
 
     @Override
-    public void postResult(String data) {
+    public void postResult(String data,int requestCode) {
         async.countDown();
         CustomLogger.alert("postResult",data);
         Assert.assertNotNull(data);

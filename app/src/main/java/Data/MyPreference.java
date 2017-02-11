@@ -3,13 +3,16 @@ package Data;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 
+import com.cantekinandroidlib.customJson.jsonHelper;
 import com.cantekinandroidlib.webApi.IThreadDelegete;
 import com.cantekinandroidlib.webApi.ThreadWebApiPost;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import Model.Form.baseProperties;
 import Model.UpdateRequestModel;
 import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.Menu.Data.EnumMenuItem;
@@ -27,7 +30,6 @@ import veribis.veribiscrmdyn.Menu.Data.MenuModel;
 
 public class MyPreference implements IThreadDelegete {
     private static String TAG = "Preference";
-    private String webApiAddress = "http://demo.veribiscrm.com/api/mobile/UpdateData";
     private Context context;
     public static MyPreference preference;
 
@@ -42,37 +44,29 @@ public class MyPreference implements IThreadDelegete {
     }
 
     public MenuModel getMenu() {
-        new ThreadWebApiPost<UpdateRequestModel>(this, null, webApiAddress).execute();
-        showProgress("Kaydediliyor");
+        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
+        String menuString = data.getString("menu", null);
+        if (menuString == null)
+            return null;
+        return jsonHelper.stringToObject(menuString, MenuModel.class);
+    }
 
-        MenuModel menuModel = new MenuModel();
-        List<MenuGroupModel> groups = new ArrayList<MenuGroupModel>();
-        List<MenuItemModel> items = new ArrayList<MenuItemModel>();
-        MenuItemModel item = new MenuItemModel();
-        item.setName("Mesai");
-        item.setLink("MesaiFormu");
-        item.setIcon("ic_menu_share");
-        item.setType(EnumMenuItem.FORM);
-        items.add(item);
-        item = new MenuItemModel();
-        item.setName("Mesai");
-        item.setLink("MesaiFormu");
-        item.setIcon("ic_menu_share");
-        item.setType(EnumMenuItem.FORM);
-        items.add(item);
+    public void setData(@NonNull String name, @NonNull String value) throws NullPointerException {
+        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = data.edit();
+        if (value != null && name != null) editor.putString(name, value);
+        else
+            throw new NullPointerException("paramtreler null olamaz");
+        editor.commit();
+    }
 
-        MenuGroupModel grup = new MenuGroupModel();
-        grup.setName("Aktivite");
-        grup.setData(items);
-
-        groups.add(grup);
-
-        grup = new MenuGroupModel();
-        grup.setName("Firma");
-        grup.setData(items);
-        groups.add(grup);
-        menuModel.setGroup(groups);
-        return menuModel;
+    public <T> T getData(String demo, Class<T> clazzType) {
+        // TODO: 10.2.2017 olmayan formu apiden getirmeye çalış
+        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
+        String dataString = data.getString(demo, null);
+        if (dataString == null)
+            return null;
+        return jsonHelper.stringToObject(dataString, clazzType);
     }
 
     private void showProgress(String message) {
@@ -104,6 +98,17 @@ public class MyPreference implements IThreadDelegete {
     }
 
     /**
+     * get api UpdateData and Insert address
+     * defult value "http://demo.veribiscrm.com/api/mobile/UpdateData"
+     *
+     * @return "http://demo.veribiscrm.com/api/mobile/UpdateData"
+     */
+    public String getWepApiSaveFileAddress() {
+        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
+        return data.getString("setWebApiAddress", "http://demo.veribiscrm.com/api/mobile/SaveFile");
+    }
+
+    /**
      * get api GetData address
      * default value "http://demo.veribiscrm.com/api/mobile/GetData"
      *
@@ -120,7 +125,7 @@ public class MyPreference implements IThreadDelegete {
      * @param data
      */
     @Override
-    public void postResult(String data) {
+    public void postResult(String data,int requestCode) {
         if (context instanceof MainActivity)
             ((MainActivity) context).dismissProgress();
     }
@@ -144,4 +149,6 @@ public class MyPreference implements IThreadDelegete {
         SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
         data.edit().clear().commit();
     }
+
+
 }

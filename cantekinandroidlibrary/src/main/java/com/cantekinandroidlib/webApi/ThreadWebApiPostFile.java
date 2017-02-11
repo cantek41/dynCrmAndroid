@@ -12,24 +12,26 @@ import com.cantekinandroidlib.logger.CustomLogger;
  * Created by Cantekin on 28.7.2016.
  */
 
-public class ThreadWebApiPost<T> extends AsyncTask<T, String, String> {
+public class ThreadWebApiPostFile extends AsyncTask<String, String, String> {
 
-    private static final String TAG = "ThreadWebApiPost";
+    private static final String TAG = "ThreadWebApiPostFile";
     private IThreadDelegete delegate = null;
-    private final T jSonRequest;
+    private final byte[] byteArray;
+    private final String filename;
     private final String webApiAddres;
-    private int requestCode;
+    private final int requestCode;
 
-    public ThreadWebApiPost(int requestCode, IThreadDelegete delegate, T jSonRequest, String webApiAddres) {
+    public ThreadWebApiPostFile(int requestCode,IThreadDelegete delegate,byte[] byteArray, String filename, String webApiAddres) {
         this.delegate = delegate;
-        this.jSonRequest = jSonRequest;
+        this.byteArray = byteArray;
+        this.filename = filename;
         this.webApiAddres = webApiAddres;
         this.requestCode = requestCode;
     }
 
     @Override
-    protected String doInBackground(T... params) {
-        return new RestApi<T>(webApiAddres).Post(jSonRequest);
+    protected String doInBackground(String... params) {
+        return new RestApi(webApiAddres).PostFile(byteArray, filename);
     }
 
     @Override
@@ -37,7 +39,7 @@ public class ThreadWebApiPost<T> extends AsyncTask<T, String, String> {
         if (delegate != null) {
             delegate.postResult(result,requestCode);
         } else {
-            CustomLogger.error(TAG, "delegate is null" + jSonRequest.getClass().getName());
+            CustomLogger.error(TAG, "delegate is null");
         }
     }
 }

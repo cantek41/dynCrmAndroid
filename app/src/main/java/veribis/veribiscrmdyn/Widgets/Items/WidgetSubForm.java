@@ -8,7 +8,9 @@ import com.cantekinandroidlib.logger.CustomLogger;
 
 import java.util.Map;
 
+import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
 import veribis.veribiscrmdyn.MainActivity;
+import veribis.veribiscrmdyn.R;
 import veribis.veribiscrmdyn.Widgets.AbstractWidget;
 import veribis.veribiscrmdyn.Widgets.EnumEvetType;
 
@@ -36,7 +38,8 @@ public class WidgetSubForm extends AbstractWidget {
       @Override
       public void onClick(View view) {
         if (formName != null)
-          ((MainActivity) getContext()).onClickWidget(EnumEvetType.SUBFORM, formName, null);
+          ((FormFragment)((MainActivity) getContext()).getSupportFragmentManager().findFragmentById(R.id.content))
+                  .onClickWidget(EnumEvetType.SUBFORM, formName, null);
       }
     });
   }

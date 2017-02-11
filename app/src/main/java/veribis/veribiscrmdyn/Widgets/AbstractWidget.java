@@ -43,7 +43,7 @@ public class AbstractWidget extends View {
         setLabel(String.valueOf(properties.get("label")));
         setField(String.valueOf(properties.get("field")));
         if (properties.get("buttons") instanceof ArrayList)
-            smallButtons = (ArrayList<String>) properties.get("Buttons");
+            smallButtons = (ArrayList<String>) properties.get("buttons");
     }
 
     public LinearLayout getLayout() {

@@ -13,8 +13,9 @@ import com.cantekinandroidlib.webApi.ThreadWebApiPost;
 import java.util.ArrayList;
 import java.util.Map;
 
+import Data.MyPreference;
 import Model.DataModelList;
-import Model.Form._baseProperties;
+import Model.Form.baseProperties;
 import Model.ListRequestModel;
 import Model.filter;
 import veribis.veribiscrmdyn.Fragment._baseFragment;
@@ -27,12 +28,12 @@ import veribis.veribiscrmdyn.R;
  */
 public class ListFragment extends _baseFragment implements IThreadDelegete, IMyList {
     private static final String TAG = "ListFragment";
-    private String webApiAddress = "http://demo.veribiscrm.com/api/mobile/getlist";
+    private String webApiAddress = MyPreference.getPreference(getContext()).getListWebApiAddress();
     private ListAdapter listAdapter;
     private ListView dataListView;
     private ArrayList<Map<String, Object>> dataList;   //listin dataSourcesi
     private ListRequestModel request;
-
+    private static final int REQUEST_READ = 10002;
     public ListFragment() {
         // Required empty public constructor
     }
@@ -45,7 +46,7 @@ public class ListFragment extends _baseFragment implements IThreadDelegete, IMyL
     }
 
     @Override
-    public ListFragment setProp(_baseProperties prop) {
+    public ListFragment setProp(baseProperties prop) {
         this.formProperties = prop;
         LayoutId = R.layout.fragment_list;
         request = new ListRequestModel();
@@ -53,10 +54,9 @@ public class ListFragment extends _baseFragment implements IThreadDelegete, IMyL
         for (Map<String, Object> widget : prop.getWidgets()) {
             request.fields.add(String.valueOf(widget.get("field")));
         }
-
         request.entity = prop.getEntity();
         request.pageSize = prop.getListPageSize();
-        if (prop.getParentField() != null) {
+        if (prop.getParentField() != null && prop.getParentFieldId() != null) {
             request.filter = new filter();
             request.filter.field = prop.getParentField();
             request.filter.op = "eq";
@@ -74,7 +74,7 @@ public class ListFragment extends _baseFragment implements IThreadDelegete, IMyL
     private void fisrtLoad() {
         FragmentTransaction frgTra = getFragmentManager().beginTransaction();
         listAdapter = new ListAdapter
-                (getContext(), this, frgTra, R.layout.row_data_list, dataList);
+                (getContext(), this, frgTra, R.layout.row_data_list, dataList, formProperties);
         dataListView.setAdapter(listAdapter);
     }
 
@@ -83,17 +83,19 @@ public class ListFragment extends _baseFragment implements IThreadDelegete, IMyL
             return;
         request.page = page;
         CustomLogger.alert(TAG, jsonHelper.objectToJson(request));
-        new ThreadWebApiPost<>(this, request, webApiAddress).execute();
+        new ThreadWebApiPost<>(REQUEST_READ, this, request, webApiAddress).execute();
         ((MainActivity) getActivity()).showProgress("Liste Çekliyor");
 
     }
 
     @Override
-    public void postResult(String data) {
-        // TODO: 25.1.2017 data model boş yada hatalı gelebilir kontrolünü yap
+    public void postResult(String data,int requestCode) {
+        // TODO: 25.1.2017 Data model boş yada hatalı gelebilir kontrolünü yap
         DataModelList model = jsonHelper.stringToObject(data, DataModelList.class);
-        dataList.addAll(model.Data); //listin datsource sine  at
-        listAdapter.notifyDataSetChanged(); //listeyi güncelle
+        if (model != null) {
+            dataList.addAll(model.Data); //listin datsource sine  at
+            listAdapter.notifyDataSetChanged(); //listeyi güncelle
+        }
         ((MainActivity) getActivity()).dismissProgress();
     }
 }

@@ -35,7 +35,7 @@ public class CancelButtonCommand implements IMenuButtonCommand {
 
   @Override
   public int icon() {
-    return R.drawable.cast_album_art_placeholder;
+    return R.drawable.common_full_open_on_phone;
   }
 
   @Override

@@ -1,14 +1,26 @@
 package com.cantekinandroidlib.webApi;
 
+import com.cantekinandroidlib.customJson.jsonHelper;
 import com.cantekinandroidlib.logger.CustomLogger;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.gson.JsonObject;
 
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Map;
 
 
 /**
@@ -17,7 +29,7 @@ import org.springframework.web.client.RestTemplate;
  */
 
 public class RestApi<T> {
-    private  String TAG = "RestApi";
+    private String TAG = "RestApi";
     private static String HttpServerErrorExceptionTAG = "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
     private static String RestClientExceptionTAG = "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
     private static String ExceptionTAG = "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
@@ -29,6 +41,7 @@ public class RestApi<T> {
 
     /**
      * Default "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
+     *
      * @param httpServerErrorExceptionTAG
      */
     public void setHttpServerErrorExceptionTAG(String httpServerErrorExceptionTAG) {
@@ -37,6 +50,7 @@ public class RestApi<T> {
 
     /**
      * Default "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
+     *
      * @param restClientExceptionTAG
      */
     public void setRestClientExceptionTAG(String restClientExceptionTAG) {
@@ -45,6 +59,7 @@ public class RestApi<T> {
 
     /**
      * Default "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
+     *
      * @param exceptionTAG
      */
     public void setExceptionTAG(String exceptionTAG) {
@@ -58,6 +73,7 @@ public class RestApi<T> {
     /**
      * api ye post yapmak için kullanılır,
      * request modeli gönderilir
+     *
      * @param requests data
      * @return Json String
      */
@@ -68,21 +84,32 @@ public class RestApi<T> {
         restTemplate.getMessageConverters().add(jsonHttpMessageConverter);
         String response = "";
         try {
+            CustomLogger.info(TAG, "Request= " + jsonHelper.objectToJson(requests));
             response = restTemplate.postForObject(webApiAddress, requests, String.class);
-          //  CustomLogger.info(TAG, "Response= " + response);
+            CustomLogger.info(TAG, "Response= " + response);
         } catch (HttpServerErrorException ex) {
-            response=HttpServerErrorExceptionTAG;
+            response = HttpServerErrorExceptionTAG;
             CustomLogger.error(TAG, "wep api kaynaklı hata, Id gitmermiş olabilir " + ex.getMessage().toString());
         } catch (RestClientException ex) {
             CustomLogger.error(TAG, " SocketException " + ex.getMessage().toString());
-            response=RestClientExceptionTAG;
+            response = RestClientExceptionTAG;
         } catch (Exception ex) {
             CustomLogger.error(TAG, "Genel Hata " + ex.getMessage().toString());
-            response=RestClientExceptionTAG;
+            response = RestClientExceptionTAG;
         } finally {
             restTemplate = null;
         }
         return response;
+    }
+
+    public String PostFile(byte[] byteArray, final String filename) {
+        RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
+        final MultiValueMap<String, Object> data = new LinkedMultiValueMap<>();
+        data.add("files", new FileMessageResource(byteArray, filename));
+        final HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(data);
+        final ResponseEntity<Map<String, String>> response = restTemplate.exchange(webApiAddress, HttpMethod.POST, requestEntity, new ParameterizedTypeReference<Map<String, String>>() {
+        });
+        return String.valueOf(response.getStatusCode());
     }
 
     /**

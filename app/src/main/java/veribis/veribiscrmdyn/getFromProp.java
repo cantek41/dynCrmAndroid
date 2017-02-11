@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import Model.Form._baseProperties;
+import Model.Form.baseProperties;
 import veribis.veribiscrmdyn.Fragment.EnumFragmentType;
 
 /**
  * Created by Cantekin on 27.1.2017.
  */
 public class getFromProp {
-  public static _baseProperties getListNoFilter() {
+  public static baseProperties getListNoFilter() {
 //    FormProperties formProperties = new FormProperties();
 //    formProperties.setFormName("Form1");
 //
@@ -23,7 +23,7 @@ public class getFromProp {
 //    listFields.add("Description");
 //    listFields.add("Subject");
 //    formProperties.setFields(listFields);
-    _baseProperties listProperties = new _baseProperties();
+    baseProperties listProperties = new baseProperties();
     listProperties.setFormName("uniq form name");
     listProperties.setFormTitle("Form Title");
     listProperties.setEntity("Activity");
@@ -59,10 +59,16 @@ public class getFromProp {
     widget.put("widgetType", "TEXT");
     widgets.add(widget);
 
+    widget = new HashMap<>();
+    widget.put("label", "Not");
+    widget.put("field", "Note");
+    widget.put("widgetType", "TEXT");
+    widgets.add(widget);
+
     listProperties.setWidgets(widgets);
     return listProperties;
   }
-  public static _baseProperties getList() {
+  public static baseProperties getList() {
 //    FormProperties formProperties = new FormProperties();
 //    formProperties.setFormName("Form1");
 //
@@ -74,7 +80,7 @@ public class getFromProp {
 //    listFields.add("Description");
 //    listFields.add("Subject");
 //    formProperties.setFields(listFields);
-    _baseProperties listProperties = new _baseProperties();
+    baseProperties listProperties = new baseProperties();
     listProperties.setFormName("uniq form name");
     listProperties.setFormTitle("Form Title");
 
@@ -110,7 +116,7 @@ public class getFromProp {
     return listProperties;
   }
 
-  public static _baseProperties get() {
+  public static baseProperties get() {
 //    FormProperties formProperties = new FormProperties();
 //    formProperties.setFormName("Form1");
 //    formProperties.setRecordId(103);
@@ -203,7 +209,7 @@ public class getFromProp {
 //    widget.put("WidgetType", EnumWidgetTypes.TEXT);
 //    widgets.add(widget);
 //    formProperties.setWidgets(widgets);
-    _baseProperties formProperties = new _baseProperties();
+    baseProperties formProperties = new baseProperties();
 
     formProperties.setFormName("uniq form name");
     formProperties.setFormTitle("uTitle");
@@ -268,9 +274,9 @@ public class getFromProp {
 
     return formProperties;
   }
-  public static _baseProperties getSubForm()
+  public static baseProperties getSubForm()
   {
-    _baseProperties formProperties = new _baseProperties();
+    baseProperties formProperties = new baseProperties();
     formProperties.setFormName("uniq form name");
     formProperties.setFormTitle("uTitle");
     formProperties.setFormType(EnumFragmentType.FORM);

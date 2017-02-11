@@ -17,16 +17,14 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textAppearance="?android:attr/textAppearanceLarge"
-      android:text="Large Text"
-      android:textColor="@color/TextHeaderLight"
+        android:textColor="@color/TextHeaderLight"
       android:id="@+id/rowLargeText" />
 
     <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textAppearance="?android:attr/textAppearanceSmall"
-      android:text="Small Text"
-      android:textColor="@color/TextNormal"
+        android:textColor="@color/TextNormal"
       android:id="@+id/rowSmalTextLeft" />
   </LinearLayout>
 
@@ -41,8 +39,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textAppearance="?android:attr/textAppearanceSmall"
-      android:text="Small Text"
-      android:id="@+id/rowSmallTextRightFirst"
+        android:id="@+id/rowSmallTextRightFirst"
       android:textColor="@color/TextNormal"
       android:layout_marginTop="1dp" />
 
@@ -50,8 +47,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textAppearance="?android:attr/textAppearanceSmall"
-      android:text="Small Text"
-      android:id="@+id/rowSmallTextSecond"
+        android:id="@+id/rowSmallTextSecond"
       android:textColor="@color/TextNormal"
       android:layout_marginTop="5dp" />
 

@@ -3,6 +3,7 @@ package Model.Form;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import veribis.veribiscrmdyn.Fragment.EnumFragmentType;
 
@@ -10,7 +11,7 @@ import veribis.veribiscrmdyn.Fragment.EnumFragmentType;
  * Created by Cantekin on 6.2.2017.
  */
 
-public class _baseProperties {
+public class baseProperties {
     private String formName;
     private String formTitle;
     private String entity;
@@ -27,7 +28,6 @@ public class _baseProperties {
     private int listPageSize;
 
 
-
     private String editLink;
     private EnumFragmentType editFormType;
 
@@ -36,12 +36,16 @@ public class _baseProperties {
      */
     private String recordId;
 
+
     public String getRecordId() {
         return recordId;
     }
 
-    public void setRecordId(String recordId) {
-        this.recordId = recordId;
+    public void setRecordId(Object recordId) {
+        if (recordId instanceof Double)
+            this.recordId = (String.valueOf(((Double) recordId).intValue()));
+        else this.recordId = (String.valueOf(recordId));
+
     }
 
     public int getListPageSize() {
@@ -67,6 +71,7 @@ public class _baseProperties {
     public void setEditFormType(EnumFragmentType editFormType) {
         this.editFormType = editFormType;
     }
+
     public String getParentFieldId() {
         return parentFieldId;
     }

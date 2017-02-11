@@ -10,13 +10,15 @@ import com.google.gson.Gson;
 
 public class jsonHelper {
 
-  public static String objectToJson(Object object)
-  {
-    // TODO: 27.1.2017 içi yazılacak ve test
-    return new Gson().toJson(object);
-  }
-  public static <T> T stringToObject(String json,Class<T> responseType)
-  { // TODO: 27.1.2017 test metod yazılacak
-    return new Gson().fromJson(json,responseType);
-  }
+    public static String objectToJson(Object object) throws NullPointerException {
+        if (object == null)
+            throw new NullPointerException("object is not null");
+        return new Gson().toJson(object);
+    }
+
+    public static <T> T stringToObject(String json, Class<T> responseType) throws NullPointerException {
+        if (json == null)
+            throw new NullPointerException("json is not null");
+        return new Gson().fromJson(json, responseType);
+    }
 }

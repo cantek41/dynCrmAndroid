@@ -7,5 +7,5 @@ package com.cantekinandroidlib.webApi;
  */
 
 public interface IThreadDelegete {
-    void postResult(String data);
+    void postResult(String data, int requestCode);
 }
