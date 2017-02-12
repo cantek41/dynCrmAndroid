@@ -48,7 +48,7 @@ public class AbstractWidget extends View {
 
     public LinearLayout getLayout() {
         LinearLayout rowLayout = new LinearLayout(getContext());
-        // Set the layout full width, full height
+        // Set the dialog_list full width, full height
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(2, 2, 2, 2);
         rowLayout.setLayoutParams(params);
@@ -57,7 +57,7 @@ public class AbstractWidget extends View {
         //etiketi satıra ekle
         labelView.setLayoutParams(params);
         widget.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, weight));
-        //view ve butonlar için yatay layout
+        //view ve butonlar için yatay dialog_list
         LinearLayout content = new LinearLayout(getContext());
         content.setLayoutParams(params);
         content.setOrientation(LinearLayout.HORIZONTAL);  //yatay
@@ -97,4 +97,5 @@ public class AbstractWidget extends View {
     public void setLabel(String text) {
         labelView.setText(text);
     }
+
 }

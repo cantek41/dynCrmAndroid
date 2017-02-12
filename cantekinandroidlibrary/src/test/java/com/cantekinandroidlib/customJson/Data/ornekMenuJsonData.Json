@@ -1,8 +1,3 @@
-name ve data var her dizide, name başlık dizi de alt elemanlar
-iconları belirleriz veririm ben sana
-açılacak formun tipi, type FORM,LIST,REPORT
-link te açılacak formun adı
-
 {
   "group": [
     {

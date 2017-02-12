@@ -1,5 +1,7 @@
 package com.cantekinandroidlib.webApi;
 
+import android.preference.PreferenceActivity;
+
 import com.cantekinandroidlib.customJson.jsonHelper;
 import com.cantekinandroidlib.logger.CustomLogger;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -20,6 +22,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.Map;
 
 
@@ -78,18 +81,26 @@ public class RestApi<T> {
      * @return Json String
      */
     public String Post(T requests) {
-        RestTemplate restTemplate = new RestTemplate(getClientHttpRequestFactory());
-        MappingJackson2HttpMessageConverter jsonHttpMessageConverter = new MappingJackson2HttpMessageConverter();
-        jsonHttpMessageConverter.getObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        restTemplate.getMessageConverters().add(jsonHttpMessageConverter);
+        RestTemplate restTemplate = new RestTemplate();
+        //MappingJackson2HttpMessageConverter jsonHttpMessageConverter = new MappingJackson2HttpMessageConverter();
+        //jsonHttpMessageConverter.getObjectMapper().configure(SerializationFeature., false);
+       // restTemplate.getMessageConverters().add(jsonHttpMessageConverter);
+
+       // HttpHeaders headers=new HttpHeaders();
+     //   headers.put("content-type", "application/json");
+      //  headers.setAccept(Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
+      //  headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
         String response = "";
         try {
             CustomLogger.info(TAG, "Request= " + jsonHelper.objectToJson(requests));
-            response = restTemplate.postForObject(webApiAddress, requests, String.class);
+            response = restTemplate.postForObject(webApiAddress, requests, String.class,headers);
             CustomLogger.info(TAG, "Response= " + response);
         } catch (HttpServerErrorException ex) {
             response = HttpServerErrorExceptionTAG;
             CustomLogger.error(TAG, "wep api kaynaklı hata, Id gitmermiş olabilir " + ex.getMessage().toString());
+            ex.printStackTrace();
         } catch (RestClientException ex) {
             CustomLogger.error(TAG, " SocketException " + ex.getMessage().toString());
             response = RestClientExceptionTAG;

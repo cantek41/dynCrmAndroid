@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import veribis.veribiscrmdyn.Widgets.Items.WidgetDropDown;
 import veribis.veribiscrmdyn.Widgets.Items.WidgetEditView;
 import veribis.veribiscrmdyn.Widgets.Items.WidgetSubForm;
 import veribis.veribiscrmdyn.Widgets.Items.WidgetTextView;
@@ -29,14 +30,19 @@ public final class FactoryWidget {
         AbstractWidget widget = null;
         CustomLogger.alert("factory", String.valueOf(properties.get("widgetType")));
         switch (EnumWidgetTypes.valueOf((String) properties.get("widgetType"))) {
-            case TEXT:
+            case TEXTVIEW:
                 widget = new WidgetTextView(contex);
                 break;
             case EDITVIEW:
-                widget = new WidgetEditView(contex);
+                widget = new WidgetDropDown(contex);
+
+                //  widget = new WidgetEditView(contex);
                 break;
             case SUBFORM:
                 widget = new WidgetSubForm(contex);
+                break;
+            case DROPDOWN:
+                widget = new WidgetDropDown(contex);
                 break;
             default:
                 widget = new WidgetTextView(contex);

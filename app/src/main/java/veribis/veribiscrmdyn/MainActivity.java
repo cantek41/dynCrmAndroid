@@ -1,6 +1,5 @@
 package veribis.veribiscrmdyn;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,13 +13,12 @@ import com.cantekinandroidlib.logger.CustomLogger;
 
 import java.io.File;
 
-import Model.Form.baseProperties;
 import me.sudar.zxingorient.ZxingOrient;
 import me.sudar.zxingorient.ZxingOrientResult;
+import veribis.veribiscrmdyn.Dialog.ListDialog;
 import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
-import veribis.veribiscrmdyn.Fragment.FragmentFactory;
-import veribis.veribiscrmdyn.Fragment._baseFragment;
-import veribis.veribiscrmdyn.Widgets.EnumEvetType;
+import veribis.veribiscrmdyn.Widgets.SelectableWidget.ISelectableWidget;
+import veribis.veribiscrmdyn.Widgets.SelectableWidget.SelectableContainer;
 
 
 public class MainActivity extends BaseActivity {
@@ -35,7 +33,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         initActivity();
     }
-
 
     @Override
     protected void initActivity() {
@@ -86,4 +83,10 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    public void onListDialog(SelectableContainer container) {
+        ListDialog bul= new ListDialog(this);
+        bul.setTitle(container.getDialogTitle());
+        bul.setData(container);
+        bul.show();
+    }
 }

@@ -9,27 +9,23 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cantekinandroidlib.logger.CustomLogger;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import Data.MyPreference;
 import Model.Form.baseProperties;
-import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
 import veribis.veribiscrmdyn.Fragment.FragmentFactory;
-import veribis.veribiscrmdyn.Fragment._baseFragment;
+import veribis.veribiscrmdyn.List.IMyList;
+import veribis.veribiscrmdyn.List._baseListAdapter;
 import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.R;
-import veribis.veribiscrmdyn.getFromProp;
 
 /**
  * Created by Cantekin on 8.1.2017.
  */
-public class ListAdapter extends ArrayAdapter<Map<String, Object>> {
-    private final String TAG = "AccountAdapter";
-    private IMyList view;
+public class ListAdapter extends _baseListAdapter {
+    private final String TAG = "ListAdapter";
     private FragmentTransaction frgmTra;
     private baseProperties formProperties;
 
@@ -38,7 +34,7 @@ public class ListAdapter extends ArrayAdapter<Map<String, Object>> {
         this.view = view;
         this.frgmTra = frgmTra;
         this.formProperties = formProperties;
-
+        pageSize=formProperties.getListPageSize();
     }
 
     @Override
@@ -81,32 +77,5 @@ public class ListAdapter extends ArrayAdapter<Map<String, Object>> {
             });
         }
         return v;
-    }
-
-    private void prepairText(TextView view, Object o) {
-        if (o instanceof Double) view.setText(String.valueOf(((Double) o).intValue()));
-        else view.setText(String.valueOf(o));
-
-    }
-
-
-    /**
-     * Liste Sonuna gelmişse yen Data çekmek
-     * için web servara gider
-     *
-     * @param position
-     * @return
-     */
-    @Override
-    public Map<String, Object> getItem(int position) {
-        if (closeEngoughToPullData(position)) {
-            if ((super.getCount() / 10) + 1 > 1)
-                view.getData((super.getCount() / 10) + 1);
-        }
-        return super.getItem(position);
-    }
-
-    public boolean closeEngoughToPullData(int position) {
-        return super.getCount() - position < 3;
     }
 }

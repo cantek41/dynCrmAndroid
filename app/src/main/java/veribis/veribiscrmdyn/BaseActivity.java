@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -195,6 +197,22 @@ public abstract class BaseActivity extends AppCompatActivity {
             mProgressDialog.dismiss();
             mProgressDialog = null;
         }
+    }
+
+    /**
+     * Network connection check     *
+     * @return
+     */
+    public boolean isConnection() {
+        ConnectivityManager connMgr = (ConnectivityManager) getApplicationContext()
+                .getSystemService(getApplicationContext().CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected())
+            return true;
+        else
+            showMessage("Bağlantınızı Kontrol edin");
+        // TODO: 25.1.2017 textler dinamik gelmeli
+        return false;
     }
 
     @Override

@@ -11,14 +11,17 @@ import com.cantekinandroidlib.webApi.IThreadDelegete;
 import com.cantekinandroidlib.webApi.ThreadWebApiPost;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import Data.MyPreference;
 import Model.DataModelList;
+import Model.Filter;
 import Model.Form.baseProperties;
 import Model.ListRequestModel;
-import Model.filter;
+import Model.Sort;
 import veribis.veribiscrmdyn.Fragment._baseFragment;
+import veribis.veribiscrmdyn.List.IMyList;
 import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.R;
 
@@ -34,6 +37,8 @@ public class ListFragment extends _baseFragment implements IThreadDelegete, IMyL
     private ArrayList<Map<String, Object>> dataList;   //listin dataSourcesi
     private ListRequestModel request;
     private static final int REQUEST_READ = 10002;
+    DataModelList resultData;
+
     public ListFragment() {
         // Required empty public constructor
     }
@@ -50,17 +55,25 @@ public class ListFragment extends _baseFragment implements IThreadDelegete, IMyL
         this.formProperties = prop;
         LayoutId = R.layout.fragment_list;
         request = new ListRequestModel();
-        request.fields = new ArrayList<>();
+
+        List<String> fields = new ArrayList<>();
         for (Map<String, Object> widget : prop.getWidgets()) {
-            request.fields.add(String.valueOf(widget.get("field")));
+            fields.add(String.valueOf(widget.get("field")));
         }
-        request.entity = prop.getEntity();
-        request.pageSize = prop.getListPageSize();
+        Sort sort = new Sort();   //= container.getSqlId();
+        sort.setDir("asc");
+        sort.setField("Name");
+        request.setSort(sort);
+        request.setFields(fields);
+        request.setEntity(prop.getEntity());
+        request.setPageSize(prop.getListPageSize());
         if (prop.getParentField() != null && prop.getParentFieldId() != null) {
-            request.filter = new filter();
-            request.filter.field = prop.getParentField();
-            request.filter.op = "eq";
-            request.filter.val1 = String.valueOf(prop.getParentFieldId());
+            Filter filter = new Filter();
+            filter.setField(prop.getParentField());
+            filter.setOp("eq");
+            filter.setVal1(String.valueOf(prop.getParentFieldId()));
+            request.setFilter(filter);
+            //// TODO: 12.2.2017 arama gizlenecek burada
         }
         return this;
     }
@@ -81,19 +94,26 @@ public class ListFragment extends _baseFragment implements IThreadDelegete, IMyL
     public void getData(int page) {
         if (!isConnection())
             return;
-        request.page = page;
+        request.setPage(page);
         CustomLogger.alert(TAG, jsonHelper.objectToJson(request));
         new ThreadWebApiPost<>(REQUEST_READ, this, request, webApiAddress).execute();
         ((MainActivity) getActivity()).showProgress("Liste Çekliyor");
-
     }
 
     @Override
-    public void postResult(String data,int requestCode) {
+    public int getTotal() {
+        if (resultData == null)
+            return request.getPageSize();
+        else
+            return resultData.Total;
+    }
+
+    @Override
+    public void postResult(String data, int requestCode) {
         // TODO: 25.1.2017 Data model boş yada hatalı gelebilir kontrolünü yap
-        DataModelList model = jsonHelper.stringToObject(data, DataModelList.class);
-        if (model != null) {
-            dataList.addAll(model.Data); //listin datsource sine  at
+        resultData = jsonHelper.stringToObject(data, DataModelList.class);
+        if (resultData != null) {
+            dataList.addAll(resultData.Data); //listin datsource sine  at
             listAdapter.notifyDataSetChanged(); //listeyi güncelle
         }
         ((MainActivity) getActivity()).dismissProgress();

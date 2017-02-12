@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import Data.MyPreference;
 import Model.Form.baseProperties;
+import veribis.veribiscrmdyn.BaseActivity;
 import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.getFromProp;
 
@@ -36,7 +37,7 @@ public abstract class _baseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the dialog_list for this fragment
         setHasOptionsMenu(true);//fragmentlerde options menuyu kullanabilmek için gerekli
         return inflater.inflate(LayoutId, container, false);
     }
@@ -78,14 +79,6 @@ public abstract class _baseFragment extends Fragment {
     }
 
     protected boolean isConnection() {
-        ConnectivityManager connMgr = (ConnectivityManager) getContext()
-                .getSystemService(getContext().CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected())
-            return true;
-        else
-            Toast.makeText(getContext(), "Bağlantınızı Kontrol edin", Toast.LENGTH_SHORT).show();
-        // TODO: 25.1.2017 textler dinamik gelmeli
-        return false;
+        return ((BaseActivity)getActivity()).isConnection();
     }
 }
