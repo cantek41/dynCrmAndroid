@@ -26,6 +26,7 @@ public class baseProperties {
      * @return editLink editFormType listPageSize
      */
     private int listPageSize;
+    private String searchField;
 
 
     private String editLink;
@@ -162,5 +163,13 @@ public class baseProperties {
 
     public void setWidgets(ArrayList<Map<String, Object>> widgets) {
         this.widgets = widgets;
+    }
+
+    public String getSearchField() {
+        return searchField;
+    }
+
+    public void setSearchField(String searchField) {
+        this.searchField = searchField;
     }
 }

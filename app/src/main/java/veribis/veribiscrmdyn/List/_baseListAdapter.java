@@ -32,7 +32,6 @@ import static com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.*;
 public abstract class _baseListAdapter extends ArrayAdapter<Map<String, Object>> {
     private final String TAG = "_baseListAdapter";
     protected IMyList view;
-    protected int pageSize;
 
 
     public _baseListAdapter(Context context, int resource, List<Map<String, Object>> objects) {
@@ -55,7 +54,7 @@ public abstract class _baseListAdapter extends ArrayAdapter<Map<String, Object>>
     public Map<String, Object> getItem(int position) {
         if (closeEngoughToPullData(position)) {
             if (super.getCount() < view.getTotal())
-                view.getData((super.getCount() / pageSize) + 1);
+                view.getData((super.getCount() / view.getPageSize()) + 1);
         }
         return super.getItem(position);
     }

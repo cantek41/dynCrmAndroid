@@ -34,7 +34,6 @@ public class ListAdapter extends _baseListAdapter {
         this.view = view;
         this.frgmTra = frgmTra;
         this.formProperties = formProperties;
-        pageSize=formProperties.getListPageSize();
     }
 
     @Override

@@ -7,4 +7,6 @@ public interface IMyList {
     void getData(int page);
 
     int getTotal();
+    int getPageSize();
+
 }
