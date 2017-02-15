@@ -1,10 +1,11 @@
-package veribis.veribiscrmdyn.Menu;
+package veribis.veribiscrmdyn.Menu.Buttons;
 
 import android.app.Activity;
 import android.content.Context;
 import android.view.MenuItem;
 
 import veribis.veribiscrmdyn.Fragment._baseFragment;
+import veribis.veribiscrmdyn.Menu.IMenuButtonCommand;
 import veribis.veribiscrmdyn.R;
 
 /**

@@ -3,31 +3,22 @@ package veribis.veribiscrmdyn.Fragment.List;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Layout;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-
-import com.cantekinandroidlib.customJson.jsonHelper;
-import com.cantekinandroidlib.logger.CustomLogger;
-import com.cantekinandroidlib.webApi.IThreadDelegete;
-import com.cantekinandroidlib.webApi.ThreadWebApiPost;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import Data.MyPreference;
-import Model.DataModelList;
 import Model.Filter;
 import Model.Form.baseProperties;
 import Model.ListRequestModel;
 import Model.Sort;
 import veribis.veribiscrmdyn.Fragment._baseFragment;
-import veribis.veribiscrmdyn.List.IMyList;
 import veribis.veribiscrmdyn.List.ListController;
-import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.R;
 import veribis.veribiscrmdyn.Widgets.SelectableWidget.SelectableContainer;
 
@@ -64,7 +55,10 @@ public class ListFragment extends _baseFragment //implements IThreadDelegete, IM
         }
         Sort sort = new Sort();   //= container.getSqlId();
         sort.setDir("asc");
-        sort.setField("Name");
+        if (formProperties.getSortField() != null)
+            sort.setField(formProperties.getSortField());
+        else
+            sort.setField("Id");
         request.setSort(sort);
         request.setFields(fields);
         request.setEntity(formProperties.getEntity());
@@ -88,9 +82,10 @@ public class ListFragment extends _baseFragment //implements IThreadDelegete, IM
         SelectableContainer container = new SelectableContainer();
         container.setDialogTitle(formProperties.getFormTitle());
         container.setTextKey(formProperties.getSearchField());
+        View[] searchViews = getSearchView();
         listController
                 .setData(container, listAdapter, dataList)
-                .searchable(getSearchView())
+                .searchable((EditText) searchViews[0], (ImageButton) searchViews[1])
                 .setRequest(request)
                 .run();
         dataListView.setAdapter(listAdapter);
@@ -102,13 +97,16 @@ public class ListFragment extends _baseFragment //implements IThreadDelegete, IM
      *
      * @return
      */
-    private EditText getSearchView() {
+    private View[] getSearchView() {
         LinearLayout searcLayout = (LinearLayout) getActivity().findViewById(R.id.searchLayout);
         EditText searchText = (EditText) getActivity().findViewById(R.id.searchText);
+        ImageButton searchButton = (ImageButton) getActivity().findViewById(R.id.searchButton);
         if (request.getSort() == null || formProperties.getSearchField() == null) {
             searcLayout.setVisibility(View.GONE);
-            searchText=null;
+            searchButton = null;
+            searchText = null;
         }
-        return searchText;
+        return new View[]{searchText, searchButton};
+        //  return searchText;
     }
 }

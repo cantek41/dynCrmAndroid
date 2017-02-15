@@ -12,11 +12,10 @@ public class WidgetTextView extends AbstractWidget {
   public WidgetTextView(Context context) {
     super(context);
     widget = new TextView(context);
-    init((TextView) widget);
   }
-
-  public void init(TextView v) {
-    v.setTextSize(15);
+  @Override
+  public void init() {
+    ((TextView) widget).setTextSize(15);
   }
   @Override
   public String getValue() {

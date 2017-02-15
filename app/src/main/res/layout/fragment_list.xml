@@ -17,14 +17,16 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 android:layout_weight="0.80"
                 android:id="@+id/searchText" />
-            <ImageView
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/logo"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                android:id="@+id/searchButton"
+                android:elevation="0dp"
+                android:background="@android:drawable/ic_search_category_default" />
 
         </LinearLayout>
 

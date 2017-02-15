@@ -27,6 +27,7 @@ public class baseProperties {
      */
     private int listPageSize;
     private String searchField;
+    private String sortField;
 
 
     private String editLink;
@@ -171,5 +172,13 @@ public class baseProperties {
 
     public void setSearchField(String searchField) {
         this.searchField = searchField;
+    }
+
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
+    }
+
+    public String getSortField() {
+        return sortField;
     }
 }

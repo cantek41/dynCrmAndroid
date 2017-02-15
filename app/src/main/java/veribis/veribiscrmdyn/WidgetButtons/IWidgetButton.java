@@ -1,4 +1,4 @@
-package veribis.veribiscrmdyn.Widgets.WidgetButtons;
+package veribis.veribiscrmdyn.WidgetButtons;
 
 import android.content.Context;
 import android.widget.ImageButton;

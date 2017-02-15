@@ -6,20 +6,21 @@ import android.widget.EditText;
 
 import java.util.Map;
 
-import veribis.veribiscrmdyn.Widgets.ActiveWidget;
+import veribis.veribiscrmdyn.Widgets.AbstractWidget;
 
 /**
  * Created by Cantekin on 23.1.2017.
  */
-public class WidgetEditView extends ActiveWidget {
+public class WidgetEditView extends AbstractWidget {
 
   public WidgetEditView(Context context) {
     super(context);
     widget = new EditText(context);
-    init((EditText) widget);
   }
 
-  public void init(EditText v) {
+  @Override
+  public void init() {
+    EditText v=(EditText)widget;
     v.setOnFocusChangeListener(new OnFocusChangeListener() {
       @Override
       public void onFocusChange(View view, boolean b) {

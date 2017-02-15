@@ -13,10 +13,14 @@ import com.cantekinandroidlib.logger.CustomLogger;
 
 import java.io.File;
 
+import Data.MyPreference;
+import Model.Form.baseProperties;
 import me.sudar.zxingorient.ZxingOrient;
 import me.sudar.zxingorient.ZxingOrientResult;
 import veribis.veribiscrmdyn.Dialog.ListDialog;
 import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
+import veribis.veribiscrmdyn.Fragment.FragmentFactory;
+import veribis.veribiscrmdyn.Fragment.HomeFragment;
 import veribis.veribiscrmdyn.Widgets.SelectableWidget.ISelectableWidget;
 import veribis.veribiscrmdyn.Widgets.SelectableWidget.SelectableContainer;
 
@@ -37,9 +41,10 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initActivity() {
         super.initActivity();
-        //// TODO: 10.2.2017 dashboard gelecek 
+        //// TODO: 10.2.2017 dashboard gelecek
+        baseProperties prop = MyPreference.getPreference(getApplicationContext()).getData("FirmaEkle", baseProperties.class);
         fmTr = getSupportFragmentManager().beginTransaction();
-        fmTr.add(R.id.content, new FormFragment().setProp(getFromProp.get()));
+        fmTr.add(R.id.content, new HomeFragment().setProp(null));
         fmTr.commit();
     }
 

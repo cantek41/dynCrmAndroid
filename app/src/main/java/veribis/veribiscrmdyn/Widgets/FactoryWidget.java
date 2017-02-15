@@ -34,9 +34,7 @@ public final class FactoryWidget {
                 widget = new WidgetTextView(contex);
                 break;
             case EDITVIEW:
-                widget = new WidgetDropDown(contex);
-
-                //  widget = new WidgetEditView(contex);
+                  widget = new WidgetEditView(contex);
                 break;
             case SUBFORM:
                 widget = new WidgetSubForm(contex);
@@ -49,6 +47,7 @@ public final class FactoryWidget {
                 break;
         }
         widget.setProp(properties);
+        widget.init();
         return widget;
     }
 }

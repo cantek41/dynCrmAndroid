@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 
 import com.cantekinandroidlib.customJson.jsonHelper;
@@ -43,6 +44,7 @@ public class ListController implements IMyList, IThreadDelegete {
     _baseListAdapter listAdapter;
     DataModelList resultData;
     EditText searchText;
+    ImageButton searchButton;
 
     public ListController(Context context) {
         this.context = context;
@@ -56,29 +58,19 @@ public class ListController implements IMyList, IThreadDelegete {
         return this;
     }
 
-    public ListController searchable(EditText searchText) {
+    public ListController searchable(EditText searchText, ImageButton searchButton) {
         this.searchText = searchText;
+        this.searchButton = searchButton;
         return this;
     }
 
     public void run() {
-        if (searchText != null)
-            searchText.addTextChangedListener(new TextWatcher() {
+        if (searchButton != null)
+            searchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                public void onClick(View v) {
+                    changeRequest(String.valueOf(searchText.getText()));
                 }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    changeRequest(s.toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-
             });
         if (request == null)
             setRequest();
@@ -115,7 +107,6 @@ public class ListController implements IMyList, IThreadDelegete {
         request.setFilter(filter);
         getData(1);
         dataList.clear();
-        CustomLogger.info(TAG, "dsdsd");
     }
 
     @Override

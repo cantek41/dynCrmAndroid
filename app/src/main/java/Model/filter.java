@@ -3,7 +3,7 @@ package Model;
 public class Filter {
   private String op;
   private String field;
-  private String val1;
+  private Object val1;
 
   public String getOp() {
     return op;
@@ -21,11 +21,11 @@ public class Filter {
     this.field = field;
   }
 
-  public String getVal1() {
+  public Object getVal1() {
     return val1;
   }
 
-  public void setVal1(String val1) {
+  public void setVal1(Object val1) {
     this.val1 = val1;
   }
 }

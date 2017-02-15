@@ -2,6 +2,7 @@ package veribis.veribiscrmdyn.Widgets.Items;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cantekinandroidlib.logger.CustomLogger;
@@ -23,7 +24,6 @@ public class WidgetSubForm extends AbstractWidget {
   public WidgetSubForm(Context context) {
     super(context);
     widget = new TextView(context);
-    init((TextView) widget);
   }
 
   /**
@@ -31,9 +31,10 @@ public class WidgetSubForm extends AbstractWidget {
    * MainActivity) getContext()).onClickWidget( olayı ile aktif
    * kaydın idsini alarak alt forma giecek
    *
-   * @param v
    */
-  public void init(TextView v) {
+  @Override
+  public void init() {
+    TextView v=(TextView)widget;
     v.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {

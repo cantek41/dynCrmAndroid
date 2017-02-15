@@ -11,16 +11,16 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import veribis.veribiscrmdyn.R;
-import veribis.veribiscrmdyn.Widgets.WidgetButtons.WidgetButtonBuilder;
+import veribis.veribiscrmdyn.WidgetButtons.FactoryWidgetButton;
 
 /**
  * Created by Cantekin on 16.1.2017.
  */
-public class AbstractWidget extends View {
+public abstract class AbstractWidget extends View {
     private static final String TAG = "AbstractWidget";
     protected TextView labelView;
     protected String Field;
-    protected View widget;
+    public View widget;
     protected ArrayList<String> smallButtons;
     private static  float weight = 0.8f;
 
@@ -65,7 +65,7 @@ public class AbstractWidget extends View {
         float buttonsWeight = 0;
         if (smallButtons != null)
             for (String btn : smallButtons) {
-                ImageButton button = WidgetButtonBuilder.getWidgetButtons(getContext(), btn, widget);
+                ImageButton button = FactoryWidgetButton.getWidgetButtons(getContext(), btn, widget);
                 content.addView(button);
                 buttonsWeight += ((LinearLayout.LayoutParams) button.getLayoutParams()).weight;
             }
@@ -98,4 +98,6 @@ public class AbstractWidget extends View {
         labelView.setText(text);
     }
 
+
+    public abstract void init();
 }

@@ -1,4 +1,4 @@
-package veribis.veribiscrmdyn.Widgets.WidgetButtons;
+package veribis.veribiscrmdyn.WidgetButtons.Items;
 
 import android.Manifest;
 import android.app.Activity;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import me.sudar.zxingorient.ZxingOrient;
 import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.R;
+import veribis.veribiscrmdyn.WidgetButtons.IWidgetButton;
+import veribis.veribiscrmdyn.WidgetButtons.IWidgetButtonCommand;
 
 
 /**
@@ -32,7 +34,7 @@ public class WidgetBarcodeButtonCommand extends IWidgetButton implements IWidget
 
   @Override
   public int icon() {
-    return R.drawable.barkod;
+    return R.mipmap.widget_button_barcode;
   }
 
   @Override

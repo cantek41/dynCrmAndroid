@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,7 +51,11 @@ public class ListDialog extends AlertDialog.Builder {
         DialogAdapter listAdapter = new DialogAdapter(context, R.layout.row_data_list, dataList, listController);
         dataListView.setAdapter(listAdapter);
         EditText searchEdit = (EditText) view.findViewById(R.id.searchText);
-        listController.setData(container, listAdapter, dataList).searchable(searchEdit).run();
+        ImageButton searchButton = (ImageButton) view.findViewById(R.id.searchButton);
+        listController
+                .setData(container, listAdapter, dataList)
+                .searchable(searchEdit,searchButton)
+                .run();
         this.setView(view);
         dialog = super.show();
         return dialog;

@@ -39,8 +39,11 @@ public abstract class _baseListAdapter extends ArrayAdapter<Map<String, Object>>
     }
 
     protected void prepairText(TextView view, Object o) {
-        if (o instanceof Double) view.setText(String.valueOf(((Double) o).intValue()));
-        else view.setText(String.valueOf(o));
+        if (o != null)
+            if (o instanceof Double) view.setText(String.valueOf(((Double) o).intValue()));
+            else view.setText(String.valueOf(o));
+        else view.setText("");
+
     }
 
     /**
@@ -60,6 +63,6 @@ public abstract class _baseListAdapter extends ArrayAdapter<Map<String, Object>>
     }
 
     public boolean closeEngoughToPullData(int position) {
-        return super.getCount()- 1 == position ;
+        return super.getCount() - 1 == position;
     }
 }

@@ -1,4 +1,4 @@
-package veribis.veribiscrmdyn.Widgets.WidgetButtons;
+package veribis.veribiscrmdyn.WidgetButtons.Items;
 
 import android.Manifest;
 import android.app.Activity;
@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import veribis.veribiscrmdyn.R;
+import veribis.veribiscrmdyn.WidgetButtons.IWidgetButton;
+import veribis.veribiscrmdyn.WidgetButtons.IWidgetButtonCommand;
 
 
 /**
@@ -27,13 +29,16 @@ public class WidgetCallButtonCommand extends IWidgetButton implements IWidgetBut
 
   @Override
   public String name() {
-    return "Kaydet";
+    return "Ara";
   }
 
   @Override
   public int icon() {
-    return R.drawable.call;
+    return R.mipmap.widget_button_call;
   }
+//  public int icon() {
+//    return R.drawable.call;
+//  }
 
   @Override
   public void execute() {

@@ -11,6 +11,7 @@ public class SelectableContainer {
     private int sqlId;
     private String textKey;
     private String valueKey;
+    private String filterText;
 
     public String getDialogTitle() {
         return dialogTitle;
@@ -50,5 +51,12 @@ public class SelectableContainer {
 
     public void setValueKey(String valueKey) {
         this.valueKey = valueKey;
+    }
+
+    public String getFilterText() {
+        return filterText;
+    }
+    public void setFilterText(String filterText) {
+        this.filterText = filterText;
     }
 }

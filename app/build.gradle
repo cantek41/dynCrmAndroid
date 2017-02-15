@@ -7,7 +7,7 @@ android {
   defaultConfig {
     applicationId "veribis.veribiscrmdyn"
     minSdkVersion 15
-    targetSdkVersion 24
+    targetSdkVersion 2
     versionCode 1
     versionName "1.0"
     multiDexEnabled true
@@ -45,4 +45,5 @@ dependencies {
   compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1.3'
   compile 'me.sudar:zxing-orient:2.1.1@aar'
   compile project(path: ':cantekinandroidlibrary')
+  compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
 }

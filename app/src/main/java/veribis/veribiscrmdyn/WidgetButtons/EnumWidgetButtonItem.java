@@ -1,4 +1,4 @@
-package veribis.veribiscrmdyn.Widgets.WidgetButtons;
+package veribis.veribiscrmdyn.WidgetButtons;
 
 /**
  * Created by Cantekin on 11.1.2017.

@@ -1,4 +1,4 @@
-package veribis.veribiscrmdyn.Widgets.WidgetButtons;
+package veribis.veribiscrmdyn.WidgetButtons.Items;
 
 import android.content.Context;
 import android.view.View;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.cantekinandroidlib.location.GpsIntentService;
 
 import veribis.veribiscrmdyn.R;
+import veribis.veribiscrmdyn.WidgetButtons.IWidgetButton;
+import veribis.veribiscrmdyn.WidgetButtons.IWidgetButtonCommand;
 
 
 /**
@@ -30,7 +32,7 @@ public class WidgetLocationButtonCommand extends IWidgetButton implements IWidge
 
   @Override
   public int icon() {
-    return R.drawable.harita;
+    return R.mipmap.widget_button_location;
   }
 
   @Override
