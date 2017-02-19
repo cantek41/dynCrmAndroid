@@ -69,6 +69,16 @@ public class MyPreference implements IThreadDelegete {
         return jsonHelper.stringToObject(dataString, clazzType);
     }
 
+    public User getUserData() {
+        // TODO: 10.2.2017 olmayan formu apiden getirmeye çalış
+        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
+        String dataString = data.getString("User", null);
+        if (dataString == null) {
+            return null;
+        }
+        return jsonHelper.stringToObject(dataString, User.class);
+    }
+
     private void showProgress(String message) {
         if (context instanceof MainActivity)
             ((MainActivity) context).showProgress(message);
@@ -84,6 +94,15 @@ public class MyPreference implements IThreadDelegete {
         SharedPreferences.Editor editor = data.edit();
         if (address != null) editor.putString("setWebApiAddress", address);
         editor.commit();
+    }
+
+    /**
+     * get login web address
+      * @return
+     */
+    public String getLoginWepApiAddress() {
+        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
+        return data.getString("LoginWepApiAddress", "http://demo.veribiscrm.com/token");
     }
 
     /**
@@ -125,7 +144,7 @@ public class MyPreference implements IThreadDelegete {
      * @param data
      */
     @Override
-    public void postResult(String data,int requestCode) {
+    public void postResult(String data, int requestCode) {
         if (context instanceof MainActivity)
             ((MainActivity) context).dismissProgress();
     }
@@ -138,7 +157,12 @@ public class MyPreference implements IThreadDelegete {
      */
     public String getListWebApiAddress() {
         SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        return data.getString("getWebApiAddress", "http://demo.veribiscrm.com/api/mobile/getlist");
+        return data.getString("getListWebApiAddress", "http://demo.veribiscrm.com/api/mobile/getlist");
+    }
+
+    public String getSqlWebApiAddress() {
+        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
+        return data.getString("getSqlWebApiAddress", "http://demo.veribiscrm.com/api/mobile/GetReportList");
     }
 
     /**

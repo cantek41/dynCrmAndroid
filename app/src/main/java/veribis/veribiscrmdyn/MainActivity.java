@@ -38,6 +38,8 @@ public class MainActivity extends BaseActivity {
         initActivity();
     }
 
+
+
     @Override
     protected void initActivity() {
         super.initActivity();
@@ -89,7 +91,7 @@ public class MainActivity extends BaseActivity {
 
 
     public void onListDialog(SelectableContainer container) {
-        ListDialog bul= new ListDialog(this);
+        ListDialog bul = new ListDialog(this);
         bul.setTitle(container.getDialogTitle());
         bul.setData(container);
         bul.show();

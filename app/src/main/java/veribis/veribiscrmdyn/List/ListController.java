@@ -46,9 +46,9 @@ public class ListController implements IMyList, IThreadDelegete {
     EditText searchText;
     ImageButton searchButton;
 
-    public ListController(Context context) {
+    public ListController(Context context,String _webApiAddress) {
         this.context = context;
-        webApiAddress = MyPreference.getPreference(context).getListWebApiAddress();
+        webApiAddress = _webApiAddress;//MyPreference.getPreference(context).getListWebApiAddress();
     }
 
     public ListController setData(SelectableContainer container, _baseListAdapter listAdapter, ArrayList<Map<String, Object>> dataList) {

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import Data.MyPreference;
 import veribis.veribiscrmdyn.List.IMyList;
 import veribis.veribiscrmdyn.List.ListController;
 import veribis.veribiscrmdyn.List._baseListAdapter;
@@ -47,7 +48,7 @@ public class ListDialog extends AlertDialog.Builder {
     public AlertDialog show() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_list, null);
         ListView dataListView = (ListView) view.findViewById(R.id.dataListListView);
-        ListController listController = new ListController(context);
+        ListController listController = new ListController(context, MyPreference.getPreference(context).getSqlWebApiAddress());
         DialogAdapter listAdapter = new DialogAdapter(context, R.layout.row_data_list, dataList, listController);
         dataListView.setAdapter(listAdapter);
         EditText searchEdit = (EditText) view.findViewById(R.id.searchText);

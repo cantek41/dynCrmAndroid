@@ -12,13 +12,13 @@ public class MenuGroupModel{
   }
   private List<MenuItemModel> data;
 
-  public String getName() {
-    return name;
+  public String getLabel() {
+    return label;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setLabel(String label) {
+    this.label = label;
   }
 
-  private String name;
+  private String label;
 }

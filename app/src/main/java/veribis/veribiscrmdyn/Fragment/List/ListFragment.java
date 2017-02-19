@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import Data.MyPreference;
 import Model.Filter;
 import Model.Form.baseProperties;
 import Model.ListRequestModel;
@@ -61,8 +62,9 @@ public class ListFragment extends _baseFragment //implements IThreadDelegete, IM
             sort.setField("Id");
         request.setSort(sort);
         request.setFields(fields);
-        request.setEntity(formProperties.getEntity());
+      //  request.setEntity(formProperties.getEntity());
         request.setPageSize(formProperties.getListPageSize());
+        request.setSqlId(formProperties.getSqlId());
         if (formProperties.getParentField() != null && formProperties.getParentFieldId() != null) {
             Filter filter = new Filter();
             filter.setField(formProperties.getParentField());
@@ -75,7 +77,7 @@ public class ListFragment extends _baseFragment //implements IThreadDelegete, IM
 
     private void listLoad() {
         ArrayList<Map<String, Object>> dataList = new ArrayList<>();
-        ListController listController = new ListController(getActivity());
+        ListController listController = new ListController(getActivity(), MyPreference.getPreference(getContext()).getSqlWebApiAddress());
         FragmentTransaction frgTra = getFragmentManager().beginTransaction();
         ListAdapter listAdapter = new ListAdapter
                 (getContext(), listController, frgTra, R.layout.row_data_list, dataList, formProperties);

@@ -1,7 +1,7 @@
 package veribis.veribiscrmdyn.Menu.Data;
 
 public class MenuItemModel {
-  private String name;
+  private String label;
   private String icon;
   private String link;
 
@@ -31,12 +31,12 @@ public class MenuItemModel {
     this.link = link;
   }
 
-  public String getName() {
-    return name;
+  public String getLabel() {
+    return label;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setLabel(String label) {
+    this.label = label;
   }
 
 }

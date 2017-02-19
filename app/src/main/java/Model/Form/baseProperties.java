@@ -29,6 +29,7 @@ public class baseProperties {
     private String searchField;
     private String sortField;
 
+    private int sqlId;
 
     private String editLink;
     private EnumFragmentType editFormType;
@@ -180,5 +181,13 @@ public class baseProperties {
 
     public String getSortField() {
         return sortField;
+    }
+
+    public int getSqlId() {
+        return sqlId;
+    }
+
+    public void setSqlId(int sqlId) {
+        this.sqlId = sqlId;
     }
 }

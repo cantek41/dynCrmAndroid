@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import Data.MyPreference;
+import Data.User;
 import Model.Form.baseProperties;
 import veribis.veribiscrmdyn.Fragment.EnumFragmentType;
 import veribis.veribiscrmdyn.Fragment.FragmentFactory;
@@ -43,11 +44,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected ProgressDialog mProgressDialog;
     protected NavigationView navigationView;
 
+    public void userFaild() {
+        showMessage("You Must be Login");
+    }
     protected void initActivity() {
         initNavigation();
     }
 
     protected void initNavigation() {
+        User user=User.getUser(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -64,6 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         toggle.syncState();
         initMenu();
     }
+
 
     private void initMenu() {
         navigationView = (NavigationView) findViewById(R.id.nav_view);

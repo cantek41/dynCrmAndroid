@@ -28,10 +28,10 @@ public class getDemoView {
         List<MenuItemModel> items = new ArrayList<>();
         MenuItemModel item;
         MenuGroupModel grup = new MenuGroupModel();
-        grup.setName("Firma");
+        grup.setLabel("Firma");
 
         item = new MenuItemModel();
-        item.setName("Firmalar");
+        item.setLabel("Firmalar");
         item.setLink("FirmaListe");
         item.setIcon("ic_menu_share");
         item.setType(EnumMenuItem.LIST);
@@ -42,11 +42,11 @@ public class getDemoView {
 
         grup = new MenuGroupModel();
         items = new ArrayList<>();
-        grup.setName("Kişi");
+        grup.setLabel("Kişi");
         groups.add(grup);
 
         item = new MenuItemModel();
-        item.setName("Kişiler");
+        item.setLabel("Kişiler");
         item.setLink("KisiListe");
         item.setIcon("ic_menu_share");
         item.setType(EnumMenuItem.LIST);
@@ -57,11 +57,11 @@ public class getDemoView {
 
         grup = new MenuGroupModel();
         items = new ArrayList<>();
-        grup.setName("Aktivite");
+        grup.setLabel("Aktivite");
         groups.add(grup);
 
         item = new MenuItemModel();
-        item.setName("Aktiviteler");
+        item.setLabel("Aktiviteler");
         item.setLink("AktiviteList");
         item.setIcon("ic_menu_share");
         item.setType(EnumMenuItem.LIST);
@@ -69,21 +69,21 @@ public class getDemoView {
 
 
         item = new MenuItemModel();
-        item.setName("İş Başı");
+        item.setLabel("İş Başı");
         item.setLink("IsBasi");
         item.setIcon("ic_menu_share");
         item.setType(EnumMenuItem.LIST);
         items.add(item);
 
         item = new MenuItemModel();
-        item.setName("Gun Sonu");
+        item.setLabel("Gun Sonu");
         item.setLink("IsSonu");
         item.setIcon("ic_menu_share");
         item.setType(EnumMenuItem.LIST);
         items.add(item);
 
         item = new MenuItemModel();
-        item.setName("Id Okut");
+        item.setLabel("Id Okut");
         item.setLink("IdOkut");
         item.setIcon("ic_menu_share");
         item.setType(EnumMenuItem.LIST);
@@ -92,11 +92,11 @@ public class getDemoView {
 
         grup = new MenuGroupModel();
         items = new ArrayList<>();
-        grup.setName("Siparişler");
+        grup.setLabel("Siparişler");
 
 
         item = new MenuItemModel();
-        item.setName("Listele");
+        item.setLabel("Listele");
         item.setLink("SiparisList");
         item.setIcon("ic_menu_share");
         item.setType(EnumMenuItem.LIST);
