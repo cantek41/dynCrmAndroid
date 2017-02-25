@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -21,18 +20,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
+import com.cantekinandroidlib.logger.CustomLogger;
+import com.squareup.picasso.Picasso;
 
 import Data.MyPreference;
 import Data.User;
 import Model.Form.baseProperties;
-import veribis.veribiscrmdyn.Fragment.EnumFragmentType;
 import veribis.veribiscrmdyn.Fragment.FragmentFactory;
 import veribis.veribiscrmdyn.Fragment._baseFragment;
 import veribis.veribiscrmdyn.Menu.Data.MenuItemModel;
-import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
-import veribis.veribiscrmdyn.Fragment.List.ListFragment;
 import veribis.veribiscrmdyn.Menu.MenuBuilder;
 
 /**
@@ -43,18 +44,19 @@ public abstract class BaseActivity extends AppCompatActivity {
     public FloatingActionButton fab;
     protected ProgressDialog mProgressDialog;
     protected NavigationView navigationView;
+    public User user;
 
     public void userFaild() {
-        showMessage("You Must be Login");
-    }
-    protected void initActivity() {
-        initNavigation();
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
-    protected void initNavigation() {
-        User user=User.getUser(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    protected void initActivity() {
+        initFabButton();
+        initNavigation();
+
+    }
+
+    protected void initFabButton() {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +64,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                 ((_baseFragment) getSupportFragmentManager().findFragmentById(R.id.content)).fabOnClick();
             }
         });
+    }
+
+    protected void initNavigation() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -73,6 +80,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void initMenu() {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        initUserInfo();
         Menu m = navigationView.getMenu();
         MenuBuilder.build(this, m);
         //statik menu elamalları ekle
@@ -92,11 +100,21 @@ public abstract class BaseActivity extends AppCompatActivity {
                         Uri.parse("http://www.veribis.com.tr"));
                 startActivity(intent);
                 ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
-
                 return true;
             }
         });
+    }
 
+    private void initUserInfo() {
+        View header = navigationView.getHeaderView(0);
+        TextView txtUserName = (TextView) header.findViewById(R.id.txtUserName);
+        TextView txtUserMail = (TextView) header.findViewById(R.id.txtUserMail);
+        BootstrapCircleThumbnail imgUser = (BootstrapCircleThumbnail) header.findViewById(R.id.imgUserImage);
+        txtUserName.setText(user.getName() + " " + user.getSurName());
+        txtUserMail.setText(user.getEmail());
+        String imageURL = user.getPicturePath().replace("..", MyPreference.getPreference(this).getWepApiRootAddress());
+        CustomLogger.info("imageURL", imageURL);
+        Picasso.with(this).load(imageURL).into(imgUser);
     }
 
     /**
@@ -207,6 +225,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * Network connection check     *
+     *
      * @return
      */
     public boolean isConnection() {

@@ -62,7 +62,7 @@ public class ListFragment extends _baseFragment //implements IThreadDelegete, IM
             sort.setField("Id");
         request.setSort(sort);
         request.setFields(fields);
-      //  request.setEntity(formProperties.getEntity());
+        request.setEntity(formProperties.getEntity());
         request.setPageSize(formProperties.getListPageSize());
         request.setSqlId(formProperties.getSqlId());
         if (formProperties.getParentField() != null && formProperties.getParentFieldId() != null) {
@@ -77,7 +77,7 @@ public class ListFragment extends _baseFragment //implements IThreadDelegete, IM
 
     private void listLoad() {
         ArrayList<Map<String, Object>> dataList = new ArrayList<>();
-        ListController listController = new ListController(getActivity(), MyPreference.getPreference(getContext()).getSqlWebApiAddress());
+        ListController listController = new ListController(getActivity(), MyPreference.getPreference(getContext()).getListWebApiAddress());
         FragmentTransaction frgTra = getFragmentManager().beginTransaction();
         ListAdapter listAdapter = new ListAdapter
                 (getContext(), listController, frgTra, R.layout.row_data_list, dataList, formProperties);

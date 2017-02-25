@@ -18,7 +18,7 @@
     android:layout_height="65dp"
     app:hasBorder="false"
     android:src="@drawable/foto"
-    android:id="@+id/profile_img_Image"
+    android:id="@+id/imgUserImage"
     android:onClick="ShowDetail" />
 
 
@@ -27,10 +27,11 @@
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/nav_header_vertical_spacing"
     android:text="Cantekin Çelikhası"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+      android:id="@+id/txtUserName" />
 
   <TextView
-    android:id="@+id/textView"
+    android:id="@+id/txtUserMail"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="cantekin.celikhasi@veribis.com.tr" />

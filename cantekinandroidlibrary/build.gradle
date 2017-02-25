@@ -28,7 +28,6 @@ android {
         exclude 'META-INF/license.txt'
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/notice.txt'
-        exclude 'META-INF/DEPENDENCIES.txt'
     }
 }
 
@@ -46,4 +45,5 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:9.4.0'
     compile 'com.google.android.gms:play-services-base:9.4.0'
     compile 'com.google.android.gms:play-services-location:9.4.0'
+
 }

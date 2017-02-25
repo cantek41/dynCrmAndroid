@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
 import com.cantekinandroidlib.customJson.jsonHelper;
+import com.cantekinandroidlib.logger.CustomLogger;
 import com.cantekinandroidlib.webApi.IThreadDelegete;
 import com.cantekinandroidlib.webApi.ThreadWebApiPost;
 
@@ -69,13 +70,19 @@ public class MyPreference implements IThreadDelegete {
         return jsonHelper.stringToObject(dataString, clazzType);
     }
 
+    public void setUserData(String user) {
+        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = data.edit();
+        CustomLogger.error(TAG, user);
+        if (user != null) editor.putString("User", user);
+        editor.commit();
+    }
+
     public User getUserData() {
         // TODO: 10.2.2017 olmayan formu apiden getirmeye çalış
         SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
         String dataString = data.getString("User", null);
-        if (dataString == null) {
-            return null;
-        }
+        if (dataString == null) return null;
         return jsonHelper.stringToObject(dataString, User.class);
     }
 
@@ -96,9 +103,15 @@ public class MyPreference implements IThreadDelegete {
         editor.commit();
     }
 
+    public String getWepApiRootAddress() {
+        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
+        return data.getString("WepApiRootAddres", "http://demo.veribiscrm.com/");
+    }
+
     /**
      * get login web address
-      * @return
+     *
+     * @return
      */
     public String getLoginWepApiAddress() {
         SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
@@ -172,6 +185,12 @@ public class MyPreference implements IThreadDelegete {
     public void deletePreferences() {
         SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
         data.edit().clear().commit();
+    }
+
+
+    public String getUserDataWebApiAddress() {
+        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
+        return data.getString("getUserDataWebApiAddress", "http://demo.veribiscrm.com/api/admin/AccountApi/GetEmployeData");
     }
 
 
