@@ -84,9 +84,8 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
                     break;
                 case REQUEST_USERDATA:
                     User user = jsonHelper.stringToObject(data, User.class);
-                    user.setAccess_token(loginRespons.getAccess_token());
-                    user.setToken_type(loginRespons.getToken_type());
-                    user.setExpires_in(loginRespons.getExpires_in());
+                    user.setUser_name(userName.getText().toString());
+                    user.setPassword(password.getText().toString());
                     if (user.getUserId() != null) {
                         MyPreference.getPreference(this).setUserData(jsonHelper.objectToJson(user));
                         startActivity(new Intent(this, MainActivity.class));

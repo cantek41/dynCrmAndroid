@@ -46,9 +46,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected NavigationView navigationView;
     public User user;
 
-    public void userFaild() {
-        startActivity(new Intent(this, LoginActivity.class));
-    }
 
     protected void initActivity() {
         initFabButton();

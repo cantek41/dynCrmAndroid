@@ -1,9 +1,22 @@
 package veribis.veribiscrmdyn;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.cantekinandroidlib.customJson.jsonHelper;
+import com.cantekinandroidlib.webApi.IThreadDelegete;
+import com.cantekinandroidlib.webApi.OauthHeaders;
+import com.cantekinandroidlib.webApi.ThreadWebApiPostURLEncoded;
+
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
+import Data.MyPreference;
+import Data.User;
+import Model.LoginResponse;
 import veribis.veribiscrmdyn.Demo.getDemoView;
 
 /**
@@ -16,12 +29,25 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         createDemo();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        setOauth();
         // TODO: 5.2.2017 menu ve dashboard ayarı yapılmalı arkada
 
     }
+
+    private void setOauth() {
+        User user = User.getUser(this);
+        if (user != null)
+            new UserLoginController(this, user.getUser_name(), user.getPassword()).login();
+        else
+            startActivity(new Intent(this, LoginActivity.class));
+    }
+
+    public void startApp() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
     private void createDemo() {
         getDemoView.getMenu(this);
@@ -38,33 +64,49 @@ public class SplashActivity extends Activity {
         getDemoView.getSiperis(this);
     }
 
+    class UserLoginController implements IThreadDelegete {
+        private static final int REQUEST_LOGIN = 10002;
+        private String userName;
+        private String password;
+        private Context context;
 
-    /**
-     * https://www.bignerdranch.com/blog/splash-screens-the-right-way/
-     * in --> res/drawable
-     <?xml version="1.0" encoding="utf-8"?>
-     <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-     <item
-     android:drawable="@color/gray"/>
-     <item>
-     <bitmap
-     android:gravity="center"
-     android:src="@mipmap/ic_launcher"/>
-     </item>
-     </layer-list>
-     ****************************
-     styles.xml
-     <resources>
+        public UserLoginController(Context context, String userName, String password) {
+            this.context = context;
+            this.userName = userName;
+            this.password = password;
+        }
 
-     <!-- Base application theme. -->
-     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-     <!-- Customize your theme here. -->
-     </style>
+        public void login() {
+            String webApiLoginAddress = MyPreference.getPreference(context).getLoginWepApiAddress();
+            MultiValueMap<String, String> requestMap = new LinkedMultiValueMap<>();
+            requestMap.add("grant_type", "password");
+            requestMap.add("username", userName);
+            requestMap.add("password", password);
+            new ThreadWebApiPostURLEncoded<>(REQUEST_LOGIN, this, requestMap, webApiLoginAddress).execute();
+        }
 
-     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-     <item name="android:windowBackground">@drawable/background_splash</item>
-     </style>
 
-     </resources>
-     */
+        @Override
+        public void postResult(String data, int requestCode) {
+            if (data != null) {
+                switch (requestCode) {
+                    case REQUEST_LOGIN:
+                        LoginResponse loginRespons = jsonHelper.stringToObject(data, LoginResponse.class);
+                        if (loginRespons.getError() == null) {
+                            OauthHeaders.setToken(loginRespons.getAccess_token(), loginRespons.getToken_type());
+                            startApp();
+                        } else {
+                            Toast.makeText(getApplicationContext(), loginRespons.getError_description(), Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        }
+                        break;
+
+                }
+
+            }
+        }
+
+    }
 }
+
+
