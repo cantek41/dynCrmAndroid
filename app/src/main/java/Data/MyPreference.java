@@ -178,4 +178,9 @@ public class MyPreference  {
         return data.getString("getUserDataWebApiAddress", "http://demo.veribiscrm.com/api/admin/AccountApi/GetEmployeData");
     }
 
+    public String getUserFormDataWebApiAddress() {
+        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
+        return data.getString("getUserDataWebApiAddress", "http://demo.veribiscrm.com/Api/mobil/User/GetUserData");
+    }
+
 }

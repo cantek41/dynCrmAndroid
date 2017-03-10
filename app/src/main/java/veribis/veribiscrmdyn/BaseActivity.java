@@ -129,10 +129,17 @@ public abstract class BaseActivity extends AppCompatActivity {
                         dialog.dismiss();
                         finish();
                         User.clearUser();
-                        Intent intent = new Intent(getApplicationContext(),SplashActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
                         startActivity(intent);
                     }
                 }).show();
+    }
+
+    /**
+     * user reme tıklayınca
+     * @param v
+     */
+    public void ShowDetail(View v) {
     }
 
     private void initUserInfo() {

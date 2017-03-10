@@ -1,30 +1,28 @@
 package veribis.veribiscrmdyn;
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.cantekinandroidlib.customJson.jsonHelper;
 import com.cantekinandroidlib.webApi.IThreadDelegete;
 import com.cantekinandroidlib.webApi.OauthHeaders;
 import com.cantekinandroidlib.webApi.ThreadWebApiPost;
 import com.cantekinandroidlib.webApi.ThreadWebApiPostURLEncoded;
-
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-
+import java.util.HashMap;
+import java.util.Map;
 import Data.MyPreference;
 import Data.User;
-import Model.LoginRequest;
+import Data.UserDataToPreference;
 import Model.LoginResponse;
 
 public class LoginActivity extends BaseActivity implements IThreadDelegete {
     private static final int REQUEST_LOGIN = 10002;
     private static final int REQUEST_USERDATA = 10003;
+    private static final int REQUEST_USER_TEMPLATE = 10004;
     private EditText userName;
     private EditText password;
     LoginResponse loginRespons;
@@ -41,6 +39,7 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
         Button loginBtn = (Button) findViewById(R.id.btnLogin);
         userName = (EditText) findViewById(R.id.edtUserName);
         password = (EditText) findViewById(R.id.pswPassword);
+        // TODO: 10.3.2017 sil
         userName.setText("erkan");
         password.setText("deneme");
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +51,6 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
     }
 
     private void loginOnClick() {
-
         if (userName.getText().length() > 0 && password.getText().length() > 0) {
             String webApiLoginAddress = MyPreference.getPreference(this).getLoginWepApiAddress();
             MultiValueMap<String, String> requestMap = new LinkedMultiValueMap<>();
@@ -65,7 +63,6 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
             Toast.makeText(this, "UserName or password  are not null!", Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public void postResult(String data, int requestCode) {
         if (data != null) {
@@ -75,8 +72,7 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
                     if (loginRespons.getError() == null) {
                         OauthHeaders.setToken(loginRespons.getAccess_token(), loginRespons.getToken_type());
                         String webApiUserDataAddress = MyPreference.getPreference(this).getUserDataWebApiAddress();
-                        LoginRequest requestq = new LoginRequest();
-                        new ThreadWebApiPost<>(REQUEST_USERDATA, this, requestq, webApiUserDataAddress).execute();
+                        new ThreadWebApiPost<>(REQUEST_USERDATA, this, "", webApiUserDataAddress).execute();
                         showProgress("Kullanıcı Bilgileri Çekiliyor");
                     } else {
                         showMessage(loginRespons.getError_description());
@@ -88,6 +84,17 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
                     user.setPassword(password.getText().toString());
                     if (user.getUserId() != null) {
                         MyPreference.getPreference(this).setUserData(jsonHelper.objectToJson(user));
+                        String webApiUserDataAddress = MyPreference.getPreference(this).getUserFormDataWebApiAddress();
+                        Map<String, String> req = new HashMap();
+                        req.put("userName", user.getName());
+                        new ThreadWebApiPost<>(REQUEST_USER_TEMPLATE, this, req, webApiUserDataAddress).execute();
+                        showProgress("Menu ve Form Bilgileri Çekiliyor");
+                    } else
+                        dismissProgress();
+                    break;
+                case REQUEST_USER_TEMPLATE:
+                    if (data != null) {
+                        new UserDataToPreference(this).Run(data);
                         startActivity(new Intent(this, MainActivity.class));
                         finish();
                     }
