@@ -85,4 +85,8 @@ public final class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public static void clearUser() {
+        userData=null;
+    }
 }

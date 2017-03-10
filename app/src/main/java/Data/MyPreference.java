@@ -29,7 +29,7 @@ import veribis.veribiscrmdyn.Menu.Data.MenuModel;
  * singleton pattern
  */
 
-public class MyPreference implements IThreadDelegete {
+public class MyPreference  {
     private static String TAG = "Preference";
     private Context context;
     public static MyPreference preference;
@@ -84,11 +84,6 @@ public class MyPreference implements IThreadDelegete {
         String dataString = data.getString("User", null);
         if (dataString == null) return null;
         return jsonHelper.stringToObject(dataString, User.class);
-    }
-
-    private void showProgress(String message) {
-        if (context instanceof MainActivity)
-            ((MainActivity) context).showProgress(message);
     }
 
     /**
@@ -151,16 +146,6 @@ public class MyPreference implements IThreadDelegete {
         return data.getString("getWebApiAddress", "http://demo.veribiscrm.com/api/mobile/GetData");
     }
 
-    /**
-     * delegeti için interfaceden gelen metot
-     *
-     * @param data
-     */
-    @Override
-    public void postResult(String data, int requestCode) {
-        if (context instanceof MainActivity)
-            ((MainActivity) context).dismissProgress();
-    }
 
     /**
      * get api List address
@@ -192,6 +177,5 @@ public class MyPreference implements IThreadDelegete {
         SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
         return data.getString("getUserDataWebApiAddress", "http://demo.veribiscrm.com/api/admin/AccountApi/GetEmployeData");
     }
-
 
 }

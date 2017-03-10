@@ -231,7 +231,6 @@ public class getDemoView {
         MyPreference.getPreference(context)
                 .setData(formProperties.getFormName(),
                         jsonHelper.objectToJson(formProperties));
-        CustomLogger.alert("KisiEkle", jsonHelper.objectToJson(formProperties));
     }
 
     public static void getAktiviteList(Context context) {

@@ -1,12 +1,15 @@
 package veribis.veribiscrmdyn;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -86,7 +89,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 //todo: ayarlar sayfası yapılacak
                 ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
-
                 return true;
             }
         });
@@ -100,6 +102,37 @@ public abstract class BaseActivity extends AppCompatActivity {
                 return true;
             }
         });
+        m.add("Çıkış").setIcon(R.drawable.anahtar).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                logOut();
+                ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+    }
+
+    private void logOut() {
+        new AlertDialog.Builder(BaseActivity.this)
+                .setMessage("Kişisel bilgileriniz silinecek, Emin misiniz?")
+                .setCancelable(true)
+                .setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MyPreference.getPreference(getApplicationContext()).deletePreferences();
+                        dialog.dismiss();
+                        finish();
+                        User.clearUser();
+                        Intent intent = new Intent(getApplicationContext(),SplashActivity.class);
+                        startActivity(intent);
+                    }
+                }).show();
     }
 
     private void initUserInfo() {

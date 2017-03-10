@@ -85,7 +85,6 @@ public class SplashActivity extends Activity {
             new ThreadWebApiPostURLEncoded<>(REQUEST_LOGIN, this, requestMap, webApiLoginAddress).execute();
         }
 
-
         @Override
         public void postResult(String data, int requestCode) {
             if (data != null) {
