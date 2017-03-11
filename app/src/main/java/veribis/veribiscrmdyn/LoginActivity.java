@@ -1,19 +1,26 @@
 package veribis.veribiscrmdyn;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.cantekinandroidlib.customJson.jsonHelper;
+import com.cantekinandroidlib.logger.CustomLogger;
 import com.cantekinandroidlib.webApi.IThreadDelegete;
 import com.cantekinandroidlib.webApi.OauthHeaders;
 import com.cantekinandroidlib.webApi.ThreadWebApiPost;
 import com.cantekinandroidlib.webApi.ThreadWebApiPostURLEncoded;
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import Data.MyPreference;
 import Data.User;
 import Data.UserDataToPreference;
@@ -74,6 +81,7 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
                         String webApiUserDataAddress = MyPreference.getPreference(this).getUserDataWebApiAddress();
                         new ThreadWebApiPost<>(REQUEST_USERDATA, this, "", webApiUserDataAddress).execute();
                         showProgress("Kullanıcı Bilgileri Çekiliyor");
+
                     } else {
                         showMessage(loginRespons.getError_description());
                     }
@@ -89,6 +97,7 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
                         req.put("userName", user.getName());
                         new ThreadWebApiPost<>(REQUEST_USER_TEMPLATE, this, req, webApiUserDataAddress).execute();
                         showProgress("Menu ve Form Bilgileri Çekiliyor");
+                        getDeviceToken();
                     } else
                         dismissProgress();
                     break;
@@ -106,5 +115,8 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
     }
 
 
+    private void getDeviceToken() {
+        CustomLogger.alert("TOKEN", "InstanceID token: " + FirebaseInstanceId.getInstance().getToken());
+    }
 }
 

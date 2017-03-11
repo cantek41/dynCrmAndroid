@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.cantekinandroidlib.FileHelper.FileConverter;
 import com.cantekinandroidlib.logger.CustomLogger;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.File;
 

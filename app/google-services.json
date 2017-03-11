@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "439841656187",
+    "firebase_url": "https://veribiscrmnotification.firebaseio.com",
+    "project_id": "veribiscrmnotification",
+    "storage_bucket": "veribiscrmnotification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439841656187:android:7dbb6f05036afbfa",
+        "android_client_info": {
+          "package_name": "veribis.veribiscrmdyn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "439841656187-duos5g8j77al5cm34p7q2tqancal0bmc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "veribis.veribiscrmdyn",
+            "certificate_hash": "6a30dbfb8355fe8705430e8abdbf1b1cefd6980e"
+          }
+        },
+        {
+          "client_id": "439841656187-tfo1deehmj6qi9gkmkcjh7kteeqgmdrk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6uG4ZzrVmZmX67V_Y-t9cbOu2LmuaOSM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "439841656187-tfo1deehmj6qi9gkmkcjh7kteeqgmdrk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
