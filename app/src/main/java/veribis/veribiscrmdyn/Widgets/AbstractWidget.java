@@ -22,12 +22,12 @@ public abstract class AbstractWidget extends View {
     protected String Field;
     public View widget;
     protected ArrayList<String> smallButtons;
-    private static  float weight = 0.8f;
+    private static float weight = 0.8f;
 
-    public void setWeight(float weight)
-    {
-        AbstractWidget.weight =weight;
+    public void setWeight(float weight) {
+        AbstractWidget.weight = weight;
     }
+
     public AbstractWidget(Context context) {
         super(context);
         labelView = new TextView(context);
@@ -42,6 +42,8 @@ public abstract class AbstractWidget extends View {
     public void setProp(Map<String, Object> properties) {
         setLabel(String.valueOf(properties.get("label")));
         setField(String.valueOf(properties.get("field")));
+        if (!String.valueOf(properties.get("defaultValue")).isEmpty())
+            setValue(String.valueOf(properties.get("defaultValue")));
         if (properties.get("buttons") instanceof ArrayList)
             smallButtons = (ArrayList<String>) properties.get("buttons");
     }
@@ -97,7 +99,6 @@ public abstract class AbstractWidget extends View {
     public void setLabel(String text) {
         labelView.setText(text);
     }
-
 
     public abstract void init();
 }

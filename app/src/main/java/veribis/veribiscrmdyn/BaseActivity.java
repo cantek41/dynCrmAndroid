@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -23,7 +22,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,7 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         m.add("Ayarlar").setIcon(R.drawable.anahtar).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                //todo: ayarlar sayfası yapılacak
+                startActivity(new Intent(getApplicationContext(), SettingActivity.class));
                 ((DrawerLayout) findViewById(R.id.drawer_layout)).closeDrawer(GravityCompat.START);
                 return true;
             }
@@ -125,7 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .setPositiveButton("Evet", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        MyPreference.getPreference(getApplicationContext()).deletePreferences();
+                        MyPreference.getPreference(getApplicationContext()).clearPreferences();
                         dialog.dismiss();
                         finish();
                         User.clearUser();
@@ -137,6 +135,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * user reme tıklayınca
+     *
      * @param v
      */
     public void ShowDetail(View v) {
@@ -149,7 +148,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         BootstrapCircleThumbnail imgUser = (BootstrapCircleThumbnail) header.findViewById(R.id.imgUserImage);
         txtUserName.setText(user.getName() + " " + user.getSurName());
         txtUserMail.setText(user.getEmail());
-        String imageURL = user.getPicturePath().replace("..", MyPreference.getPreference(this).getWepApiRootAddress());
+        String imageURL = user.getPicturePath().replace("..", MyPreference.getPreference(this).getMainURL());
         CustomLogger.info("imageURL", imageURL);
         Picasso.with(this).load(imageURL).into(imgUser);
     }

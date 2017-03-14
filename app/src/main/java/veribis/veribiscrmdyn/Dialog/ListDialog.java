@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,7 +47,7 @@ public class ListDialog extends AlertDialog.Builder {
     public AlertDialog show() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_list, null);
         ListView dataListView = (ListView) view.findViewById(R.id.dataListListView);
-        ListController listController = new ListController(context, MyPreference.getPreference(context).getSqlWebApiAddress());
+        ListController listController = new ListController(context, MyPreference.getPreference(context).getSqlAddress());
         DialogAdapter listAdapter = new DialogAdapter(context, R.layout.row_data_list, dataList, listController);
         dataListView.setAdapter(listAdapter);
         EditText searchEdit = (EditText) view.findViewById(R.id.searchText);

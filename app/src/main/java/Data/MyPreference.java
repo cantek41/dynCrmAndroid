@@ -29,10 +29,12 @@ import veribis.veribiscrmdyn.Menu.Data.MenuModel;
  * singleton pattern
  */
 
-public class MyPreference  {
+public class MyPreference {
     private static String TAG = "Preference";
     private Context context;
     public static MyPreference preference;
+    public static String mainURL;
+    public static SharedPreferences data;
 
     private MyPreference(Context context) {
         this.context = context;
@@ -41,19 +43,55 @@ public class MyPreference  {
     public static MyPreference getPreference(Context context) {
         if (preference == null)
             preference = new MyPreference(context);
+        if (data == null)
+            data = PreferenceManager.getDefaultSharedPreferences(context);
+        mainURL = data.getString("mainURL", "https://demo.veribiscrm.com/");
         return preference;
     }
 
+    //region MainURL
+    public void setMainURL(String mainURL) {
+        SharedPreferences.Editor editor = data.edit();
+        if (mainURL != null) editor.putString("mainURL", mainURL);
+        editor.commit();
+    }
+
+    public String getMainURL() {
+        return mainURL;
+    }
+
+    //endregion
+    //region Get
+    public <T> T getData(String key, Class<T> clazzType) {
+        String dataString = data.getString(key, null);
+        if (dataString == null)
+            return null;
+        return jsonHelper.stringToObject(dataString, clazzType);
+    }
+
     public MenuModel getMenu() {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
         String menuString = data.getString("menu", null);
         if (menuString == null)
             return null;
-        return jsonHelper.stringToObject(menuString, MenuModel.class);
+        CustomLogger.info(TAG, menuString);
+        try {
+            return jsonHelper.stringToObject(menuString, MenuModel.class);
+
+        } catch (Exception e) {
+            return null;
+        }
     }
 
+    public User getUserData() {
+        // TODO: 10.2.2017 olmayan formu apiden getirmeye çalış
+        String dataString = data.getString("User", null);
+        if (dataString == null) return null;
+        return jsonHelper.stringToObject(dataString, User.class);
+    }
+
+    //endregion
+    //region Set
     public void setData(@NonNull String name, @NonNull String value) throws NullPointerException {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = data.edit();
         if (value != null && name != null) editor.putString(name, value);
         else
@@ -61,126 +99,71 @@ public class MyPreference  {
         editor.commit();
     }
 
-    public <T> T getData(String demo, Class<T> clazzType) {
-        // TODO: 10.2.2017 olmayan formu apiden getirmeye çalış
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        String dataString = data.getString(demo, null);
-        if (dataString == null)
-            return null;
-        return jsonHelper.stringToObject(dataString, clazzType);
-    }
-
     public void setUserData(String user) {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = data.edit();
         CustomLogger.error(TAG, user);
         if (user != null) editor.putString("User", user);
         editor.commit();
     }
 
-    public User getUserData() {
-        // TODO: 10.2.2017 olmayan formu apiden getirmeye çalış
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        String dataString = data.getString("User", null);
-        if (dataString == null) return null;
-        return jsonHelper.stringToObject(dataString, User.class);
-    }
-
-    /**
-     * set api UpdateData and Insert adress
-     *
-     * @param address
-     */
-    public void setSetWepApiAddress(String address) {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = data.edit();
-        if (address != null) editor.putString("setWebApiAddress", address);
-        editor.commit();
-    }
-
-    public String getWepApiRootAddress() {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        return data.getString("WepApiRootAddres", "http://demo.veribiscrm.com/");
-    }
-
-    /**
-     * get login web address
-     *
-     * @return
-     */
-    public String getLoginWepApiAddress() {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        return data.getString("LoginWepApiAddress", "http://demo.veribiscrm.com/token");
-    }
-
-    /**
-     * get api UpdateData and Insert address
-     * defult value "http://demo.veribiscrm.com/api/mobile/UpdateData"
-     *
-     * @return "http://demo.veribiscrm.com/api/mobile/UpdateData"
-     */
-    public String getSetWepApiAddress() {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        return data.getString("setWebApiAddress", "http://demo.veribiscrm.com/api/mobile/UpdateData");
-    }
-
-    /**
-     * get api UpdateData and Insert address
-     * defult value "http://demo.veribiscrm.com/api/mobile/UpdateData"
-     *
-     * @return "http://demo.veribiscrm.com/api/mobile/UpdateData"
-     */
-    public String getWepApiSaveFileAddress() {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        return data.getString("setWebApiAddress", "http://demo.veribiscrm.com/api/mobile/SaveFile");
-    }
-
-    /**
-     * get api GetData address
-     * default value "http://demo.veribiscrm.com/api/mobile/GetData"
-     *
-     * @return "http://demo.veribiscrm.com/api/mobile/GetData"
-     */
-    public String getGetWepApiAddress() {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        return data.getString("getWebApiAddress", "http://demo.veribiscrm.com/api/mobile/GetData");
-    }
-
-
-    /**
-     * get api List address
-     * default value "http://demo.veribiscrm.com/api/mobile/getlist"     *
-     *
-     * @return "http://demo.veribiscrm.com/api/mobile/getlist"
-     */
-    public String getListWebApiAddress() {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        return data.getString("getListWebApiAddress", "http://demo.veribiscrm.com/api/mobile/getlist");
-    }
-
-    public String getSqlWebApiAddress() {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        return data.getString("getSqlWebApiAddress", "http://demo.veribiscrm.com/api/mobile/GetReportList");
-    }
-
-    /**
-     * logOut işleminde kullanıcıya ait tüm verilerin
-     * silinmesini sağlar
-     */
-    public void deletePreferences() {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
+    //endregion
+    //region delete
+    public void clearPreferences() {
         data.edit().clear().commit();
     }
 
-
-    public String getUserDataWebApiAddress() {
+    public void deleteValue(String key) {
         SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        return data.getString("getUserDataWebApiAddress", "http://demo.veribiscrm.com/api/admin/AccountApi/GetEmployeData");
+        SharedPreferences.Editor editor = data.edit();
+        if (key != null) editor.remove(key);
+        editor.commit();
+    }
+
+    //endregion
+    //region WepApi Adresleri
+    public String getLoginAddress() {
+        return mainURL.concat("/token");
+    }
+
+    public String getUserDataAddress() {
+        return mainURL.concat("/api/admin/AccountApi/GetEmployeData");
     }
 
     public String getUserFormDataWebApiAddress() {
-        SharedPreferences data = PreferenceManager.getDefaultSharedPreferences(context);
-        return data.getString("getUserDataWebApiAddress", "http://demo.veribiscrm.com/Api/mobil/User/GetUserData");
+        return mainURL.concat("/api/mobil/User/GetUserData");
     }
+
+    public String getGetAddress() {
+        return mainURL.concat("/api/mobile/GetData");
+    }
+
+    public String getSetAddress() {
+        return mainURL.concat("/api/mobile/UpdateData");
+    }
+
+    public String getListAddress() {
+        return mainURL.concat("/api/mobile/GetList");
+    }
+
+    public String getSaveFileAddress() {
+        return mainURL.concat("/api/mobile/SaveFile");
+    }
+
+    public String getSqlAddress() {
+        return mainURL.concat("/api/mobile/GetReportList");
+    }
+
+    public String getMenuApiAddres() {
+        return mainURL.concat("/api/mobile/MenuData/GetMenu");
+    }
+
+    public String getFormApiAddres() {
+        return mainURL.concat("/api/mobile/formData/GetFormMobil");
+    }
+
+    public String getSetDeviceApiAddres() {
+        return mainURL.concat("/api/mobil/User/SetDevice");
+    }
+    //endregion
 
 }

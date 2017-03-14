@@ -40,6 +40,10 @@ public class baseProperties {
     private String recordId;
 
 
+    private List<String> Buttons;
+
+    private ArrayList<Map<String, Object>> widgets;
+
     public String getRecordId() {
         return recordId;
     }
@@ -83,9 +87,7 @@ public class baseProperties {
         this.parentFieldId = parentFieldId;
     }
 
-    private List<String> Buttons;
 
-    private ArrayList<Map<String, Object>> widgets;
 
     public String getFormName() {
         return formName;

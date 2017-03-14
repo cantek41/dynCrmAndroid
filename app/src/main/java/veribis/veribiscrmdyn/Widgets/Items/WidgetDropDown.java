@@ -55,9 +55,10 @@ public class WidgetDropDown extends AbstractWidget implements ISelectableWidget 
         else
             sqlId = 0;
 
+      /* bu şeilde olmalı
         sqlId=31;
         valueKey="Id";
-        textKey="AdSoyad";
+        textKey="AdSoyad";*/
     }
 
     @Override

@@ -30,10 +30,10 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
     private static final int REQUEST_LOGIN = 10002;
     private static final int REQUEST_USERDATA = 10003;
     private static final int REQUEST_USER_TEMPLATE = 10004;
+    private static final int REQUEST_SET_DEVICE = 10014;
     private EditText userName;
     private EditText password;
     LoginResponse loginRespons;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
 
     private void loginOnClick() {
         if (userName.getText().length() > 0 && password.getText().length() > 0) {
-            String webApiLoginAddress = MyPreference.getPreference(this).getLoginWepApiAddress();
+            String webApiLoginAddress = MyPreference.getPreference(this).getLoginAddress();
             MultiValueMap<String, String> requestMap = new LinkedMultiValueMap<>();
             requestMap.add("grant_type", "password");
             requestMap.add("username", userName.getText().toString());
@@ -78,7 +78,7 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
                     loginRespons = jsonHelper.stringToObject(data, LoginResponse.class);
                     if (loginRespons.getError() == null) {
                         OauthHeaders.setToken(loginRespons.getAccess_token(), loginRespons.getToken_type());
-                        String webApiUserDataAddress = MyPreference.getPreference(this).getUserDataWebApiAddress();
+                        String webApiUserDataAddress = MyPreference.getPreference(this).getUserDataAddress();
                         new ThreadWebApiPost<>(REQUEST_USERDATA, this, "", webApiUserDataAddress).execute();
                         showProgress("Kullanıcı Bilgileri Çekiliyor");
 
@@ -116,7 +116,14 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
 
 
     private void getDeviceToken() {
-        CustomLogger.alert("TOKEN", "InstanceID token: " + FirebaseInstanceId.getInstance().getToken());
+        String token=FirebaseInstanceId.getInstance().getToken();
+        CustomLogger.alert("TOKEN", "InstanceID token: " + token);
+        String webApiAddress = null;
+        Map<String, String> req = new HashMap();
+        webApiAddress = MyPreference.getPreference(this).getSetDeviceApiAddres();
+        req.put("userName", User.getUser(getApplicationContext()).getName());
+        req.put("deviceID", token);
+        new ThreadWebApiPost<>(REQUEST_SET_DEVICE, this, req, webApiAddress).execute();
     }
 }
 

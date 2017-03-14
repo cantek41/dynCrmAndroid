@@ -28,7 +28,9 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // createDemo();
+          createDemo();
+
+      //  getDemoView.getMenu(this);
         setOauth();
         // TODO: 5.2.2017 menu ve dashboard ayarı yapılmalı arkada
 
@@ -77,7 +79,7 @@ public class SplashActivity extends Activity {
         }
 
         public void login() {
-            String webApiLoginAddress = MyPreference.getPreference(context).getLoginWepApiAddress();
+            String webApiLoginAddress = MyPreference.getPreference(context).getLoginAddress();
             MultiValueMap<String, String> requestMap = new LinkedMultiValueMap<>();
             requestMap.add("grant_type", "password");
             requestMap.add("username", userName);

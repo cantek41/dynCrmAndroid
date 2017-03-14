@@ -34,7 +34,7 @@ public class getDemoView {
         item.setLabel("Firmalar");
         item.setLink("FirmaListe");
         item.setIcon("ic_menu_share");
-        item.setType(EnumMenuItem.LIST);
+
         items.add(item);
 
         grup.setData(items);
@@ -49,7 +49,7 @@ public class getDemoView {
         item.setLabel("Kişiler");
         item.setLink("KisiListe");
         item.setIcon("ic_menu_share");
-        item.setType(EnumMenuItem.LIST);
+
         items.add(item);
 
         grup.setData(items);
@@ -64,7 +64,7 @@ public class getDemoView {
         item.setLabel("Aktiviteler");
         item.setLink("AktiviteList");
         item.setIcon("ic_menu_share");
-        item.setType(EnumMenuItem.LIST);
+
         items.add(item);
 
 
@@ -72,21 +72,21 @@ public class getDemoView {
         item.setLabel("İş Başı");
         item.setLink("IsBasi");
         item.setIcon("ic_menu_share");
-        item.setType(EnumMenuItem.LIST);
+
         items.add(item);
 
         item = new MenuItemModel();
         item.setLabel("Gun Sonu");
         item.setLink("IsSonu");
         item.setIcon("ic_menu_share");
-        item.setType(EnumMenuItem.LIST);
+
         items.add(item);
 
         item = new MenuItemModel();
         item.setLabel("Id Okut");
         item.setLink("IdOkut");
         item.setIcon("ic_menu_share");
-        item.setType(EnumMenuItem.LIST);
+
         items.add(item);
         grup.setData(items);
 
@@ -99,12 +99,13 @@ public class getDemoView {
         item.setLabel("Listele");
         item.setLink("SiparisList");
         item.setIcon("ic_menu_share");
-        item.setType(EnumMenuItem.LIST);
+
 
         items.add(item);
         grup.setData(items);
         groups.add(grup);
         menuModel.setGroup(groups);
+     CustomLogger.alert("ornbek", jsonHelper.objectToJson(menuModel));
         MyPreference.getPreference(context).setData("menu", jsonHelper.objectToJson(menuModel));
     }
 
@@ -136,6 +137,8 @@ public class getDemoView {
         widgets.add(newWidget("Web", "Web", "TEXT", null, null, null));
 
         listProperties.setWidgets(widgets);
+        CustomLogger.alert("ornbek", jsonHelper.objectToJson(listProperties));
+
         MyPreference.getPreference(context).setData(listProperties.getFormName(), jsonHelper.objectToJson(listProperties));
 
     }
@@ -166,6 +169,8 @@ public class getDemoView {
         widgets.add(newWidget("Siparişler", null, "SUBFORM", null, "SiparisList", "LIST"));
 
         formProperties.setWidgets(widgets);
+        CustomLogger.alert("ornbek", jsonHelper.objectToJson(formProperties));
+
         MyPreference.getPreference(context).setData(formProperties.getFormName(), jsonHelper.objectToJson(formProperties));
     }
 

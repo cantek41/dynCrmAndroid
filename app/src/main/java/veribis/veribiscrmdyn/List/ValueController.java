@@ -7,7 +7,6 @@ import com.cantekinandroidlib.customJson.jsonHelper;
 import com.cantekinandroidlib.logger.CustomLogger;
 import com.cantekinandroidlib.webApi.IThreadDelegete;
 import com.cantekinandroidlib.webApi.ThreadWebApiPost;
-import com.google.zxing.common.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +36,7 @@ public class ValueController implements IThreadDelegete {
 
     public ValueController(Context context) {
         this.context = context;
-        webApiAddress = MyPreference.getPreference(context).getListWebApiAddress();
+        webApiAddress = MyPreference.getPreference(context).getListAddress();
     }
 
     public ValueController setData(SelectableContainer container) {

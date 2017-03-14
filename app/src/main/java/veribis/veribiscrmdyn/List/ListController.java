@@ -48,7 +48,7 @@ public class ListController implements IMyList, IThreadDelegete {
 
     public ListController(Context context,String _webApiAddress) {
         this.context = context;
-        webApiAddress = _webApiAddress;//MyPreference.getPreference(context).getListWebApiAddress();
+        webApiAddress = _webApiAddress;//MyPreference.getPreference(context).getListAddress();
     }
 
     public ListController setData(SelectableContainer container, _baseListAdapter listAdapter, ArrayList<Map<String, Object>> dataList) {

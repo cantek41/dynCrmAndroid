@@ -5,16 +5,6 @@ public class MenuItemModel {
   private String icon;
   private String link;
 
-  public EnumMenuItem getType() {
-    return type;
-  }
-
-  public void setType(EnumMenuItem type) {
-    this.type = type;
-  }
-
-  private EnumMenuItem type;
-
   public String getIcon() {
     return icon;
   }

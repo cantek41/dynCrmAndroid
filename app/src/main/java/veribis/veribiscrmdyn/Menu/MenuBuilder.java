@@ -16,7 +16,7 @@ import veribis.veribiscrmdyn.Menu.Data.MenuModel;
  */
 public class MenuBuilder {
     public static void build(final Context context, Menu menu) {
-      //  MyPreference.getPreference(context).deletePreferences();
+      //  MyPreference.getPreference(context).clearPreferences();
         MenuModel menuModel = MyPreference.getPreference(context).getMenu();
         if (menuModel != null)
             for (MenuGroupModel group : menuModel.getGroup()) {

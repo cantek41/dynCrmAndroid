@@ -18,7 +18,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import Data.MyPreference;
 import Model.Form.DataModelForm;
@@ -37,9 +36,9 @@ import veribis.veribiscrmdyn.Widgets.WidgetHelper;
 
 public class FormFragment extends _baseFragment implements IThreadDelegete {
     private static final String TAG = "FormFragment";
-    private String wepApiSetAddress = MyPreference.getPreference(getContext()).getSetWepApiAddress();
-    private String wepApiSaveFileAddress = MyPreference.getPreference(getContext()).getWepApiSaveFileAddress();
-    private String webApiGetDAtaAddress = MyPreference.getPreference(getContext()).getGetWepApiAddress();
+    private String wepApiSetAddress = MyPreference.getPreference(getContext()).getSetAddress();
+    private String wepApiSaveFileAddress = MyPreference.getPreference(getContext()).getSaveFileAddress();
+    private String webApiGetDAtaAddress = MyPreference.getPreference(getContext()).getGetAddress();
     List<AbstractWidget> widgetFields;//kaydet te gidecek datalar burada
     private DataModelForm formModel;
     private static final int REQUEST_FILE = 10001;

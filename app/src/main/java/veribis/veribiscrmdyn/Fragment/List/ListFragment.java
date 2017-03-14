@@ -77,7 +77,7 @@ public class ListFragment extends _baseFragment //implements IThreadDelegete, IM
 
     private void listLoad() {
         ArrayList<Map<String, Object>> dataList = new ArrayList<>();
-        ListController listController = new ListController(getActivity(), MyPreference.getPreference(getContext()).getListWebApiAddress());
+        ListController listController = new ListController(getActivity(), MyPreference.getPreference(getContext()).getListAddress());
         FragmentTransaction frgTra = getFragmentManager().beginTransaction();
         ListAdapter listAdapter = new ListAdapter
                 (getContext(), listController, frgTra, R.layout.row_data_list, dataList, formProperties);
