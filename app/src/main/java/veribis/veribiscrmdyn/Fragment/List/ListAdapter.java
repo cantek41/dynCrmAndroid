@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cantekinandroidlib.logger.CustomLogger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +68,7 @@ public class ListAdapter extends _baseListAdapter {
                     if (newProp != null) {
                         newProp.setParentFieldId(formProperties.getParentFieldId());
                         newProp.setRecordId(value);
+                        CustomLogger.info(TAG, "ID===>" + value.toString());
                         ((MainActivity) getContext())
                                 .showFragment(FragmentFactory.getFragment(newProp.getFormType())
                                         .setProp(newProp));

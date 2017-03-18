@@ -80,6 +80,8 @@ public class RestApi<T> {
             response=output;
         } catch (Exception e) {
             CustomLogger.error(TAG,e.getMessage());
+            CustomLogger.error(TAG,webApiAddress+"\n"+requestJson);
+            e.printStackTrace();
         }
         CustomLogger.info(TAG,response);
         return response;

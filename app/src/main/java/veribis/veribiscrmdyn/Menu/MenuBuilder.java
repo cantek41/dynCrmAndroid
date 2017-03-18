@@ -21,7 +21,7 @@ public class MenuBuilder {
         if (menuModel != null)
             for (MenuGroupModel group : menuModel.getGroup()) {
                 SubMenu subMenu = menu.addSubMenu(group.getLabel());
-                for (final MenuItemModel item : group.getData()) {
+                for (final MenuItemModel item : group.getData().getRow()) {
                     int id = context.getResources().getIdentifier(item.getIcon(), "drawable", context.getPackageName());
                     subMenu.add(item.getLabel()).setIcon(id).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         @Override

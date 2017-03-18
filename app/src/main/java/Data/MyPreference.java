@@ -66,6 +66,7 @@ public class MyPreference {
         String dataString = data.getString(key, null);
         if (dataString == null)
             return null;
+        CustomLogger.alert(TAG,"Menu  "+dataString);
         return jsonHelper.stringToObject(dataString, clazzType);
     }
 
@@ -78,6 +79,8 @@ public class MyPreference {
             return jsonHelper.stringToObject(menuString, MenuModel.class);
 
         } catch (Exception e) {
+            CustomLogger.error(TAG, "getMenu \n");
+            e.printStackTrace();
             return null;
         }
     }
@@ -92,6 +95,7 @@ public class MyPreference {
     //endregion
     //region Set
     public void setData(@NonNull String name, @NonNull String value) throws NullPointerException {
+        CustomLogger.info(TAG, name + "-->" + value);
         SharedPreferences.Editor editor = data.edit();
         if (value != null && name != null) editor.putString(name, value);
         else
@@ -154,11 +158,11 @@ public class MyPreference {
     }
 
     public String getMenuApiAddres() {
-        return mainURL.concat("/api/mobile/MenuData/GetMenu");
+        return mainURL.concat("/api/mobil/MenuData/GetMenu");
     }
 
     public String getFormApiAddres() {
-        return mainURL.concat("/api/mobile/formData/GetFormMobil");
+        return mainURL.concat("/Api/mobil/formData/GetFormMobil");
     }
 
     public String getSetDeviceApiAddres() {

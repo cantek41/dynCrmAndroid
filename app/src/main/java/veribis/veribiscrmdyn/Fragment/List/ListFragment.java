@@ -9,6 +9,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.cantekinandroidlib.logger.CustomLogger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +53,7 @@ public class ListFragment extends _baseFragment //implements IThreadDelegete, IM
         LayoutId = R.layout.fragment_list;
         request = new ListRequestModel();
         List<String> fields = new ArrayList<>();
-        for (Map<String, Object> widget : formProperties.getWidgets()) {
+        for (Map<String, Object> widget : formProperties.getWidget().getWidgets()) {
             fields.add(String.valueOf(widget.get("field")));
         }
         Sort sort = new Sort();   //= container.getSqlId();
@@ -77,7 +79,7 @@ public class ListFragment extends _baseFragment //implements IThreadDelegete, IM
 
     private void listLoad() {
         ArrayList<Map<String, Object>> dataList = new ArrayList<>();
-        ListController listController = new ListController(getActivity(), MyPreference.getPreference(getContext()).getListAddress());
+        ListController listController = new ListController(getActivity(), MyPreference.getPreference(getContext()).getSqlAddress());
         FragmentTransaction frgTra = getFragmentManager().beginTransaction();
         ListAdapter listAdapter = new ListAdapter
                 (getContext(), listController, frgTra, R.layout.row_data_list, dataList, formProperties);

@@ -36,7 +36,7 @@ public class ValueController implements IThreadDelegete {
 
     public ValueController(Context context) {
         this.context = context;
-        webApiAddress = MyPreference.getPreference(context).getListAddress();
+        webApiAddress = MyPreference.getPreference(context).getSqlAddress();
     }
 
     public ValueController setData(SelectableContainer container) {

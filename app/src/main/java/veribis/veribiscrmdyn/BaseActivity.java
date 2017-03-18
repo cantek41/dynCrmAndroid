@@ -189,6 +189,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void menuItemClick(MenuItemModel menuItem) {
         //// TODO: 10.2.2017 menugetLink kullanılmalı
         baseProperties prop = MyPreference.getPreference(getApplicationContext()).getData(menuItem.getLink(), baseProperties.class);
+
         if (prop != null)
             showFragment(FragmentFactory.getFragment(prop.getFormType()).setProp(prop));
         else {

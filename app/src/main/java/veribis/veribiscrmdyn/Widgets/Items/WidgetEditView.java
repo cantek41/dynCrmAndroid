@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 
+import com.cantekinandroidlib.logger.CustomLogger;
+
 import java.util.Map;
 
 import veribis.veribiscrmdyn.Widgets.AbstractWidget;
@@ -12,6 +14,8 @@ import veribis.veribiscrmdyn.Widgets.AbstractWidget;
  * Created by Cantekin on 23.1.2017.
  */
 public class WidgetEditView extends AbstractWidget {
+
+  private static final String TAG = "WidgetEditView";
 
   public WidgetEditView(Context context) {
     super(context);
@@ -32,6 +36,7 @@ public class WidgetEditView extends AbstractWidget {
   @Override
   public void setProp(Map<String, Object> properties) {
     super.setProp(properties);
+    setValue(String.valueOf(properties.get("defaultValue")));
 
     // TODO: 24.1.2017 özel propertiler burada eklenecek
   }
@@ -40,8 +45,10 @@ public class WidgetEditView extends AbstractWidget {
   public String getValue() {
     return ((EditText) widget).getText().toString();
   }
+
   @Override
   public void setValue(String data) {
+    CustomLogger.alert(TAG,"defaultValue=="+String.valueOf(data));
     ((EditText) widget).setText(data);
   }
 

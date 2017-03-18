@@ -37,7 +37,7 @@ public class getDemoView {
 
         items.add(item);
 
-        grup.setData(items);
+      //  grup.setData(items);
         groups.add(grup);
 
         grup = new MenuGroupModel();
@@ -52,7 +52,7 @@ public class getDemoView {
 
         items.add(item);
 
-        grup.setData(items);
+       // grup.setData(items);
 
 
         grup = new MenuGroupModel();
@@ -88,7 +88,7 @@ public class getDemoView {
         item.setIcon("ic_menu_share");
 
         items.add(item);
-        grup.setData(items);
+       // grup.setData(items);
 
         grup = new MenuGroupModel();
         items = new ArrayList<>();
@@ -102,7 +102,7 @@ public class getDemoView {
 
 
         items.add(item);
-        grup.setData(items);
+     //   grup.setData(items);
         groups.add(grup);
         menuModel.setGroup(groups);
      CustomLogger.alert("ornbek", jsonHelper.objectToJson(menuModel));
@@ -136,7 +136,7 @@ public class getDemoView {
         widgets.add(newWidget("Mail", "Mail", "TEXT", null, null, null));
         widgets.add(newWidget("Web", "Web", "TEXT", null, null, null));
 
-        listProperties.setWidgets(widgets);
+      //  listProperties.setWidgets(widgets);
         CustomLogger.alert("ornbek", jsonHelper.objectToJson(listProperties));
 
         MyPreference.getPreference(context).setData(listProperties.getFormName(), jsonHelper.objectToJson(listProperties));
@@ -163,13 +163,14 @@ public class getDemoView {
 
         widgets.add(newWidget("Firma Adı", "Name", "DATEPICKER", null, null, null));
         widgets.add(newWidget("Tarih", "CreatedDate", "DATEPICKER", null, null, null));
+        widgets.add(newWidget("Tarih", "ModifiedDate", "TIMEPICKER", null, null, null));
         widgets.add(newWidget("Lokasyon", "Location", "TEXTVIEW", "LOCATION", null, null));
         widgets.add(newWidget("Mail", "Mail", "TEXTVIEW", "SEND_MAIL", null, null));
         widgets.add(newWidget("Kişiler", null, "SUBFORM", null, "KisiListe", "LIST"));
         widgets.add(newWidget("Aktiviteler", null, "SUBFORM", null, "AktiviteList", "LIST"));
         widgets.add(newWidget("Siparişler", null, "SUBFORM", null, "SiparisList", "LIST"));
 
-        formProperties.setWidgets(widgets);
+      //  formProperties.setWidgets(widgets);
         CustomLogger.alert("ornbek", jsonHelper.objectToJson(formProperties));
 
         MyPreference.getPreference(context).setData(formProperties.getFormName(), jsonHelper.objectToJson(formProperties));
@@ -205,7 +206,7 @@ public class getDemoView {
         widgets.add(newWidget("Mail", "Mail", "EDITVIEW", null, null, null));
 
 
-        listProperties.setWidgets(widgets);
+     //   listProperties.setWidgets(widgets);
         MyPreference.getPreference(context).setData(listProperties.getFormName(), jsonHelper.objectToJson(listProperties));
 
     }
@@ -232,7 +233,7 @@ public class getDemoView {
         widgets.add(newWidget("Soyad", "SurName", "EDITVIEW", null, null, null));
         widgets.add(newWidget("Email", "Mail", "EDITVIEW", "SEND_MAIL", null, null));
 
-        formProperties.setWidgets(widgets);
+      //  formProperties.setWidgets(widgets);
 
         MyPreference.getPreference(context)
                 .setData(formProperties.getFormName(),
@@ -268,7 +269,7 @@ public class getDemoView {
         widgets.add(newWidget("Tarih", "StartDate", "TEXT", null, null, null));
         widgets.add(newWidget("Not", "Note", "TEXT", null, null, null));
 
-        listProperties.setWidgets(widgets);
+      //  listProperties.setWidgets(widgets);
         MyPreference.getPreference(context).setData(listProperties.getFormName(), jsonHelper.objectToJson(listProperties));
 
     }
@@ -295,7 +296,7 @@ public class getDemoView {
         widgets.add(newWidget("Tarih", "StartDate", "EDITVIEW", null, null, null));
         widgets.add(newWidget("Yer", "Note", "TEXTVIEW", "BARCODE", null, null));
 
-        formProperties.setWidgets(widgets);
+      //  formProperties.setWidgets(widgets);
 
         MyPreference.getPreference(context)
                 .setData(formProperties.getFormName(),
@@ -322,7 +323,7 @@ public class getDemoView {
         widgets.add(newWidget("Tarih", "StartDate", "EDITVIEW", null, null, null));
         widgets.add(newWidget("Yer", "Note", "TEXTVIEW", "BARCODE", null, null));
 
-        formProperties.setWidgets(widgets);
+      //  formProperties.setWidgets(widgets);
 
         MyPreference.getPreference(context)
                 .setData(formProperties.getFormName(),
@@ -349,7 +350,7 @@ public class getDemoView {
         widgets.add(newWidget("Tarih", "StartDate", "EDITVIEW", null, null, null));
         widgets.add(newWidget("Yer", "Note", "TEXTVIEW", "BARCODE", null, null));
 
-        formProperties.setWidgets(widgets);
+     //   formProperties.setWidgets(widgets);
 
         MyPreference.getPreference(context)
                 .setData(formProperties.getFormName(),
@@ -376,7 +377,7 @@ public class getDemoView {
         widgets.add(newWidget("Tarih", "StartDate", "EDITVIEW", null, null, null));
         widgets.add(newWidget("Yer", "Note", "TEXTVIEW", "BARCODE", null, null));
 
-        formProperties.setWidgets(widgets);
+       // formProperties.setWidgets(widgets);
 
         MyPreference.getPreference(context)
                 .setData(formProperties.getFormName(),
@@ -411,7 +412,7 @@ public class getDemoView {
         widgets.add(newWidget("Id", "Id", "TEXT", null, null, null));
         widgets.add(newWidget("Tarih", "DocumentDate", "TEXT", null, null, null));
 
-        listProperties.setWidgets(widgets);
+      //  listProperties.setWidgets(widgets);
         MyPreference.getPreference(context).setData(listProperties.getFormName(), jsonHelper.objectToJson(listProperties));
 
     }
@@ -436,7 +437,7 @@ public class getDemoView {
         widgets.add(newWidget("Konu", "Subject", "EDITVIEW", null, null, null));
         widgets.add(newWidget("Tarih", "DocumentDate", "EDITVIEW", null, null, null));
 
-        formProperties.setWidgets(widgets);
+    //    formProperties.setWidgets(widgets);
 
         MyPreference.getPreference(context)
                 .setData(formProperties.getFormName(),

@@ -4,15 +4,16 @@ import java.util.List;
 
 public class MenuGroupModel {
     private String label;
-    private List<MenuItemModel> data;
+    private Row data;
     private String name;
     private String icon;
+    private String widgetType;
 
-    public List<MenuItemModel> getData() {
+    public Row getData() {
         return data;
     }
 
-    public void setData(List<MenuItemModel> data) {
+    public void setData(Row data) {
         this.data = data;
     }
 
@@ -40,8 +41,13 @@ public class MenuGroupModel {
         this.icon = icon;
     }
 
+    public String getWidgetType() {
+        return widgetType;
+    }
 
-
-
+    public void setWidgetType(String widgetType) {
+        this.widgetType = widgetType;
+    }
 
 }
+

@@ -1,5 +1,7 @@
 package com.cantekinandroidlib.webApi;
 
+import com.cantekinandroidlib.logger.CustomLogger;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -32,6 +34,7 @@ public final class OauthHeaders {
         con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
         if (token != null)
             con.setRequestProperty("Authorization", token_type + " " + token);
+        CustomLogger.info("Authorization", token_type + " " + token);
         return con;
     }
 }

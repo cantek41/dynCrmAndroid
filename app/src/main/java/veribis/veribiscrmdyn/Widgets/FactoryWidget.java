@@ -20,7 +20,7 @@ import veribis.veribiscrmdyn.Widgets.Items.WidgetTextView;
 public final class FactoryWidget {
 
     public static List<AbstractWidget> createViewGroup(Context context, ArrayList<Map<String, Object>> widgets) {
-        List<AbstractWidget> result = new ArrayList<AbstractWidget>();
+        List<AbstractWidget> result = new ArrayList<>();
         for (Map<String, Object> w : widgets) {
             result.add(createWidget(context, w));
         }

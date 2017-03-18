@@ -50,8 +50,9 @@ public class WidgetDropDown extends AbstractWidget implements ISelectableWidget 
         super.setProp(properties);
         valueKey = String.valueOf(properties.get("valueKey"));
         textKey = String.valueOf(properties.get("textKey"));
-        if (properties.get("sqlId")!=null)
-            sqlId = Integer.valueOf(String.valueOf(properties.get("sqlId")));
+        if (properties.get("sqlId")!=null) {
+            sqlId=((Double)properties.get("sqlId")).intValue();
+        }
         else
             sqlId = 0;
 
@@ -63,7 +64,7 @@ public class WidgetDropDown extends AbstractWidget implements ISelectableWidget 
 
     @Override
     public String getValue() {
-        return value;
+        return String.valueOf((Double.valueOf(value).intValue()));
     }
 
 
@@ -74,7 +75,6 @@ public class WidgetDropDown extends AbstractWidget implements ISelectableWidget 
         container.setValueKey(valueKey);
         container.setWidget(this);
         container.setSqlId(sqlId);
-
         container.setFilterText(data);
         ValueController value= new ValueController(getContext());
         value.setData(container).run();

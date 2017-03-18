@@ -136,7 +136,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService impleme
                 case REQUEST_GETMENU:
 
                     try {
-                        JSONObject menu = new JSONObject(data).getJSONObject("Widget");
+                        JSONObject menu = new JSONObject(data).getJSONObject("widget");
                         MyPreference.getPreference(getApplicationContext()).setData("menu", menu.toString());
 
                     } catch (JSONException e) {

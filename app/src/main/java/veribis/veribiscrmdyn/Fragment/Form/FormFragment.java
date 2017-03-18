@@ -55,15 +55,18 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
         LayoutId = R.layout.fragment_form;
         formModel = new DataModelForm();
         String field;
-        formModel.Data.put("Id", formProperties.getRecordId());
-        if (formProperties.getWidgets() != null)
-            for (Map<String, Object> w : formProperties.getWidgets()) {
+//        formModel.Data.put("Id", formProperties.getRecordId());
+//        CustomLogger.alert(TAG, "ID===>" + formProperties.getRecordId());
+        if (formProperties.getWidget().getWidgets() != null)
+            for (Map<String, Object> w : formProperties.getWidget().getWidgets()) {
                 field = String.valueOf(w.get("field"));
                 if (!field.equals("null")) {
                     formModel.Data.put(field, "");
                     CustomLogger.alert(TAG, field);
                 }
             }
+        formModel.Data.put("Id", formProperties.getRecordId());
+        CustomLogger.alert(TAG, "ID===>" + formProperties.getRecordId());
         if (formProperties.getParentField() != null) {
             formModel.Data.put(formProperties.getParentField(), formProperties.getParentFieldId());
         }
@@ -78,10 +81,11 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
 
     private void intiWidgets() {
         LinearLayout root = (LinearLayout) getActivity().findViewById(R.id.fargmentForm);
-        widgetFields = new WidgetHelper(root, formProperties.getWidgets()).build();
-        setDataToWidget();
-        if (formProperties.getRecordId() != null)
+        widgetFields = new WidgetHelper(root, formProperties.getWidget().getWidgets()).build();
+        if (formProperties.getRecordId() != null) {
+            setDataToWidget();
             getData();
+        }
     }
 
     private void getData() {

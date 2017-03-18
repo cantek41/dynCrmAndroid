@@ -28,9 +28,9 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-          createDemo();
+          //createDemo();
 
-        getDemoView.getMenu(this);
+      //  getDemoView.getMenu(this);
         setOauth();
         // TODO: 5.2.2017 menu ve dashboard ayarı yapılmalı arkada
 

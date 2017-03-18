@@ -5,6 +5,8 @@ public class MenuItemModel {
   private String icon;
   private String link;
 
+  private String widgetType;
+
   public String getIcon() {
     return icon;
   }
@@ -29,5 +31,12 @@ public class MenuItemModel {
     this.label = label;
   }
 
+  public String getWidgetType() {
+    return widgetType;
+  }
+
+  public void setWidgetType(String widgetType) {
+    this.widgetType = widgetType;
+  }
 }
 

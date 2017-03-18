@@ -65,7 +65,7 @@ public class getFromProp {
     widget.put("widgetType", "TEXT");
     widgets.add(widget);
 
-    listProperties.setWidgets(widgets);
+ //   listProperties.setWidgets(widgets);
     return listProperties;
   }
   public static baseProperties getList() {
@@ -112,7 +112,7 @@ public class getFromProp {
     widget.put("widgetType", "TEXT");
     widgets.add(widget);
 
-    listProperties.setWidgets(widgets);
+  //  listProperties.setWidgets(widgets);
     return listProperties;
   }
 
@@ -270,7 +270,7 @@ public class getFromProp {
 
     widgets.add(widget);
 
-    formProperties.setWidgets(widgets);
+   // formProperties.setWidgets(widgets);
 
     return formProperties;
   }
@@ -336,7 +336,7 @@ public class getFromProp {
 
     widgets.add(widget);
 
-    formProperties.setWidgets(widgets);
+    //formProperties.setWidgets(widgets);
 
     return formProperties;
   }

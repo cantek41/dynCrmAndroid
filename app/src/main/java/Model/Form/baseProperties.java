@@ -42,7 +42,8 @@ public class baseProperties {
 
     private List<String> Buttons;
 
-    private ArrayList<Map<String, Object>> widgets;
+    private Widget widget;
+
 
     public String getRecordId() {
         return recordId;
@@ -161,13 +162,9 @@ public class baseProperties {
         this.parentField = parentField;
     }
 
-    public ArrayList<Map<String, Object>> getWidgets() {
-        return widgets;
-    }
 
-    public void setWidgets(ArrayList<Map<String, Object>> widgets) {
-        this.widgets = widgets;
-    }
+
+
 
     public String getSearchField() {
         return searchField;
@@ -192,4 +189,13 @@ public class baseProperties {
     public void setSqlId(int sqlId) {
         this.sqlId = sqlId;
     }
+
+    public Widget getWidget() {
+        return widget;
+    }
+
+    public void setWidget(Widget widget) {
+        this.widget = widget;
+    }
 }
+

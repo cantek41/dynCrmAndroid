@@ -7,6 +7,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cantekinandroidlib.logger.CustomLogger;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -42,8 +44,6 @@ public abstract class AbstractWidget extends View {
     public void setProp(Map<String, Object> properties) {
         setLabel(String.valueOf(properties.get("label")));
         setField(String.valueOf(properties.get("field")));
-        if (!String.valueOf(properties.get("defaultValue")).isEmpty())
-            setValue(String.valueOf(properties.get("defaultValue")));
         if (properties.get("buttons") instanceof ArrayList)
             smallButtons = (ArrayList<String>) properties.get("buttons");
     }
@@ -81,8 +81,7 @@ public abstract class AbstractWidget extends View {
         return "";
     }
 
-    public void setValue(String data) {
-    }
+    public abstract void setValue(String data);
 
     public String getField() {
         return Field;
