@@ -3,6 +3,8 @@ package com.cantekinandroidlib.webApi;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+import java.net.HttpURLConnection;
+
 /**
  * Created by Cantekin on 25.2.2017.
  */
@@ -23,5 +25,13 @@ public final class OauthHeaders {
         if (token != null)
             headers.set("Authorization", token_type + " " + token);
         return headers;
+    }
+
+    public static HttpURLConnection getHeaders(HttpURLConnection con) {
+        con.setRequestProperty("Accept", "*/*");
+        con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        if (token != null)
+            con.setRequestProperty("Authorization", token_type + " " + token);
+        return con;
     }
 }

@@ -24,6 +24,11 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,121 +42,48 @@ import java.util.Map;
 
 public class RestApi<T> {
     private String TAG = "RestApi";
-    private static String HttpServerErrorExceptionTAG = "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
-    private static String RestClientExceptionTAG = "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
-    private static String ExceptionTAG = "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
     private final String webApiAddress;
-    private HttpHeaders headers;
 
     public void setTAG(String TAG) {
         this.TAG = TAG;
-    }
-
-    /**
-     * Default "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
-     *
-     * @param httpServerErrorExceptionTAG
-     */
-    public void setHttpServerErrorExceptionTAG(String httpServerErrorExceptionTAG) {
-        HttpServerErrorExceptionTAG = httpServerErrorExceptionTAG;
-    }
-
-    /**
-     * Default "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
-     *
-     * @param restClientExceptionTAG
-     */
-    public void setRestClientExceptionTAG(String restClientExceptionTAG) {
-        RestClientExceptionTAG = restClientExceptionTAG;
-    }
-
-    /**
-     * Default "{\"Data\":null,\"Status\":{\"ErrCode\":1,\"Message\":\"Id is Null\"}}";
-     *
-     * @param exceptionTAG
-     */
-    public void setExceptionTAG(String exceptionTAG) {
-        ExceptionTAG = exceptionTAG;
     }
 
     public RestApi(String webApiAddress) {
         this.webApiAddress = webApiAddress;
     }
 
-    public RestApi(String webApiAddress, HttpHeaders headers) {
-        this.webApiAddress = webApiAddress;
-        this.headers = headers;
-    }
-
-    /**
-     * api ye post yapmak için kullanılır,
-     * request modeli gönderilir
-     *
-     * @param requests data
-     * @return Json String
-     */
-    public String Post66(T requests) {
-        RestTemplate restTemplate = new RestTemplate();
-//        MappingJackson2HttpMessageConverter jsonHttpMessageConverter = new MappingJackson2HttpMessageConverter();
-//        jsonHttpMessageConverter.getObjectMapper().configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-//        restTemplate.getMessageConverters().add(jsonHttpMessageConverter);
-//        HttpHeaders headers = OauthHeaders.getHeaders();
-//        for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
-//            List<String> values = Collections.unmodifiableList(entry.getValue());
-//            CustomLogger.alert(entry.getKey(), values.get(0));
-//        }
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "bearer MP985WW1CoHPW_v2bHxYnNHDy3wQsm_wpKEWQNpMArdzC41cmFlhmr7bbJ2CMgAyPvDyhCH5PJhJLLkF39SA2pNc-D0WQfs_Jg7z6skT9Tytf4d4y46jUnjIwqodhwlccXbb1ToRAMqheeZ7Kr1ZSxrVzeOyjpWuPty4Eyqe5z--7Uakj1db3m5L1t6X3Ze88ZE1SBBNE2UUJR-3aHm_3oca9rgOBf0WiJ4ophymRnnl6aV6nXcTXPRSCZ9rMDkP");
-        String response = "";
-        try {
-//            CustomLogger.info(TAG, "Request= " + jsonHelper.objectToJson(requests));
-            response = restTemplate.postForObject(webApiAddress, requests, String.class, headers);
-            CustomLogger.info(TAG, "Response= " + response);
-        } catch (HttpServerErrorException ex) {
-            response = HttpServerErrorExceptionTAG;
-            CustomLogger.error(TAG, "wep api kaynaklı hata, Id gitmermiş olabilir " + ex.getMessage().toString());
-            ex.printStackTrace();
-        } catch (RestClientException ex) {
-            CustomLogger.error(TAG, " SocketException " + ex.getMessage().toString());
-            response = RestClientExceptionTAG;
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            CustomLogger.error(TAG, "Genel Hata " + ex.getMessage().toString());
-            response = RestClientExceptionTAG;
-            ex.printStackTrace();
-        } finally {
-            restTemplate = null;
-        }
-        return response;
-    }
-
     public String Post(T requests) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<T> entity = new HttpEntity<>(requests, OauthHeaders.getHeaders());
-        ResponseEntity result = null;
+        String requestJson = jsonHelper.objectToJson(requests);
         String response = "";
         try {
-            result = restTemplate.exchange(webApiAddress, HttpMethod.POST, entity, String.class);
-            System.out.println(result.getBody().toString());
-            response = result.getBody().toString();
-        } catch (HttpServerErrorException ex) {
-            response = HttpServerErrorExceptionTAG;
-            CustomLogger.error(TAG, "wep api kaynaklı hata, Id gitmermiş olabilir " + ex.getMessage().toString());
-            ex.printStackTrace();
-        } catch (RestClientException ex) {
-            CustomLogger.error(TAG, " SocketException " + ex.getMessage().toString());
-            response = RestClientExceptionTAG;
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            CustomLogger.error(TAG, "Genel Hata " + ex.getMessage().toString());
-            response = RestClientExceptionTAG;
-            ex.printStackTrace();
-        } finally {
-            restTemplate = null;
+            URL url=new URL(webApiAddress);
+            HttpURLConnection urlConnection=(HttpURLConnection)url.openConnection();
+            urlConnection.setRequestMethod("POST");
+            urlConnection=OauthHeaders.getHeaders(urlConnection);
+            OutputStream os = urlConnection.getOutputStream();
+            os.write(requestJson.getBytes("UTF-8"));
+            os.close();
+            urlConnection.connect();
+            if (urlConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + urlConnection.getResponseCode());
+            }
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    (urlConnection.getInputStream())));
+
+            String row;
+            String output="";
+            while ((row = br.readLine()) != null) {
+                output+=row;
+            }
+            urlConnection.disconnect();
+            response=output;
+        } catch (Exception e) {
+            CustomLogger.error(TAG,e.getMessage());
         }
+        CustomLogger.info(TAG,response);
         return response;
     }
-
 
     public String PostToken(MultiValueMap<String, String> map) {
         RestTemplate restTemplate = new RestTemplate();

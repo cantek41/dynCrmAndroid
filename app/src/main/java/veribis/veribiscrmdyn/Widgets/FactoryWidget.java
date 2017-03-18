@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import veribis.veribiscrmdyn.Widgets.Items.WidgetDate;
 import veribis.veribiscrmdyn.Widgets.Items.WidgetDropDown;
 import veribis.veribiscrmdyn.Widgets.Items.WidgetEditView;
 import veribis.veribiscrmdyn.Widgets.Items.WidgetSubForm;
@@ -41,6 +42,9 @@ public final class FactoryWidget {
                 break;
             case DROPDOWN:
                 widget = new WidgetDropDown(contex);
+                break;
+            case DATEPICKER:
+                widget = new WidgetDate(contex);
                 break;
             default:
                 widget = new WidgetTextView(contex);

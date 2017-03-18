@@ -30,7 +30,7 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
           createDemo();
 
-      //  getDemoView.getMenu(this);
+        getDemoView.getMenu(this);
         setOauth();
         // TODO: 5.2.2017 menu ve dashboard ayarı yapılmalı arkada
 

@@ -161,7 +161,8 @@ public class getDemoView {
         Buttons.add("ATTACH");
         formProperties.setButtons(Buttons);
 
-        widgets.add(newWidget("Firma Adı", "Name", "EDITVIEW", null, null, null));
+        widgets.add(newWidget("Firma Adı", "Name", "DATEPICKER", null, null, null));
+        widgets.add(newWidget("Tarih", "CreatedDate", "DATEPICKER", null, null, null));
         widgets.add(newWidget("Lokasyon", "Location", "TEXTVIEW", "LOCATION", null, null));
         widgets.add(newWidget("Mail", "Mail", "TEXTVIEW", "SEND_MAIL", null, null));
         widgets.add(newWidget("Kişiler", null, "SUBFORM", null, "KisiListe", "LIST"));
