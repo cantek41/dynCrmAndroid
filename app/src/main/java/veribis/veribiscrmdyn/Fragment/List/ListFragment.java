@@ -58,8 +58,9 @@ public class ListFragment extends _baseFragment //implements IThreadDelegete, IM
         }
         Sort sort = new Sort();   //= container.getSqlId();
         sort.setDir("asc");
-        if (formProperties.getSortField() != null)
+        if (!formProperties.getSortField().isEmpty()) {
             sort.setField(formProperties.getSortField());
+        }
         else
             sort.setField("Id");
         request.setSort(sort);

@@ -85,7 +85,7 @@ public class ListController implements IMyList, IThreadDelegete {
     public void setRequest() {
         request = new ListRequestModel();
         request.setSqlId(container.getSqlId());
-        Sort sort = new Sort();   //= container.getSqlId();
+        Sort sort = new Sort();
         sort.setDir("asc");
         sort.setField(container.getTextKey());
         request.setSort(sort);
