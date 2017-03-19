@@ -67,9 +67,9 @@ public class MainActivity extends BaseActivity {
                     break;
                 case REQUEST_CAMERA:
                     Object fragment = getSupportFragmentManager().findFragmentById(R.id.content);
-                    CustomLogger.alert(TAG, String.valueOf(intent.getExtras().get("Data")));
                     if (fragment instanceof FormFragment) {
-                        Bitmap photo = (Bitmap) intent.getExtras().get("Data");
+
+                        Bitmap photo = (Bitmap) intent.getExtras().get("data");
                         Uri tempUri = FileConverter.getImageUri(getApplicationContext(), photo);
                         String imagePath = FileConverter.getPath(this, tempUri);
                         ((FormFragment) fragment).uploadFile(new File(imagePath));

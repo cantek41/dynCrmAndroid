@@ -22,7 +22,9 @@ public final class FactoryWidget {
     public static List<AbstractWidget> createViewGroup(Context context, ArrayList<Map<String, Object>> widgets) {
         List<AbstractWidget> result = new ArrayList<>();
         for (Map<String, Object> w : widgets) {
-            result.add(createWidget(context, w));
+            AbstractWidget abstractWidget = createWidget(context, w);
+            if (abstractWidget != null)
+                result.add(abstractWidget);
         }
         return result;
     }
@@ -30,12 +32,14 @@ public final class FactoryWidget {
     public static AbstractWidget createWidget(Context contex, Map<String, Object> properties) {
         AbstractWidget widget = null;
         CustomLogger.alert("factory", String.valueOf(properties.get("widgetType")));
+        if (properties.get("widgetType") == null)
+            return null;
         switch (EnumWidgetTypes.valueOf((String) properties.get("widgetType"))) {
             case TEXTVIEW:
                 widget = new WidgetTextView(contex);
                 break;
             case EDITVIEW:
-                  widget = new WidgetEditView(contex);
+                widget = new WidgetEditView(contex);
                 break;
             case SUBFORM:
                 widget = new WidgetSubForm(contex);

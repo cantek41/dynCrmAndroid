@@ -9,6 +9,7 @@ import com.cantekinandroidlib.customJson.Data.MenuItemModel;
 import com.cantekinandroidlib.customJson.Data.MenuModel;
 import com.cantekinandroidlib.logger.CustomLogger;
 import com.cantekinandroidlib.logger.EnumLogType;
+import com.google.gson.internal.LinkedTreeMap;
 
 import org.junit.Test;
 
@@ -97,70 +98,22 @@ public class jsonHelperTest {
 
     @Test
     public void formJsonTest() throws Exception {
-        FormProperties formProperties = new FormProperties();
 
-        formProperties.setFormName("uniq form name");
-        formProperties.setFormTitle("uTitle");
-        formProperties.setFormType(EnumFragmentType.FORM);
-
-        formProperties.setEntity("Activity");
-
-        formProperties.setParentField("CompanyId");
-
-        formProperties.setActionButtonIsVisible(false);
-        formProperties.setActionButtonLink("uniq Form name");
-        formProperties.setActionButtonFromType(EnumFragmentType.FORM);
-
-
-        ArrayList<Map<String, Object>> widgets = new ArrayList<Map<String, Object>>();
-        ArrayList<String> Buttons = new ArrayList<String>();
-        Buttons.add("SAVE");
-        Buttons.add("CANCEL");
-        Buttons.add("ATTACH");
-        formProperties.setButtons(Buttons);
-        Map<String, Object> widget = new HashMap<String, Object>();
-        widget.put("label", "Description");
-        widget.put("field", "Description");
-        widget.put("widgetType", "EDIT");
-        widget.put("buttons", null);
-        widgets.add(widget);
-        widget = new HashMap<String, Object>();
-        widget.put("label", "Subject");
-        widget.put("field", "Subject");
-        widget.put("widgetType", "EDIT");
-        widget.put("buttons", null);
-        ArrayList<String> btn = new ArrayList<String>();
-        btn.add("CALL");
-        btn.add("LOCATION");
-        widget.put("buttons", btn);
-
-        widgets.add(widget);
-        widget = new HashMap<String, Object>();
-        widget.put("label", "Note");
-        widget.put("field", "Note");
-        widget.put("widgetType", "EDIT");
-        widgets.add(widget);
-
-        widget = new HashMap<String, Object>();
-        widget.put("subForm", "Form1");
-        widget.put("label", "AltForm");
-        widget.put("widgetType", "SUBFORM");
-        widget.put("subFormType", "LIST");
-
-        widgets.add(widget);
-
-        widget = new HashMap<String, Object>();
-        widget.put("subForm", "Form2");
-        widget.put("label", "AltForm");
-        widget.put("widgetType", "SUBFORM");
-        widget.put("subFormType", "FORM");
-
-        widgets.add(widget);
-
-        formProperties.setWidgets(widgets);
-
-        CustomLogger.setLogType(EnumLogType.SYSTEM);
-        CustomLogger.alert("Form Json= ", jsonHelper.objectToJson(formProperties));
+        String dd = "{\n" +
+                "  \"Data\": {\n" +
+                "    \"Id\": 383,\n" +
+                "    \"Subject\": \"Konu\",\n" +
+                "    \"StartDate\": \"2017-03-22T00:00:00\",\n" +
+                "    \"CompanyId\": 283\n" +
+                "  },\n" +
+                "  \"Status\": {\n" +
+                "    \"ErrCode\": 0,\n" +
+                "    \"Message\": null\n" +
+                "  }\n" +
+                "}";
+        LinkedTreeMap ff=jsonHelper.stringToObjectdd(dd);
+        System.out.print(ff.get("Data").toString());
+        CustomLogger.alert("fds",ff.get("Data").toString());
     }
 
 

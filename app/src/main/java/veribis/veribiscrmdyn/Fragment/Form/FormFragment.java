@@ -55,8 +55,6 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
         LayoutId = R.layout.fragment_form;
         formModel = new DataModelForm();
         String field;
-//        formModel.Data.put("Id", formProperties.getRecordId());
-//        CustomLogger.alert(TAG, "ID===>" + formProperties.getRecordId());
         if (formProperties.getWidget().getWidgets() != null)
             for (Map<String, Object> w : formProperties.getWidget().getWidgets()) {
                 field = String.valueOf(w.get("field"));
@@ -67,11 +65,11 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
             }
         formModel.Data.put("Id", formProperties.getRecordId());
         CustomLogger.alert(TAG, "ID===>" + formProperties.getRecordId());
-        if (formProperties.getParentField() != null) {
-            formModel.Data.put(formProperties.getParentField(), formProperties.getParentFieldId());
-        }
+
         return this;
     }
+
+
 
     @Override
     protected void initFragment() {
@@ -85,6 +83,16 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
         if (formProperties.getRecordId() != null) {
             setDataToWidget();
             getData();
+        } else if (formProperties.getParentField() != null) {
+            setParent();
+        }
+    }
+    private void setParent() {
+        formModel.Data.put(formProperties.getParentField(), formProperties.getParentFieldId());
+        for (AbstractWidget w : widgetFields) {
+            if (!w.getField().equals("null") && w.getField().equals(formProperties.getParentField())) {
+                w.setValue(formProperties.getParentFieldId());
+            }
         }
     }
 
@@ -112,7 +120,6 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
         CustomLogger.info(TAG, "ID" + formProperties.getRecordId());
         if (formProperties.getParentField() != null && formProperties.getParentFieldId() != null)
             request.Data.put(formProperties.getParentField(), formProperties.getParentFieldId());
-
 
         for (AbstractWidget w : widgetFields) {
             if (!w.getField().equals("null")) {

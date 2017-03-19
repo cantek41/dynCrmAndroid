@@ -2,6 +2,8 @@ package Data;
 
 import android.content.Context;
 
+import com.cantekinandroidlib.logger.CustomLogger;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,14 +28,14 @@ public class UserDataToPreference {
             if (obj.getString("lists") != null) {
                 JSONArray lists = new JSONArray(obj.getString("lists"));
                 for (int i = 0; i < lists.length(); i++) {
-                    JSONObject lst = lists.getJSONObject(0);
+                    JSONObject lst = lists.getJSONObject(i);
                     MyPreference.getPreference(context).setData(lst.getString("formName"), lst.toString());
                 }
             }
             if (obj.getString("forms") != null) {
                 JSONArray forms = new JSONArray(obj.getString("forms"));
                 for (int i = 0; i < forms.length(); i++) {
-                    JSONObject frm = forms.getJSONObject(0);
+                    JSONObject frm = forms.getJSONObject(i);
                     MyPreference.getPreference(context).setData(frm.getString("formName"), frm.toString());
                 }
             }

@@ -2,6 +2,7 @@ package com.cantekinandroidlib.customJson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -32,5 +33,12 @@ public class jsonHelper {
         if (json == null)
             throw new NullPointerException("json is not null");
         return new Gson().fromJson(json, responseType);
+    }
+
+    public static LinkedTreeMap stringToObjectdd(String json) throws NullPointerException {
+        if (json == null)
+            throw new NullPointerException("json is not null");
+        LinkedTreeMap result =new Gson().fromJson(json , LinkedTreeMap.class);
+        return result;
     }
 }

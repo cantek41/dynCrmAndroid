@@ -72,8 +72,10 @@ public class ListAdapter extends _baseListAdapter {
                         ((MainActivity) getContext())
                                 .showFragment(FragmentFactory.getFragment(newProp.getFormType())
                                         .setProp(newProp));
-                    } else
+                    } else {
+                        CustomLogger.alert(TAG, "Form Adı:" +formProperties.getEditLink());
                         ((MainActivity) getContext()).showMessage("Form bulunamadı");
+                    }
 
                 }
             });

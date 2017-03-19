@@ -11,6 +11,8 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 
+import com.cantekinandroidlib.logger.CustomLogger;
+
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -20,6 +22,8 @@ import java.io.ByteArrayOutputStream;
 public class FileConverter {
 
     public static Uri getImageUri(Context inContext, Bitmap inImage) {
+        if(inImage==null)
+            CustomLogger.alert("IMAGE","NULLL");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "image", null);

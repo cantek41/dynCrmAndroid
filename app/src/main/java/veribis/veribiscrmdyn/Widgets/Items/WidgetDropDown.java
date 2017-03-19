@@ -64,6 +64,8 @@ public class WidgetDropDown extends AbstractWidget implements ISelectableWidget 
 
     @Override
     public String getValue() {
+        if(value==null)
+            return null;
         return String.valueOf((Double.valueOf(value).intValue()));
     }
 
