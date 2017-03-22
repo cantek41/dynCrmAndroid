@@ -68,7 +68,7 @@ public class ListAdapter extends _baseListAdapter {
                     if (newProp != null) {
                         newProp.setParentFieldId(formProperties.getParentFieldId());
                         newProp.setRecordId(value);
-                        CustomLogger.info(TAG, "ID===>" + value.toString());
+//                        CustomLogger.info(TAG, "ID===>" + value.toString());
                         ((MainActivity) getContext())
                                 .showFragment(FragmentFactory.getFragment(newProp.getFormType())
                                         .setProp(newProp));

@@ -4,12 +4,19 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cantekinandroidlib.logger.CustomLogger;
+
+import org.springframework.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Map;
 
+import veribis.veribiscrmdyn.Fragment.Form.FormFragment;
 import veribis.veribiscrmdyn.List.ValueController;
 import veribis.veribiscrmdyn.MainActivity;
+import veribis.veribiscrmdyn.R;
 import veribis.veribiscrmdyn.Widgets.AbstractWidget;
+import veribis.veribiscrmdyn.Widgets.EnumEvetType;
 import veribis.veribiscrmdyn.Widgets.SelectableWidget.ISelectableWidget;
 import veribis.veribiscrmdyn.Widgets.SelectableWidget.SelectableContainer;
 
@@ -19,6 +26,7 @@ import veribis.veribiscrmdyn.Widgets.SelectableWidget.SelectableContainer;
 public class WidgetDropDown extends AbstractWidget implements ISelectableWidget {
     private String textKey, valueKey;
     private String value;
+    private String casCade;
     private int sqlId;
     ISelectableWidget sWidget = this;
 
@@ -40,6 +48,15 @@ public class WidgetDropDown extends AbstractWidget implements ISelectableWidget 
                 container.setSqlId(sqlId);
                 container.setTextKey(textKey);
                 container.setValueKey(valueKey);
+                if (StringUtils.hasText(casCade)) {
+                    CustomLogger.alert("casCade22", casCade);
+                    container.setValueKey(casCade);
+                    String val = ((FormFragment) ((MainActivity) getContext())
+                            .getSupportFragmentManager()
+                            .findFragmentById(R.id.content))
+                            .getValueByWidget(casCade);
+                    container.setFilterText(val);
+                }
                 ((MainActivity) getContext()).onListDialog(container);
             }
         });
@@ -50,21 +67,27 @@ public class WidgetDropDown extends AbstractWidget implements ISelectableWidget 
         super.setProp(properties);
         valueKey = String.valueOf(properties.get("valueKey"));
         textKey = String.valueOf(properties.get("textKey"));
-        if (properties.get("sqlId")!=null) {
-            sqlId=((Double)properties.get("sqlId")).intValue();
-        }
-        else
+        if (properties.get("cascade") != null)
+            casCade = String.valueOf(properties.get("cascade"));
+        if (properties.get("sqlId") != null) {
+            CustomLogger.alert("sq", String.valueOf(properties.get("sqlId")));
+            if (properties.get("sqlId") instanceof Double)
+                sqlId = ((Double) properties.get("sqlId")).intValue();
+            else if (properties.get("sqlId") instanceof Integer)
+                sqlId = ((Integer) properties.get("sqlId"));
+            else sqlId = Integer.valueOf(String.valueOf(properties.get("sqlId")));
+        } else
             sqlId = 0;
 
-      /* bu şeilde olmalı
-        sqlId=31;
-        valueKey="Id";
-        textKey="AdSoyad";*/
+        // bu şeilde olmalı
+//        sqlId = 31;
+//        valueKey = "Id";
+//        textKey = "AdSoyad";
     }
 
     @Override
     public String getValue() {
-        if(value==null)
+        if (value == null)
             return null;
         return String.valueOf((Double.valueOf(value).intValue()));
     }
@@ -72,13 +95,14 @@ public class WidgetDropDown extends AbstractWidget implements ISelectableWidget 
 
     @Override
     public void setValue(String data) {
+        CustomLogger.alert("setValue", data);
         SelectableContainer container = new SelectableContainer();
         container.setTextKey(textKey);
         container.setValueKey(valueKey);
         container.setWidget(this);
         container.setSqlId(sqlId);
         container.setFilterText(data);
-        ValueController value= new ValueController(getContext());
+        ValueController value = new ValueController(getContext());
         value.setData(container).run();
     }
 

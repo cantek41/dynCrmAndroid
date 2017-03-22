@@ -87,6 +87,11 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
             setParent();
         }
     }
+
+    /**
+     * alt form olarak açılmışsa ü
+     * üst fromdan gelen datayı yerleştir
+     */
     private void setParent() {
         formModel.Data.put(formProperties.getParentField(), formProperties.getParentFieldId());
         for (AbstractWidget w : widgetFields) {
@@ -96,6 +101,25 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
         }
     }
 
+    /**
+     * gönderilen fieldın datasını çeker
+     * @param fieldName
+     * @return
+     */
+    public String getValueByWidget(String fieldName) {
+        String result=null;
+        for (AbstractWidget w : widgetFields) {
+            if (w.getField().equals(fieldName)) {
+                result = w.getValue();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Id si olan
+     * yani edit edilecek kaydın datalarını çek
+     */
     private void getData() {
         if (!isConnection())
             return;
@@ -103,10 +127,8 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
         UpdateRequestModel request = new UpdateRequestModel();
         request.entity = formProperties.getEntity();
         request.Data = formModel.Data;
-
-        new ThreadWebApiPost<UpdateRequestModel>(REQUEST_READ, this, request, webApiGetDAtaAddress).execute();
+        new ThreadWebApiPost<>(REQUEST_READ, this, request, webApiGetDAtaAddress).execute();
         ((MainActivity) getActivity()).showProgress("Data Getiriliyor");
-
     }
 
 
@@ -139,7 +161,9 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
             menu = MenuButtonBuilder.getMenuButtons(this, menu, button);
     }
 
-
+    /**
+     * dataları widgetlere yerleştir
+     */
     private void setDataToWidget() {
         for (AbstractWidget w : widgetFields) {
             if (!w.getField().equals("null") && formModel.Data.get(w.getField().toString()) != null) {
@@ -149,6 +173,10 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
         }
     }
 
+    /**
+     * attach edilen dosyayı servara gönder
+     * @param file
+     */
     public void uploadFile(File file) {
         ((MainActivity) getActivity()).showMessage("dosyaGonder");
 

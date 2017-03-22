@@ -11,12 +11,13 @@ import java.util.List;
 import java.util.Map;
 
 import Data.MyPreference;
+import Model.Form.Widget;
 import Model.Form.baseProperties;
 import veribis.veribiscrmdyn.Fragment.EnumFragmentType;
-import veribis.veribiscrmdyn.Menu.Data.EnumMenuItem;
 import veribis.veribiscrmdyn.Menu.Data.MenuGroupModel;
 import veribis.veribiscrmdyn.Menu.Data.MenuItemModel;
 import veribis.veribiscrmdyn.Menu.Data.MenuModel;
+import veribis.veribiscrmdyn.Menu.Data.Row;
 
 /**
  * Created by Cantekin on 15.2.2017.
@@ -34,10 +35,10 @@ public class getDemoView {
         item.setLabel("Firmalar");
         item.setLink("FirmaListe");
         item.setIcon("ic_menu_share");
-
         items.add(item);
-
-      //  grup.setData(items);
+        Row r=new Row();
+        r.setRow(items);
+        grup.setData(r);
         groups.add(grup);
 
         grup = new MenuGroupModel();
@@ -51,7 +52,9 @@ public class getDemoView {
         item.setIcon("ic_menu_share");
 
         items.add(item);
-
+        r=new Row();
+        r.setRow(items);
+        grup.setData(r);
        // grup.setData(items);
 
 
@@ -88,6 +91,9 @@ public class getDemoView {
         item.setIcon("ic_menu_share");
 
         items.add(item);
+        r=new Row();
+        r.setRow(items);
+        grup.setData(r);
        // grup.setData(items);
 
         grup = new MenuGroupModel();
@@ -102,6 +108,9 @@ public class getDemoView {
 
 
         items.add(item);
+        r=new Row();
+        r.setRow(items);
+        grup.setData(r);
      //   grup.setData(items);
         groups.add(grup);
         menuModel.setGroup(groups);
@@ -115,9 +124,9 @@ public class getDemoView {
         listProperties.setFormTitle("Firmalar");
         listProperties.setEntity("Company");
         listProperties.setFormType(EnumFragmentType.LIST);
-
-        listProperties.setSearchField("Name");
-        listProperties.setSortField("Name");
+        listProperties.setSqlId(499);
+        listProperties.setSearchField("Firma");
+        listProperties.setSortField("Firma");
 
         //listProperties.setParentField("Priority");//ilişikili alan
 
@@ -131,12 +140,11 @@ public class getDemoView {
         listProperties.setListPageSize(10);
 
         ArrayList<Map<String, Object>> widgets = new ArrayList<>();
-        widgets.add(newWidget("Firma Adı", "Name", "TEXT", null, null, null));
-        widgets.add(newWidget("Id", "Id", "TEXT", null, null, null));
-        widgets.add(newWidget("Mail", "Mail", "TEXT", null, null, null));
-        widgets.add(newWidget("Web", "Web", "TEXT", null, null, null));
-
-      //  listProperties.setWidgets(widgets);
+        widgets.add(newWidget("Firma Adı", "Firma", "TEXT", null, null, null, null));
+        widgets.add(newWidget("Id", "Tur", "TEXT", null, null, null, null));
+        Widget d=new Widget();
+        d.setWidgets(widgets);
+        listProperties.setWidget(d);
         CustomLogger.alert("ornbek", jsonHelper.objectToJson(listProperties));
 
         MyPreference.getPreference(context).setData(listProperties.getFormName(), jsonHelper.objectToJson(listProperties));
@@ -161,16 +169,20 @@ public class getDemoView {
         Buttons.add("ATTACH");
         formProperties.setButtons(Buttons);
 
-        widgets.add(newWidget("Firma Adı", "Name", "DATEPICKER", null, null, null));
-        widgets.add(newWidget("Tarih", "CreatedDate", "DATEPICKER", null, null, null));
-        widgets.add(newWidget("Tarih", "ModifiedDate", "TIMEPICKER", null, null, null));
-        widgets.add(newWidget("Lokasyon", "Location", "TEXTVIEW", "LOCATION", null, null));
-        widgets.add(newWidget("Mail", "Mail", "TEXTVIEW", "SEND_MAIL", null, null));
-        widgets.add(newWidget("Kişiler", null, "SUBFORM", null, "KisiListe", "LIST"));
-        widgets.add(newWidget("Aktiviteler", null, "SUBFORM", null, "AktiviteList", "LIST"));
-        widgets.add(newWidget("Siparişler", null, "SUBFORM", null, "SiparisList", "LIST"));
+        widgets.add(newWidgetDROPDOWN("Firma Adı", "Id", "DROPDOWN",null,"499","Id","Firma",null));
+        widgets.add(newWidgetDROPDOWN("Kişi", "CreatedUser", "DROPDOWN", null,"502","Id","Yetkili","Id"));
+        widgets.add(newWidget("ddD", "CreatedDate", "DROPDOWN", null, null, null, "Id"));
+        widgets.add(newWidget("Tarih", "ModifiedDate", "TIMEPICKER", null, null, null, null));
+        widgets.add(newWidget("Lokasyon", "Location", "TEXTVIEW", "LOCATION", null, null, null));
+        widgets.add(newWidget("Mail", "Mail", "TEXTVIEW", "SEND_MAIL", null, null, null));
+        widgets.add(newWidget("Kişiler", null, "SUBFORM", null, "KisiListe", "LIST", null));
+        widgets.add(newWidget("Aktiviteler", null, "SUBFORM", null, "AktiviteList", "LIST", null));
+        widgets.add(newWidget("Siparişler", null, "SUBFORM", null, "SiparisList", "LIST", null));
 
-      //  formProperties.setWidgets(widgets);
+        Widget d=new Widget();
+        d.setWidgets(widgets);
+        formProperties.setWidget(d);
+
         CustomLogger.alert("ornbek", jsonHelper.objectToJson(formProperties));
 
         MyPreference.getPreference(context).setData(formProperties.getFormName(), jsonHelper.objectToJson(formProperties));
@@ -200,10 +212,10 @@ public class getDemoView {
 
         ArrayList<Map<String, Object>> widgets = new ArrayList<>();
 
-        widgets.add(newWidget("Adı", "Name", "EDITVIEW", null, null, null));
-        widgets.add(newWidget("Soyad", "SurName", "EDITVIEW", null, null, null));
-        widgets.add(newWidget("Id", "Id", "EDITVIEW", null, null, null));
-        widgets.add(newWidget("Mail", "Mail", "EDITVIEW", null, null, null));
+        widgets.add(newWidget("Adı", "Name", "EDITVIEW", null, null, null, null));
+        widgets.add(newWidget("Soyad", "SurName", "EDITVIEW", null, null, null, null));
+        widgets.add(newWidget("Id", "Id", "EDITVIEW", null, null, null, null));
+        widgets.add(newWidget("Mail", "Mail", "EDITVIEW", null, null, null, null));
 
 
      //   listProperties.setWidgets(widgets);
@@ -229,9 +241,9 @@ public class getDemoView {
         formProperties.setButtons(Buttons);
 
 
-        widgets.add(newWidget("Ad", "Name", "EDITVIEW", null, null, null));
-        widgets.add(newWidget("Soyad", "SurName", "EDITVIEW", null, null, null));
-        widgets.add(newWidget("Email", "Mail", "EDITVIEW", "SEND_MAIL", null, null));
+        widgets.add(newWidget("Ad", "Name", "EDITVIEW", null, null, null, null));
+        widgets.add(newWidget("Soyad", "SurName", "EDITVIEW", null, null, null, null));
+        widgets.add(newWidget("Email", "Mail", "EDITVIEW", "SEND_MAIL", null, null, null));
 
       //  formProperties.setWidgets(widgets);
 
@@ -264,10 +276,10 @@ public class getDemoView {
 
         ArrayList<Map<String, Object>> widgets = new ArrayList<>();
 
-        widgets.add(newWidget("Konu", "Subject", "TEXT", null, null, null));
-        widgets.add(newWidget("Id", "Id", "TEXT", null, null, null));
-        widgets.add(newWidget("Tarih", "StartDate", "TEXT", null, null, null));
-        widgets.add(newWidget("Not", "Note", "TEXT", null, null, null));
+        widgets.add(newWidget("Konu", "Subject", "TEXT", null, null, null, null));
+        widgets.add(newWidget("Id", "Id", "TEXT", null, null, null, null));
+        widgets.add(newWidget("Tarih", "StartDate", "TEXT", null, null, null, null));
+        widgets.add(newWidget("Not", "Note", "TEXT", null, null, null, null));
 
       //  listProperties.setWidgets(widgets);
         MyPreference.getPreference(context).setData(listProperties.getFormName(), jsonHelper.objectToJson(listProperties));
@@ -291,10 +303,10 @@ public class getDemoView {
         Buttons.add("CANCEL");
         formProperties.setButtons(Buttons);
 
-        widgets.add(newWidget("Konu", "Subject", "EDITVIEW", null, null, null));
-        widgets.add(newWidget("Not", "Note", "EDITVIEW", null, null, null));
-        widgets.add(newWidget("Tarih", "StartDate", "EDITVIEW", null, null, null));
-        widgets.add(newWidget("Yer", "Note", "TEXTVIEW", "BARCODE", null, null));
+        widgets.add(newWidget("Konu", "Subject", "EDITVIEW", null, null, null, null));
+        widgets.add(newWidget("Not", "Note", "EDITVIEW", null, null, null, null));
+        widgets.add(newWidget("Tarih", "StartDate", "EDITVIEW", null, null, null, null));
+        widgets.add(newWidget("Yer", "Note", "TEXTVIEW", "BARCODE", null, null, null));
 
       //  formProperties.setWidgets(widgets);
 
@@ -320,8 +332,8 @@ public class getDemoView {
         Buttons.add("CANCEL");
         formProperties.setButtons(Buttons);
 
-        widgets.add(newWidget("Tarih", "StartDate", "EDITVIEW", null, null, null));
-        widgets.add(newWidget("Yer", "Note", "TEXTVIEW", "BARCODE", null, null));
+        widgets.add(newWidget("Tarih", "StartDate", "EDITVIEW", null, null, null, null));
+        widgets.add(newWidget("Yer", "Note", "TEXTVIEW", "BARCODE", null, null, null));
 
       //  formProperties.setWidgets(widgets);
 
@@ -347,8 +359,8 @@ public class getDemoView {
         Buttons.add("CANCEL");
         formProperties.setButtons(Buttons);
 
-        widgets.add(newWidget("Tarih", "StartDate", "EDITVIEW", null, null, null));
-        widgets.add(newWidget("Yer", "Note", "TEXTVIEW", "BARCODE", null, null));
+        widgets.add(newWidget("Tarih", "StartDate", "EDITVIEW", null, null, null, null));
+        widgets.add(newWidget("Yer", "Note", "TEXTVIEW", "BARCODE", null, null, null));
 
      //   formProperties.setWidgets(widgets);
 
@@ -374,8 +386,8 @@ public class getDemoView {
         Buttons.add("CANCEL");
         formProperties.setButtons(Buttons);
 
-        widgets.add(newWidget("Tarih", "StartDate", "EDITVIEW", null, null, null));
-        widgets.add(newWidget("Yer", "Note", "TEXTVIEW", "BARCODE", null, null));
+        widgets.add(newWidget("Tarih", "StartDate", "EDITVIEW", null, null, null, null));
+        widgets.add(newWidget("Yer", "Note", "TEXTVIEW", "BARCODE", null, null, null));
 
        // formProperties.setWidgets(widgets);
 
@@ -408,9 +420,9 @@ public class getDemoView {
 
         ArrayList<Map<String, Object>> widgets = new ArrayList<>();
 
-        widgets.add(newWidget("Konu", "Subject", "TEXT", null, null, null));
-        widgets.add(newWidget("Id", "Id", "TEXT", null, null, null));
-        widgets.add(newWidget("Tarih", "DocumentDate", "TEXT", null, null, null));
+        widgets.add(newWidget("Konu", "Subject", "TEXT", null, null, null, null));
+        widgets.add(newWidget("Id", "Id", "TEXT", null, null, null, null));
+        widgets.add(newWidget("Tarih", "DocumentDate", "TEXT", null, null, null, null));
 
       //  listProperties.setWidgets(widgets);
         MyPreference.getPreference(context).setData(listProperties.getFormName(), jsonHelper.objectToJson(listProperties));
@@ -434,8 +446,8 @@ public class getDemoView {
         Buttons.add("CANCEL");
         formProperties.setButtons(Buttons);
 
-        widgets.add(newWidget("Konu", "Subject", "EDITVIEW", null, null, null));
-        widgets.add(newWidget("Tarih", "DocumentDate", "EDITVIEW", null, null, null));
+        widgets.add(newWidget("Konu", "Subject", "EDITVIEW", null, null, null, null));
+        widgets.add(newWidget("Tarih", "DocumentDate", "EDITVIEW", null, null, null, null));
 
     //    formProperties.setWidgets(widgets);
 
@@ -444,7 +456,27 @@ public class getDemoView {
                         jsonHelper.objectToJson(formProperties));
     }
 
-    private static Map<String, Object> newWidget(String label, String field, String wType, String wbtn, String subForm, String SubFormType) {
+    private static Map<String, Object> newWidgetDROPDOWN(String label, String field, String wType, String wbtn,String sqlId,String valueKey,String textKey, String cascade) {
+        Map<String, Object> widget = new HashMap<>();
+        widget.put("label", label);
+        if (field != null)
+            widget.put("field", field);
+        widget.put("widgetType", wType);
+        widget.put("valueKey", valueKey);
+        widget.put("textKey", textKey);
+        widget.put("sqlId", sqlId);
+        widget.put("cascade", cascade);
+//        sqlId=31;
+//        valueKey="Id";
+//        textKey="AdSoyad";
+        if (wbtn != null) {
+            ArrayList<String> btn = new ArrayList<>();
+            btn.add(wbtn);
+            widget.put("buttons", btn);
+        }
+        return widget;
+    }
+    private static Map<String, Object> newWidget(String label, String field, String wType, String wbtn, String subForm, String SubFormType, String cascade) {
         Map<String, Object> widget = new HashMap<>();
         widget.put("label", label);
         if (field != null)
@@ -452,6 +484,7 @@ public class getDemoView {
         widget.put("widgetType", wType);
         widget.put("subForm", subForm);
         widget.put("subFormType", SubFormType);
+        widget.put("cascade", cascade);
         if (wbtn != null) {
             ArrayList<String> btn = new ArrayList<>();
             btn.add(wbtn);
