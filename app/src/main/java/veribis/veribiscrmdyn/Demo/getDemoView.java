@@ -142,6 +142,7 @@ public class getDemoView {
         ArrayList<Map<String, Object>> widgets = new ArrayList<>();
         widgets.add(newWidget("Firma Adı", "Firma", "TEXT", null, null, null, null));
         widgets.add(newWidget("Id", "Tur", "TEXT", null, null, null, null));
+
         widgets.add(newWidget("Id", "Id", "TEXT", null, null, null, null));
 
         Widget d=new Widget();
@@ -172,9 +173,11 @@ public class getDemoView {
         formProperties.setButtons(Buttons);
 
         widgets.add(newWidgetDROPDOWN("Firma Adı", "Id", "DROPDOWN",null,"499","Id","Firma",null));
+
         widgets.add(newWidgetDROPDOWN("Kişi", "CompanyTown", "DROPDOWN", null,"502","Id","Yetkili","Id"));
     //    widgets.add(newWidget("ddD6", "CompanyTown", "DROPDOWN", null, null, null, "Id"));
     //    widgets.add(newWidget("Tarih", "ModifiedDate", "TIMEPICKER", null, null, null, null));
+
         widgets.add(newWidget("Lokasyon", "Location", "TEXTVIEW", "LOCATION", null, null, null));
         widgets.add(newWidget("Mail", "Mail", "TEXTVIEW", "SEND_MAIL", null, null, null));
         widgets.add(newWidget("Kişiler", null, "SUBFORM", null, "KisiListe", "LIST", null));
