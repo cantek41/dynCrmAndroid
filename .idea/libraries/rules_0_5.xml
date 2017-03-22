@@ -5,8 +5,8 @@
       <root url="jar://$PROJECT_DIR$/cantekinandroidlibrary/build/intermediates/exploded-aar/com.android.support.test/rules/0.5/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/0ac008905701a244dca448f5aa8179e74f40e7e8/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/0ac008905701a244dca448f5aa8179e74f40e7e8/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/3915fa4f10bd18e0b1cd2c73e3c3122007270565/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/3915fa4f10bd18e0b1cd2c73e3c3122007270565/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

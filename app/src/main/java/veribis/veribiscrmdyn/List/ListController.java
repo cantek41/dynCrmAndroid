@@ -95,9 +95,25 @@ public class ListController implements IMyList, IThreadDelegete {
         fields.add(container.getTextKey());
         fields.add(container.getValueKey());
         request.setFields(fields);
+        if(container.getFilterText()!=null && container.getFilterText()!="") {
+            CustomLogger.alert(TAG,"filter");
+            Filter filter = new Filter();
+            filter.setField(container.getValueKey());
+            if (isNumeric(container.getFilterText())) {
+                filter.setOp("eq");
+                filter.setVal1(Double.valueOf(container.getFilterText()).intValue());
+            } else {
+                filter.setOp("starts");
+                filter.setVal1(container.getFilterText());
+            }
+            request.setFilter(filter);
+        }
     }
 
 
+    public boolean isNumeric(String s) {
+        return s.matches("[-+]?\\d*\\.?\\d+");
+    }
 
     private void changeRequest(String text) {
         Filter filter = new Filter();

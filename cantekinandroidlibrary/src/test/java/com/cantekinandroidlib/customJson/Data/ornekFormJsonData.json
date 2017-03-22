@@ -1,0 +1,49 @@
+{
+  "formName": "uniq form name",
+  "formTitle": "uTitle",
+  "entity": "Activity",
+  "formType": "FORM",
+  "actionButtonLink": "uniq Form name",
+  "actionButtonIsVisible": false,
+  "actionButtonFromType": "FORM",
+  "parentField": "CompanyId",
+  "Buttons": [
+    "SAVE",
+    "CANCEL",
+    "ATTACH"
+  ],
+  "widgets": [
+    {
+      "field": "Description",
+      "label": "Description",
+      "widgetType": "EDIT",
+      "REQU":"TRUE"
+    },
+    {
+      "buttons": [
+        "CALL",
+        "LOCATION"
+      ],
+      "field": "Subject",
+      "label": "Subject",
+      "widgetType": "EDIT"
+    },
+    {
+      "field": "Note",
+      "label": "Note",
+      "widgetType": "EDIT"
+    },
+    {
+      "label": "AltForm",
+      "subFormType": "LIST",
+      "subForm": "Form1",
+      "widgetType": "SUBFORM"
+    },
+    {
+      "label": "AltForm",
+      "subFormType": "FORM",
+      "subForm": "Form2",
+      "widgetType": "SUBFORM"
+    }
+  ]
+}
