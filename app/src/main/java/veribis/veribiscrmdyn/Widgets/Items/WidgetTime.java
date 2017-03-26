@@ -1,14 +1,12 @@
 package veribis.veribiscrmdyn.Widgets.Items;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
-
-import com.cantekinandroidlib.logger.CustomLogger;
+import android.widget.TimePicker;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -18,22 +16,18 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
-import veribis.veribiscrmdyn.List.ValueController;
-import veribis.veribiscrmdyn.MainActivity;
 import veribis.veribiscrmdyn.Widgets.AbstractWidget;
-import veribis.veribiscrmdyn.Widgets.SelectableWidget.ISelectableWidget;
-import veribis.veribiscrmdyn.Widgets.SelectableWidget.SelectableContainer;
 
 /**
  * Created by Cantekin on 23.1.2017.
  */
-public class WidgetDate extends AbstractWidget {
+public class WidgetTime extends AbstractWidget {
     private String format;
     private Date value;
     private DateFormat dateFormatter;
-    private final String defaultFormat = "dd.MM.yyyy";
+    private final String defaultFormat = "dd.MM.yyyy HH:mm";
 
-    public WidgetDate(Context context) {
+    public WidgetTime(Context context) {
         super(context);
         widget = new TextView(context);
     }
@@ -42,28 +36,40 @@ public class WidgetDate extends AbstractWidget {
     public void init() {
         TextView v = (TextView) widget;
         v.setTextSize(15);
-        value =new Date();
+        value = new Date();
         setText();
         v.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR);
-                int mMonth = c.get(Calendar.MONTH);
-                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                final int mYear = c.get(Calendar.YEAR);
+                final int mMonth = c.get(Calendar.MONTH);
+                final int mDay = c.get(Calendar.DAY_OF_MONTH);
+                final int hour = c.get(Calendar.HOUR_OF_DAY);
+                final int minute = c.get(Calendar.MINUTE);
+
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                Calendar newDate = Calendar.getInstance();
-                                newDate.set(year, monthOfYear, dayOfMonth);
-                                value = newDate.getTime();
-                                setText();
+                            public void onDateSet(DatePicker view, final int year,
+                                                  final int monthOfYear, final int dayOfMonth) {
+                                TimePickerDialog timePickerDialog;
+                                timePickerDialog = new TimePickerDialog(getContext(),
+                                        new TimePickerDialog.OnTimeSetListener() {
+                                            @Override
+                                            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                                                Calendar newDate = Calendar.getInstance();
+                                                newDate.set(year, monthOfYear, dayOfMonth, selectedHour, selectedMinute);
+                                                value = newDate.getTime();
+                                                setText();
+                                            }
+                                        }, hour, minute, true);
+                                timePickerDialog.show();
                             }
                         }, mYear, mMonth, mDay);
                 datePickerDialog.show();
             }
         });
+
     }
 
     @Override

@@ -13,6 +13,7 @@ import veribis.veribiscrmdyn.Widgets.Items.WidgetDropDown;
 import veribis.veribiscrmdyn.Widgets.Items.WidgetEditView;
 import veribis.veribiscrmdyn.Widgets.Items.WidgetSubForm;
 import veribis.veribiscrmdyn.Widgets.Items.WidgetTextView;
+import veribis.veribiscrmdyn.Widgets.Items.WidgetTime;
 
 /**
  * Created by Cantekin on 23.1.2017.
@@ -49,6 +50,9 @@ public final class FactoryWidget {
                 break;
             case DATEPICKER:
                 widget = new WidgetDate(contex);
+                break;
+            case TIMEPICKER:
+                widget = new WidgetTime(contex);
                 break;
             default:
                 widget = new WidgetTextView(contex);

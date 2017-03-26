@@ -41,7 +41,7 @@ public class WidgetNavigationButtonCommand extends IWidgetButton implements IWid
       float latitude = Float.valueOf(location[0]);// 55.758192f;
       float longitude = Float.valueOf(location[1]);// 37.642817f;
       String uriBegin = "geo:" + latitude + "," + longitude;
-      String query = latitude + "," + longitude + "(Hedef)";
+      String query = latitude + "," + longitude ;
       String encodedQuery = Uri.encode(query);
       String uriString = uriBegin + "?q=" + encodedQuery + "&z=16";
       Uri uri = Uri.parse(uriString);

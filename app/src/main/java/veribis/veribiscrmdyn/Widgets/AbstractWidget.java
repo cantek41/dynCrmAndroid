@@ -25,6 +25,9 @@ public abstract class AbstractWidget extends View {
     public View widget;
     protected ArrayList<String> smallButtons;
     private static float weight = 0.8f;
+    private int visible = VISIBLE;
+    public boolean required = false;
+    private boolean enable = true;
 
     public void setWeight(float weight) {
         AbstractWidget.weight = weight;
@@ -46,6 +49,15 @@ public abstract class AbstractWidget extends View {
         setField(String.valueOf(properties.get("field")));
         if (properties.get("buttons") instanceof ArrayList)
             smallButtons = (ArrayList<String>) properties.get("buttons");
+
+        if (properties.get("visible") != null && !Boolean.parseBoolean(String.valueOf(properties.get("visible"))))
+            visible = GONE;
+
+        if (properties.get("enable") != null && !Boolean.parseBoolean(String.valueOf(properties.get("enable"))))
+            enable = false;
+
+        if (properties.get("required") != null && Boolean.parseBoolean(String.valueOf(properties.get("required"))))
+            required = true;
     }
 
     public LinearLayout getLayout() {
@@ -74,13 +86,14 @@ public abstract class AbstractWidget extends View {
         content.setWeightSum(weight + buttonsWeight);
         rowLayout.addView(labelView);
         rowLayout.addView(content);
+        rowLayout.setVisibility(visible);
+        rowLayout.setEnabled(enable);
         return rowLayout;
     }
 
     public String getValue() {
         return "";
     }
-
     public abstract void setValue(String data);
 
     public String getField() {

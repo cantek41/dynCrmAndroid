@@ -46,9 +46,6 @@ public class LoginActivity extends BaseActivity implements IThreadDelegete {
         Button loginBtn = (Button) findViewById(R.id.btnLogin);
         userName = (EditText) findViewById(R.id.edtUserName);
         password = (EditText) findViewById(R.id.pswPassword);
-        // TODO: 10.3.2017 sil
-        userName.setText("erkan");
-        password.setText("deneme");
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

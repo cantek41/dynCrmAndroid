@@ -69,7 +69,7 @@ public class WidgetDropDown extends AbstractWidget implements ISelectableWidget 
         textKey = String.valueOf(properties.get("textKey"));
         if (properties.get("cascade") != null)
             casCade = String.valueOf(properties.get("cascade"));
-        if (properties.get("sqlId") != null) {
+        if (properties.get("sqlId") != null && StringUtils.hasText(String.valueOf(properties.get("sqlId")))) {
             CustomLogger.alert("sq", String.valueOf(properties.get("sqlId")));
             if (properties.get("sqlId") instanceof Double)
                 sqlId = ((Double) properties.get("sqlId")).intValue();

@@ -46,6 +46,8 @@ public class baseProperties {
 
 
     public String getRecordId() {
+        if (recordId == "" || recordId == null || recordId == "null")
+            recordId = "0";
         return recordId;
     }
 
@@ -87,7 +89,6 @@ public class baseProperties {
     public void setParentFieldId(String parentFieldId) {
         this.parentFieldId = parentFieldId;
     }
-
 
 
     public String getFormName() {
@@ -161,9 +162,6 @@ public class baseProperties {
     public void setParentField(String parentField) {
         this.parentField = parentField;
     }
-
-
-
 
 
     public String getSearchField() {

@@ -70,7 +70,6 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
     }
 
 
-
     @Override
     protected void initFragment() {
         super.initFragment();
@@ -80,7 +79,7 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
     private void intiWidgets() {
         LinearLayout root = (LinearLayout) getActivity().findViewById(R.id.fargmentForm);
         widgetFields = new WidgetHelper(root, formProperties.getWidget().getWidgets()).build();
-        if (formProperties.getRecordId() != null) {
+        if (formProperties.getRecordId() != null && formProperties.getRecordId()!="0") {
             setDataToWidget();
             getData();
         } else if (formProperties.getParentField() != null) {
@@ -103,11 +102,12 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
 
     /**
      * gönderilen fieldın datasını çeker
+     *
      * @param fieldName
      * @return
      */
     public String getValueByWidget(String fieldName) {
-        String result=null;
+        String result = null;
         for (AbstractWidget w : widgetFields) {
             if (w.getField().equals(fieldName)) {
                 result = w.getValue();
@@ -144,6 +144,12 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
             request.Data.put(formProperties.getParentField(), formProperties.getParentFieldId());
 
         for (AbstractWidget w : widgetFields) {
+            if (w.required && w.getValue().equals("")) {
+                ((MainActivity) getActivity()).showMessage(w.getLabel() + " boş olamaz");
+                return;
+            }
+            CustomLogger.info(TAG+"--->", w.getField() + w.getValue()+String.valueOf(w.required));
+
             if (!w.getField().equals("null")) {
                 CustomLogger.info(TAG, w.getField() + w.getValue());
                 request.Data.put(w.getField(), w.getValue());
@@ -175,6 +181,7 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
 
     /**
      * attach edilen dosyayı servara gönder
+     *
      * @param file
      */
     public void uploadFile(File file) {
