@@ -45,17 +45,18 @@ public final class CustomLogger {
     }
 
     public static void alert(String TAG, String message) {
-        switch (getLogType()) {
-            case LOGCAT:
-                Log.w(TAG, message);
-                break;
-            case WEBAPI:
-                //TODO: webapi logger yapılacak
-                break;
-            case SYSTEM:
-                System.out.format("TAG=%s %n Message=%s %n", TAG, message);
-                break;
-        }
+        if (message != null)
+            switch (getLogType()) {
+                case LOGCAT:
+                    Log.w(TAG, message);
+                    break;
+                case WEBAPI:
+                    //TODO: webapi logger yapılacak
+                    break;
+                case SYSTEM:
+                    System.out.format("TAG=%s %n Message=%s %n", TAG, message);
+                    break;
+            }
     }
 
     public static void info(String TAG, String message) {

@@ -64,18 +64,22 @@ public abstract class _baseFragment extends Fragment {
     }
 
     public void fabOnClick() {
-        baseProperties newProp = MyPreference.getPreference(getContext()).getData(formProperties.getEditLink(), baseProperties.class);
+        baseProperties newProp = MyPreference.getPreference(getContext()).getData(formProperties.getActionButtonLink(), baseProperties.class);
         if (newProp == null) {
-            ((MainActivity) getActivity()).showMessage("form is null");
+            ((MainActivity) getActivity()).showMessage(formProperties.getActionButtonLink() + " form is null");
             return;
         }
-        newProp.setParentFieldId(formProperties.getParentFieldId());
+        if (formProperties.getFormType() == EnumFragmentType.FORM || formProperties.getFormType() == EnumFragmentType.SUBFORM )
+            newProp.setParentFieldId(formProperties.getRecordId());
+        else if (formProperties.getFormType() == EnumFragmentType.LIST)
+            newProp.setParentFieldId(formProperties.getParentFieldId());
+
         ((MainActivity) getActivity())
                 .showFragment(FragmentFactory.getFragment(newProp.getFormType())
                         .setProp(newProp));
     }
 
     protected boolean isConnection() {
-        return ((BaseActivity)getActivity()).isConnection();
+        return ((BaseActivity) getActivity()).isConnection();
     }
 }

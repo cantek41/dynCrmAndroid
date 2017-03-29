@@ -8,18 +8,21 @@ import veribis.veribiscrmdyn.Fragment.List.ListFragment;
  */
 public class FragmentFactory {
 
-  private FragmentFactory(){}
-
-  public static _baseFragment getFragment(EnumFragmentType fragmentType){
-    _baseFragment fragment=null;
-    switch (fragmentType) {
-      case LIST:
-        fragment=new ListFragment();
-        break;
-      case FORM:
-        fragment=new FormFragment();
-        break;
+    private FragmentFactory() {
     }
-    return fragment;
-  }
+
+    public static _baseFragment getFragment(EnumFragmentType fragmentType) {
+        _baseFragment fragment = null;
+        switch (fragmentType) {
+            case LIST:
+                fragment = new ListFragment();
+                break;
+            case FORM:
+                fragment = new FormFragment();
+            case SUBFORM:
+                fragment = new FormFragment();
+                break;
+        }
+        return fragment;
+    }
 }

@@ -161,9 +161,12 @@ public class getDemoView {
         formProperties.setFormType(EnumFragmentType.FORM);
         formProperties.setEntity("Company");
 
-        formProperties.setActionButtonIsVisible(false);
 
-        //     formProperties.setParentField("Priority");//üstform ilişki
+        formProperties.setActionButtonIsVisible(true);
+        formProperties.setActionButtonLink("FirmaEkle");
+        formProperties.setEditLink("FirmaEkle");
+        formProperties.setEditFormType(EnumFragmentType.FORM);
+
 
         ArrayList<Map<String, Object>> widgets = new ArrayList<Map<String, Object>>();
         ArrayList<String> Buttons = new ArrayList<>();
@@ -177,6 +180,8 @@ public class getDemoView {
         widgets.add(newWidgetDROPDOWN("Kişi", "CompanyTown", "DROPDOWN", null,"502","Id","Yetkili","Id"));
     //    widgets.add(newWidget("ddD6", "CompanyTown", "DROPDOWN", null, null, null, "Id"));
     //    widgets.add(newWidget("Tarih", "ModifiedDate", "TIMEPICKER", null, null, null, null));
+        widgets.add(newWidgetList("List", "FirmaListe", "LISTVIEW"));
+
 
         widgets.add(newWidget("Lokasyon", "Location", "TEXTVIEW", "LOCATION", null, null, null));
         widgets.add(newWidget("Mail", "Mail", "TEXTVIEW", "SEND_MAIL", null, null, null));
@@ -481,6 +486,16 @@ public class getDemoView {
         }
         return widget;
     }
+
+    private static Map<String, Object> newWidgetList(String label, String listName, String wType) {
+        Map<String, Object> widget = new HashMap<>();
+        widget.put("label", label);
+        widget.put("widgetType", wType);
+        widget.put("listName", listName);
+
+        return widget;
+    }
+
     private static Map<String, Object> newWidget(String label, String field, String wType, String wbtn, String subForm, String SubFormType, String cascade) {
         Map<String, Object> widget = new HashMap<>();
         widget.put("label", label);

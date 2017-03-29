@@ -41,7 +41,7 @@ public class WidgetDate extends AbstractWidget {
     @Override
     public void init() {
         TextView v = (TextView) widget;
-        v.setTextSize(15);
+        ((TextView) widget).setTextSize(17);
         value =new Date();
         setText();
         v.setOnClickListener(new OnClickListener() {
@@ -65,7 +65,10 @@ public class WidgetDate extends AbstractWidget {
             }
         });
     }
+    @Override
+    public void layoutClick() {
 
+    }
     @Override
     public void setProp(Map<String, Object> properties) {
         super.setProp(properties);

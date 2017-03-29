@@ -61,6 +61,10 @@ public class WidgetDropDown extends AbstractWidget implements ISelectableWidget 
             }
         });
     }
+    @Override
+    public void layoutClick() {
+
+    }
 
     @Override
     public void setProp(Map<String, Object> properties) {

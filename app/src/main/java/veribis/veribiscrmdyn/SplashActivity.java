@@ -29,7 +29,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//          createDemo();
+//depo          createDemo();
 
       //  getDemoView.getMenu(this);
         setOauth();

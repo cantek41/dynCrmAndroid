@@ -46,6 +46,10 @@ public class WidgetSubForm extends AbstractWidget {
   }
 
   @Override
+  public void layoutClick() {
+
+  }
+  @Override
   public void setProp(Map<String, Object> properties) {
     super.setProp(properties);
     if (properties.get("subForm") != null) {

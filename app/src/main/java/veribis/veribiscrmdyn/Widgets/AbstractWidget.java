@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.cantekinandroidlib.logger.CustomLogger;
 
+import org.springframework.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -45,8 +47,10 @@ public abstract class AbstractWidget extends View {
      * @param properties
      */
     public void setProp(Map<String, Object> properties) {
-        setLabel(String.valueOf(properties.get("label")));
-        setField(String.valueOf(properties.get("field")));
+        if (properties.get("label") instanceof String)
+            setLabel(String.valueOf(properties.get("label")));
+        if (properties.get("field") instanceof String)
+            setField(String.valueOf(properties.get("field")));
         if (properties.get("buttons") instanceof ArrayList)
             smallButtons = (ArrayList<String>) properties.get("buttons");
 
@@ -64,16 +68,18 @@ public abstract class AbstractWidget extends View {
         LinearLayout rowLayout = new LinearLayout(getContext());
         // Set the dialog_list full width, full height
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(2, 2, 2, 2);
+        params.setMargins(2, 2, 2, 0);
         rowLayout.setLayoutParams(params);
         rowLayout.setOrientation(LinearLayout.VERTICAL); //dikey
         rowLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.rowTransparan));
         //etiketi satıra ekle
+
         labelView.setLayoutParams(params);
-        widget.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, weight));
+
+        widget.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, weight));
         //view ve butonlar için yatay dialog_list
         LinearLayout content = new LinearLayout(getContext());
-        content.setLayoutParams(params);
+        content.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         content.setOrientation(LinearLayout.HORIZONTAL);  //yatay
         content.addView(widget);
         float buttonsWeight = 0;
@@ -88,12 +94,19 @@ public abstract class AbstractWidget extends View {
         rowLayout.addView(content);
         rowLayout.setVisibility(visible);
         rowLayout.setEnabled(enable);
+        rowLayout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layoutClick();
+            }
+        });
         return rowLayout;
     }
-
+    public abstract void layoutClick();
     public String getValue() {
         return "";
     }
+
     public abstract void setValue(String data);
 
     public String getField() {

@@ -64,6 +64,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
+
+    public void enabledFabButton(boolean enabled) {
+        CustomLogger.alert("enabledFabButton",String.valueOf(enabled));
+        fab.setEnabled(enabled);
+    }
+
     protected void initNavigation() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -148,9 +154,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         BootstrapCircleThumbnail imgUser = (BootstrapCircleThumbnail) header.findViewById(R.id.imgUserImage);
         txtUserName.setText(user.getName() + " " + user.getSurName());
         txtUserMail.setText(user.getEmail());
-        String imageURL = user.getPicturePath().replace("..", MyPreference.getPreference(this).getMainURL());
-        CustomLogger.info("imageURL", imageURL);
-        Picasso.with(this).load(imageURL).into(imgUser);
+        String imageURL="";
+        if (user.getPicturePath() != null) {
+            imageURL = user.getPicturePath().replace("..", MyPreference.getPreference(this).getMainURL());
+            Picasso.with(this).load(imageURL).into(imgUser);
+        }
     }
 
     /**

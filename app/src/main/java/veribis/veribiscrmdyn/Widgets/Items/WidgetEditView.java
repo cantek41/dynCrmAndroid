@@ -42,6 +42,12 @@ public class WidgetEditView extends AbstractWidget {
   }
 
   @Override
+  public void layoutClick() {
+    CustomLogger.alert(TAG,"layoutClick");
+
+  }
+
+  @Override
   public String getValue() {
     return ((EditText) widget).getText().toString();
   }

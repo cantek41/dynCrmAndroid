@@ -46,8 +46,8 @@ public class FactoryWidgetButton {
             default:
                 break;
         }
-        command.setLayoutParams(new LinearLayout.LayoutParams(100, 100, weight));
-        ((LinearLayout.LayoutParams) command.getLayoutParams()).setMargins(0, 0, 2, 2);
+        command.setLayoutParams(new LinearLayout.LayoutParams(110, 110, weight));
+        ((LinearLayout.LayoutParams) command.getLayoutParams()).setMargins(0, 0, 5, 0);
         command.setParent(parentValue);
         command.setPadding(0, 0, 0, 0);
         command.setImageResource(command.icon());

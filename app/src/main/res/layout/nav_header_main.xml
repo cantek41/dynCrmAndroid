@@ -14,12 +14,12 @@
   android:weightSum="1">
 
   <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
-    android:layout_width="62dp"
-    android:layout_height="65dp"
-    app:hasBorder="false"
-    android:src="@drawable/foto"
-    android:id="@+id/imgUserImage"
-    android:onClick="ShowDetail" />
+      android:id="@+id/imgUserImage"
+      android:layout_width="62dp"
+      android:layout_height="65dp"
+      android:onClick="ShowDetail"
+      android:src="@mipmap/veribislogo"
+      app:hasBorder="false" />
 
 
   <TextView

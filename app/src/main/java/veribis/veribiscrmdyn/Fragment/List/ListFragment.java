@@ -20,6 +20,7 @@ import Model.Filter;
 import Model.Form.baseProperties;
 import Model.ListRequestModel;
 import Model.Sort;
+import veribis.veribiscrmdyn.BaseActivity;
 import veribis.veribiscrmdyn.Fragment._baseFragment;
 import veribis.veribiscrmdyn.List.ListController;
 import veribis.veribiscrmdyn.R;
@@ -45,6 +46,7 @@ public class ListFragment extends _baseFragment //implements IThreadDelegete, IM
         super.initFragment();
         dataListView = (ListView) getActivity().findViewById(R.id.dataListListView);
         listLoad();
+        ((BaseActivity) getActivity()).enabledFabButton(true);
     }
 
     @Override

@@ -2,6 +2,7 @@ package veribis.veribiscrmdyn.Fragment.Form;
 
 import android.view.Menu;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.cantekinandroidlib.customJson.jsonHelper;
 import com.cantekinandroidlib.logger.CustomLogger;
@@ -24,6 +25,8 @@ import Model.Form.DataModelForm;
 import Model.Form.baseProperties;
 import Model.UpdateRequestModel;
 
+import veribis.veribiscrmdyn.BaseActivity;
+import veribis.veribiscrmdyn.Fragment.EnumFragmentType;
 import veribis.veribiscrmdyn.Fragment.FragmentFactory;
 import veribis.veribiscrmdyn.Fragment._baseFragment;
 import veribis.veribiscrmdyn.MainActivity;
@@ -77,11 +80,13 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
     }
 
     private void intiWidgets() {
+        ((BaseActivity) getActivity()).enabledFabButton(false);
         LinearLayout root = (LinearLayout) getActivity().findViewById(R.id.fargmentForm);
         widgetFields = new WidgetHelper(root, formProperties.getWidget().getWidgets()).build();
-        if (formProperties.getRecordId() != null && formProperties.getRecordId()!="0") {
+        if (formProperties.getRecordId() != null && formProperties.getRecordId() != "0") {
             setDataToWidget();
             getData();
+            ((BaseActivity) getActivity()).enabledFabButton(true);
         } else if (formProperties.getParentField() != null) {
             setParent();
         }
@@ -148,9 +153,9 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
                 ((MainActivity) getActivity()).showMessage(w.getLabel() + " boş olamaz");
                 return;
             }
-            CustomLogger.info(TAG+"--->", w.getField() + w.getValue()+String.valueOf(w.required));
+            CustomLogger.info(TAG + "--->", w.getField() + w.getValue() + String.valueOf(w.required));
 
-            if (!w.getField().equals("null")) {
+            if (w.getField() != null && !w.getField().equals("null")) {
                 CustomLogger.info(TAG, w.getField() + w.getValue());
                 request.Data.put(w.getField(), w.getValue());
             }
@@ -172,11 +177,12 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
      */
     private void setDataToWidget() {
         for (AbstractWidget w : widgetFields) {
-            if (!w.getField().equals("null") && formModel.Data.get(w.getField().toString()) != null) {
+            if (w.getField() != null && !w.getField().equals("null") && formModel.Data.get(w.getField().toString()) != null) {
                 w.setValue(formModel.Data.get(w.getField().toString()).toString());
                 CustomLogger.alert(TAG, formModel.Data.get(w.getField().toString()).toString());
             }
         }
+        formProperties.setRecordId(formModel.Data.get("Id"));
     }
 
     /**
@@ -245,6 +251,7 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
                         setDataToWidget();
                     else
                         ((MainActivity) getActivity()).showMessage(formModel.Status.Message);
+
                 } catch (JsonSyntaxException ex) {
                     CustomLogger.error(TAG, ex.getMessage());
                     ((MainActivity) getActivity()).showMessage("Yöneticinize Başvurun Hata Kodu:Tasarım uyuşmazlığı");
@@ -262,10 +269,16 @@ public class FormFragment extends _baseFragment implements IThreadDelegete {
             case REQUEST_UPDATE:
                 try {
                     formModel = jsonHelper.stringToObject(data, DataModelForm.class);
-                    if (formModel.Status.ErrCode == 0)
+                    if (formModel.Status.ErrCode == 0) {
+                        if (formProperties.getFormType() == EnumFragmentType.SUBFORM) {
+                            if (getActivity().getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                                getActivity().getSupportFragmentManager().popBackStack();
+                            }
+                        }
                         setDataToWidget();
-                    else
+                    } else
                         ((MainActivity) getActivity()).showMessage(formModel.Status.Message);
+                    ((BaseActivity) getActivity()).enabledFabButton(true);
                 } catch (JsonSyntaxException ex) {
                     CustomLogger.error(TAG, ex.getMessage());
                     ((MainActivity) getActivity()).showMessage("Yöneticinize Başvurun Hata Kodu:Tasarım uyuşmazlığı");

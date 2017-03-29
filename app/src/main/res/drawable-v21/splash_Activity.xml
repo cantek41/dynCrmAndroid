@@ -4,7 +4,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/logoscreen"
+            android:src="@mipmap/veribislogo"
             />
     </item>
 </layer-list>

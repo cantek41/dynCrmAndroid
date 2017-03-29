@@ -56,7 +56,8 @@ public class ValueController implements IThreadDelegete {
         Filter filter = new Filter();
         filter.setField(container.getValueKey());
         CustomLogger.alert(TAG, container.getFilterText());
-        if (isNumeric(container.getFilterText())) {
+
+        if (container.getFilterText()!=null && isNumeric(container.getFilterText())) {
             filter.setOp("eq");
             filter.setVal1(Double.valueOf(container.getFilterText()).intValue());
         } else {

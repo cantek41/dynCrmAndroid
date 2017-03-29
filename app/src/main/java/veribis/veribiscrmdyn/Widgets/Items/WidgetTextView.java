@@ -21,7 +21,7 @@ public class WidgetTextView extends AbstractWidget {
   }
   @Override
   public void init() {
-    ((TextView) widget).setTextSize(15);
+    ((TextView) widget).setTextSize(17);
   }
   @Override
   public void setProp(Map<String, Object> properties) {
@@ -29,6 +29,13 @@ public class WidgetTextView extends AbstractWidget {
     setValue(String.valueOf(properties.get("defaultValue")));
     CustomLogger.alert(TAG,"defaultValue"+String.valueOf(properties.get("defaultValue")));
   }
+
+  @Override
+  public void layoutClick() {
+    CustomLogger.alert(TAG,"layoutClick");
+
+  }
+
   @Override
   public String getValue() {
     return ((TextView) widget).getText().toString();
